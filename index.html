@@ -24,7 +24,10 @@
 
     <div class="container">
 
+
+        <!-- ================================================= -->
         <!-- HEADER -->
+        <!-- ================================================= -->
 
         <header>
 
@@ -39,9 +42,15 @@
         </header>
 
 
+
+        <!-- ================================================= -->
         <!-- KPI CARDS -->
+        <!-- ================================================= -->
 
         <section class="kpi-grid">
+
+
+            <!-- TOTAL -->
 
             <div class="card">
 
@@ -59,6 +68,9 @@
             </div>
 
 
+
+            <!-- EXAM ATTENDED -->
+
             <div class="card">
 
                 <h3>
@@ -74,6 +86,9 @@
 
             </div>
 
+
+
+            <!-- ASSIGNMENT -->
 
             <div class="card">
 
@@ -91,6 +106,9 @@
             </div>
 
 
+
+            <!-- RE-REG DONE -->
+
             <div class="card">
 
                 <h3>
@@ -106,6 +124,9 @@
 
             </div>
 
+
+
+            <!-- RE-REG NOT DONE -->
 
             <div class="card">
 
@@ -123,6 +144,9 @@
             </div>
 
 
+
+            <!-- RE-REG PERCENTAGE -->
+
             <div class="card">
 
                 <h3>
@@ -138,12 +162,19 @@
 
             </div>
 
+
         </section>
 
 
+
+        <!-- ================================================= -->
         <!-- FILTERS -->
+        <!-- ================================================= -->
 
         <section class="filters">
+
+
+            <!-- PROGRAM -->
 
             <select id="programFilter">
 
@@ -154,6 +185,9 @@
             </select>
 
 
+
+            <!-- BATCH -->
+
             <select id="batchFilter">
 
                 <option value="">
@@ -163,16 +197,34 @@
             </select>
 
 
-            <select id="semesterFilter">
+
+            <!-- SALES TYPE -->
+
+            <select id="salesTypeFilter">
 
                 <option value="">
-                    All Semesters
+                    All Sales Types
                 </option>
 
             </select>
 
 
-            <select id="examFilter">
+
+            <!-- CURRENT SEMESTER -->
+
+            <select id="currentSemFilter">
+
+                <option value="">
+                    All Current Semesters
+                </option>
+
+            </select>
+
+
+
+            <!-- EXAM ATTENDANCE -->
+
+            <select id="attendanceFilter">
 
                 <option value="">
                     All Exam Attendance
@@ -180,6 +232,9 @@
 
             </select>
 
+
+
+            <!-- ASSIGNMENT -->
 
             <select id="assignmentFilter">
 
@@ -190,6 +245,9 @@
             </select>
 
 
+
+            <!-- RE-REG -->
+
             <select id="reregFilter">
 
                 <option value="">
@@ -198,12 +256,17 @@
 
             </select>
 
+
         </section>
 
 
-        <!-- SEARCH -->
+
+        <!-- ================================================= -->
+        <!-- SEARCH + RESET -->
+        <!-- ================================================= -->
 
         <section class="search">
+
 
             <input
                 type="text"
@@ -211,54 +274,197 @@
                 placeholder="Search Roll No or Learner Name..."
             >
 
+
+            <button
+                id="resetFilters"
+                type="button"
+            >
+                Reset Filters
+            </button>
+
+
         </section>
 
 
-        <!-- TABLE -->
+
+        <!-- ================================================= -->
+        <!-- SALES TYPE ANALYSIS -->
+        <!-- ================================================= -->
+
+        <section class="analysis-section">
+
+
+            <div class="section-header">
+
+                <h2>
+                    Sales Type Analysis
+                </h2>
+
+            </div>
+
+
+            <div id="salesTypeAnalysis">
+
+                <p>
+                    Loading...
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ================================================= -->
+        <!-- COMBINATION ANALYSIS -->
+        <!-- ================================================= -->
+
+        <section class="analysis-section">
+
+
+            <div class="section-header">
+
+                <h2>
+                    Learner Status Combination
+                </h2>
+
+                <p>
+                    Exam Attendance + Assignment + Re-Registration
+                </p>
+
+            </div>
+
+
+            <div id="combinationAnalysis">
+
+                <p>
+                    Loading...
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ================================================= -->
+        <!-- LEARNER TABLE -->
+        <!-- ================================================= -->
 
         <section class="table-section">
 
-            <table>
 
-                <thead>
-
-                    <tr>
-
-                        <th>Roll No</th>
-
-                        <th>Name</th>
-
-                        <th>Program</th>
-
-                        <th>Batch</th>
-
-                        <th>Term Sem</th>
-
-                        <th>Exam Attendance</th>
-
-                        <th>Assignment</th>
-
-                        <th>Current Sem</th>
-
-                        <th>Re-Reg</th>
-
-                    </tr>
-
-                </thead>
+            <div class="table-header">
 
 
-                <tbody id="learnerTable">
+                <div>
 
-                </tbody>
+                    <h2>
+                        Learner Details
+                    </h2>
 
-            </table>
+                    <span id="recordCount">
+                        0 learners
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="table-wrapper">
+
+
+                <table>
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Roll No
+                            </th>
+
+                            <th>
+                                Name
+                            </th>
+
+                            <th>
+                                Program
+                            </th>
+
+                            <th>
+                                Batch
+                            </th>
+
+                            <th>
+                                Sales Type
+                            </th>
+
+                            <th>
+                                Exam Attendance
+                            </th>
+
+                            <th>
+                                Assignment
+                            </th>
+
+                            <th>
+                                Current Sem
+                            </th>
+
+                            <th>
+                                Re-Reg
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+
+                    <tbody id="learnerTableBody">
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
 
         </section>
+
+
+
+        <!-- ================================================= -->
+        <!-- LOADING -->
+        <!-- ================================================= -->
+
+        <div
+            id="loading"
+            class="loading"
+        >
+            Loading dashboard...
+        </div>
+
 
     </div>
 
 
+
+    <!-- ================================================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ================================================= -->
+
     <script src="script.js"></script>
+
 
 </body>
 
