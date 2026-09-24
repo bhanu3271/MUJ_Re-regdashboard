@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Re-Registration Dashboard</title>
+<style>
+  :root{
+    --ink:#1b2430; --ink-soft:#5b6674; --line:#e2e6ea;
+    --bg:#f6f7f9; --card:#ffffff;
+    --navy:#26415e; --navy-deep:#182b40; --navy-light:#e7edf3;
+    --gold:#c9962c;
+    --pos:#2f7d5c; --pos-bg:#e7f3ed;
+    --neg:#b1483f; --neg-bg:#fbebe9;
+    --warn:#b17a1f; --warn-bg:#fbf1e0;
+    --track:#eef1f4;
+    padding-top: env(safe-area-inset-top,0px);
+    padding-bottom: env(safe-area-inset-bottom,0px);
+    box-sizing:border-box;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#e8ebef; --ink-soft:#9aa5b1; --line:#2a3340;
+      --bg:#12161c; --card:#181e26;
+      --navy:#7fa2c9; --navy-deep:#0d1218; --navy-light:#1c2a38;
+      --gold:#e0b45c;
+      --pos:#5fc79a; --pos-bg:#173226;
+      --neg:#e8837a; --neg-bg:#331d1c;
+      --warn:#e0b45c; --warn-bg:#332b17;
+      --track:#232a34;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#e8ebef; --ink-soft:#9aa5b1; --line:#2a3340;
+    --bg:#12161c; --card:#181e26;
+    --navy:#7fa2c9; --navy-deep:#0d1218; --navy-light:#1c2a38;
+    --gold:#e0b45c;
+    --pos:#5fc79a; --pos-bg:#173226;
+    --neg:#e8837a; --neg-bg:#331d1c;
+    --warn:#e0b45c; --warn-bg:#332b17;
+    --track:#232a34;
+  }
+  html{scroll-padding-top:env(safe-area-inset-top,0px); height:100%;}
+  *{box-sizing:border-box;}
+  body{margin:0; min-height:100%; background:var(--bg); color:var(--ink); font-family:'Source Serif Pro',Georgia,'Times New Roman',serif;}
+  .num{font-family:'IBM Plex Mono','Courier New',monospace; font-variant-numeric:tabular-nums;}
+  header{background:linear-gradient(160deg,var(--navy-deep),var(--navy)); color:#f2f4f7; padding:24px 20px 18px; padding-top:calc(24px + env(safe-area-inset-top,0px));}
+  header .wrap{max-width:1180px;margin:0 auto;}
+  header h1{font-size:24px; margin:0 0 4px; font-weight:600;}
+  header p{margin:0; color:#c7d2de; font-size:13.5px; max-width:64ch;}
+
+  .page-nav{background:var(--navy-deep); border-bottom:1px solid rgba(255,255,255,.12);}
+  .page-nav-wrap{max-width:1180px;margin:0 auto;padding:8px 20px;display:flex;gap:8px;flex-wrap:wrap;font-family:Arial,sans-serif;}
+  .page-link{display:inline-block;text-decoration:none;color:#d9e3ed;border:1px solid rgba(255,255,255,.18);padding:6px 11px;border-radius:6px;font-size:12px;}
+  .page-link:hover,.page-link.active{background:var(--gold);color:#182b40;border-color:var(--gold);}
+
+  .filterbar{position:sticky; top:0; z-index:5; background:var(--card); border-bottom:1px solid var(--line); padding:10px 20px; padding-top:env(safe-area-inset-top,0px);}
+  .filterbar .wrap{max-width:1180px; margin:0 auto; display:flex; gap:10px; flex-wrap:wrap; align-items:center; font-family:Arial,sans-serif;}
+  .filterbar select, .filterbar input{font-family:Arial,sans-serif; font-size:13px; padding:6px 10px; border:1px solid var(--line); border-radius:6px; background:var(--card); color:var(--ink);}
+  .filterbar input{flex:1; min-width:140px;}
+  .chip{display:inline-flex; align-items:center; gap:6px; font-size:12px; background:var(--navy-light); color:var(--navy); padding:4px 10px; border-radius:20px; cursor:pointer; border:none;}
+  .chip .x{font-weight:700;}
+  #clearAll{display:none; font-size:12px; color:var(--ink-soft); background:none; border:1px solid var(--line); border-radius:6px; padding:6px 10px; cursor:pointer; font-family:Arial,sans-serif;}
+
+  main{max-width:1180px; margin:0 auto; padding:20px 20px 60px;}
+  .top-card{background:linear-gradient(135deg,var(--pos-bg),var(--card)); border:1px solid var(--pos); border-radius:8px; padding:16px 18px; margin-bottom:22px;}
+  .top-card .tag{font-family:Arial,sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--pos); font-weight:700;}
+  .top-card h3{margin:6px 0 4px; font-size:19px;}
+  .top-card p{margin:0; font-size:13.5px; color:var(--ink); font-family:Arial,sans-serif; line-height:1.5;}
+
+  .kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:22px;}
+  .kpi{background:var(--card); border:1px solid var(--line); border-radius:8px; padding:14px 16px; box-shadow:0 4px 14px rgba(20,30,45,.06); transition:box-shadow .15s;}
+  .kpi .label{font-size:11.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em; font-family:Arial,sans-serif;}
+  .kpi .value{font-size:23px; margin-top:4px; font-weight:700;}
+  .kpi .sub{font-size:12px; color:var(--ink-soft); margin-top:2px;}
+
+  section{margin-bottom:30px;}
+  h2{font-size:16px; font-weight:700; margin:0 0 4px;}
+  .section-note{font-size:12.5px; color:var(--ink-soft); margin:0 0 14px; font-family:Arial,sans-serif;}
+  .chart-card{background:var(--card); border:1px solid var(--line); border-radius:8px; padding:14px 18px 6px;}
+
+  .row{padding:8px 0; border-bottom:1px solid var(--line); cursor:pointer; border-radius:6px; transition:background .1s;}
+  .row:hover{background:var(--track);}
+  .row.active{background:var(--navy-light);}
+  .row:last-child{border-bottom:none;}
+  .row-head{display:grid; grid-template-columns:22px 180px 1fr 128px; align-items:center; gap:10px;}
+  .row-head .rank{font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-soft);}
+  .row-head .name{font-size:13.5px; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .bar-track{position:relative; height:15px; background:var(--track); border-radius:3px; overflow:hidden;}
+  .bar-fill{position:absolute; left:0; top:0; height:100%; background:var(--navy); transition:width .2s;}
+  .meta{font-size:12px; text-align:right; color:var(--ink-soft); font-family:Arial,sans-serif; white-space:nowrap;}
+  .meta b{color:var(--ink); font-family:'IBM Plex Mono','Courier New',monospace;}
+  .pills{grid-column:2/-1; display:flex; flex-wrap:wrap; gap:6px; margin-top:6px;}
+  .pill{font-family:Arial,sans-serif; font-size:11px; padding:2px 8px; border-radius:20px; background:var(--track); color:var(--ink-soft); white-space:nowrap;}
+  .pill b{color:var(--ink); font-family:'IBM Plex Mono',monospace;}
+  .focus-note{grid-column:2/-1; margin-top:8px; padding:10px 12px; background:var(--warn-bg); border:1px solid var(--warn); border-radius:6px; font-family:Arial,sans-serif; font-size:12.5px; color:var(--ink); line-height:1.5;}
+  .focus-note .flabel{font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--warn); font-weight:700; display:block; margin-bottom:3px;}
+
+  .table-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--card);}
+  table{border-collapse:collapse; width:100%; min-width:560px; font-size:13px;}
+  th, td{padding:9px 12px; text-align:right; border-bottom:1px solid var(--line); white-space:nowrap;}
+  th:first-child, td:first-child{text-align:left; position:sticky; left:0; background:var(--card);}
+  th{font-family:Arial,sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft); background:var(--card);}
+  tbody tr{cursor:pointer;}
+  tbody tr:hover td{background:var(--track);}
+  tbody tr.active td{background:var(--navy-light);}
+  .badge{display:inline-block; padding:2px 8px; border-radius:20px; font-size:12px; font-family:Arial,sans-serif;}
+  .badge.pos{background:var(--pos-bg); color:var(--pos);}
+  .badge.neg{background:var(--neg-bg); color:var(--neg);}
+  .badge.warn{background:var(--warn-bg); color:var(--warn);}
+  .empty{padding:20px; text-align:center; color:var(--ink-soft); font-family:Arial,sans-serif; font-size:13px;}
+
+  .div-row{display:grid; grid-template-columns:180px 1fr 130px; align-items:center; gap:10px; padding:6px 0; border-bottom:1px solid var(--line);}
+  .div-row:last-child{border-bottom:none;}
+  .div-row .name{font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .div-track{position:relative; height:15px; background:var(--track); border-radius:3px;}
+  .div-mid{position:absolute; left:50%; top:-2px; width:1px; height:19px; background:var(--ink-soft); opacity:.4;}
+  .div-fill{position:absolute; top:0; height:100%; border-radius:2px; background:var(--navy);}
+  .div-fill.neg{background:var(--neg);}
+  .div-row .meta{font-size:12px; text-align:right; font-family:Arial,sans-serif; color:var(--ink-soft); white-space:nowrap;}
+  .div-row .meta b{color:var(--ink); font-family:'IBM Plex Mono','Courier New',monospace;}
+  .div-row .meta b.neg{color:var(--neg);}
+
+  footer{max-width:1180px; margin:0 auto; padding:0 20px 30px; font-size:11.5px; color:var(--ink-soft); font-family:Arial,sans-serif;}
+  @media (max-width:720px){
+    .kpis{grid-template-columns:repeat(2,1fr);}
+    .row-head{grid-template-columns:18px 1fr 80px; gap:6px;}
+    .pills{grid-column:1/-1;}
+  }
+</style>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <h1>Re-Registration Dashboard</h1>
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px;font-family:Arial,sans-serif;">
+      <span id="excelStatus" style="font-size:12px;color:#d9e3ed;">Connecting to Google Sheet…</span>
+    </div>
+  </div>
+</header>
+
+<div class="page-nav">
+  <div class="page-nav-wrap">
+    <a class="page-link" href="index.html">Page 1 · Learner Dashboard</a>
+    <a class="page-link active" href="page2.html">Page 2 · Re-Registration Analysis</a>
+  </div>
+</div>
+
+<div class="filterbar">
+  <div class="wrap">
+    <select id="progSel"><option value="">All programs</option></select>
+    <select id="semSel"><option value="">All semesters</option></select>
+    <select id="priSel"><option value="">All priority categories</option></select>
+    <input type="text" id="mentorSearch" placeholder="Search mentor…">
+    <span id="chips"></span>
+    <button id="clearAll">Clear all filters ✕</button>
+  </div>
+</div>
+
+<main>
+  <div class="top-card" id="topCard"></div>
+  <div class="kpis" id="kpis"></div>
+
+  <section>
+    <h2 id="mentorHeading">Mentor-wise re-registration status</h2>
+    <p class="section-note">Click a mentor to see their program breakdown and a focus note on where to concentrate re-registration effort.</p>
+    <div class="chart-card"><div id="mentorChart"></div></div>
+  </section>
+
+  <section>
+    <h2 id="programHeading">Program-wise re-registration status</h2>
+    <p class="section-note">Click a program to filter everything to it.</p>
+    <div class="chart-card"><div id="programChart"></div></div>
+  </section>
+
+  <section>
+    <h2 id="priorityHeading">Priority category breakdown</h2>
+    <p class="section-note">P1 = closest to full payment, P7 = nil submission — the least engaged. Click a row to filter.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Priority category</th><th>Total</th><th>Paid</th><th>Not paid</th><th>Not paid %</th></tr></thead>
+        <tbody id="priBody"></tbody>
+      </table>
+    </div>
+  <section>
+    <h2>IS vs DA — course completion gap by mentor</h2>
+    <p class="section-note">IS (In-Semester) minus DA (Direct Admission) completion %, from the term pivot. Green = IS leads outperform DA leads for that mentor; red = the reverse. This is a separate metric from re-registration payment status above.</p>
+    <div class="chart-card"><div id="isdaChart"></div></div>
+  </section>
+</main>
+
+<footer>Re-reg status: Paid / Not Paid / Partially Paid. Priority category uses the updated field. Click any chart element or row to cross-filter; use the ✕ chips or "Clear all filters" to reset. Data source: Google Sheets.</footer>
+
+<script>
+/*
+  Google-Sheets-driven Re-Registration Dashboard
+  ------------------------------------------------
+  The dashboard UI, filters, calculations, charts and table layout are unchanged.
+  Only the data source has changed from local Excel to Google Sheets.
+
+  Google Sheet structure:
+    Sheet1 = student-level data
+    Sheet2 = mentor summary / IS-DA data
+
+  Keep the existing sheet names and column headers unchanged.
+*/
+
+// =========================
+// GOOGLE SHEET SETTINGS
+// =========================
+// Example Google Sheet URL:
+// https://docs.google.com/spreadsheets/d/1AbCdEfGhIjKlMnOpQrStUvWxYz/edit
+// Copy only the ID between /d/ and /edit.
+const GOOGLE_SHEET_ID = '1iwtwKK5JAG-qDRnjcMf5GGL5CMBMW9X3QFYtaawvCqg';
+
+const GOOGLE_SHEET1_NAME = 'Sheet1';
+const GOOGLE_SHEET2_NAME = 'Sheet2';
+
+// Automatically refresh the dashboard every 60 seconds.
+const GOOGLE_REFRESH_MS = 60000;
+
+let RAW = {
+  mentors: [],
+  programs: [],
+  priorities: [],
+  semesters: [],
+  rows: []
+};
+
+let ISDA = [];
+let NOTES = {};
+let refreshTimer = null;
+let refreshBusy = false;
+
+const state = { mentor: null, program: null, priority: null, semester: null, _mentorName: null, _programName: null, _priorityName: null, _semesterName: null };
+
+function fmt(n){
+  return Number(n || 0).toFixed(1) + '%';
+}
+
+function short(p){
+  return String(p || '').split(' - ')[0];
+}
+
+function norm(v){
+  return String(v ?? '').trim();
+}
+
+function key(v){
+  return norm(v).toLowerCase().replace(/\s+/g, ' ');
+}
+
+function pct(v){
+  const n = Number(v);
+  if (!Number.isFinite(n)) return 0;
+  return Math.abs(n) <= 1.0000001 ? n * 100 : n;
+}
+
+function setStatus(message, ok=false){
+  const el = document.getElementById('excelStatus');
+  if (!el) return;
+  el.textContent = message;
+  el.style.color = ok ? '#bfe7d3' : '#d9e3ed';
+}
+
+function normalizeWorkbookRows(rows){
+  if (!rows || !rows.length) throw new Error('Sheet1 is empty.');
+
+  const headers = Object.keys(rows[0]).map(norm);
+  const required = [
+    'Program',
+    'Mentors',
+    'Re reg status',
+    'Priority Category updated',
+    'Semester'
+  ];
+
+  const missing = required.filter(h => !headers.some(x => key(x) === key(h)));
+  if (missing.length){
+    throw new Error('Sheet1 is missing required column(s): ' + missing.join(', '));
+  }
+
+  const actualHeader = wanted => headers.find(h => key(h) === key(wanted)) || wanted;
+
+  return rows.map(r => ({
+    Program: norm(r[actualHeader('Program')]),
+    Mentors: norm(r[actualHeader('Mentors')]),
+    ReReg: norm(r[actualHeader('Re reg status')]),
+    Priority: norm(r[actualHeader('Priority Category updated')]),
+    Semester: norm(r[actualHeader('Semester')]),
+    LeadName: norm(r[actualHeader('Lead Name')])
+  })).filter(r => r.Program || r.Mentors || r.ReReg || r.Priority || r.Semester);
+}
+
+function classifyPayment(status){
+  const s = key(status);
+
+  if (s === 'paid' || (s.includes('paid') && !s.includes('not') && !s.includes('partial'))) {
+    return 'paid';
+  }
+
+  if (s.includes('partial')) {
+    return 'partial';
+  }
+
+  return 'not_paid';
+}
+
+function buildRawFromSheet1(rows){
+  const normalized = normalizeWorkbookRows(rows);
+
+  // Preserve the familiar ordering where possible, otherwise use workbook order.
+  const preferredPrograms = [
+    'B.Com','BBA','BCA','M.Com','MA in Economics','MA.JMC','MBA','MCA'
+  ];
+
+  const preferredPriorities = [
+    'P1 - Full / Annual Payment',
+    'P2 - All IA_All Exams',
+    'P3 - Full Exam_Part/Nil IA',
+    'P4 - Full IA_Part/Nil Exam',
+    'P5 - Partial IA_Partial Exams',
+    'P6 - Partial IA_Nil Exams/Nil IA_Partial Exams',
+    'P7 - Nil IA_Nil Exams'
+  ];
+
+  const mentorSet = new Set();
+  const programSet = new Set();
+  const prioritySet = new Set();
+  const semesterSet = new Set();
+
+  normalized.forEach(r => {
+    if (r.Mentors) mentorSet.add(r.Mentors);
+    if (r.Program) programSet.add(r.Program);
+    if (r.Priority) prioritySet.add(r.Priority);
+    semesterSet.add(r.Semester || 'Not specified');
+  });
+
+  const mentors = [
+    ...preferredPrograms.filter(() => false), // keeps this section intentionally empty
+    ...Array.from(mentorSet)
+  ];
+
+  const programs = [
+    ...preferredPrograms.filter(p => programSet.has(p)),
+    ...Array.from(programSet).filter(p => !preferredPrograms.includes(p))
+  ];
+
+  const priorities = [
+    ...preferredPriorities.filter(p => prioritySet.has(p)),
+    ...Array.from(prioritySet).filter(p => !preferredPriorities.includes(p))
+  ];
+
+  const semesters = Array.from(semesterSet).sort((a,b)=>{
+    const an = parseInt(String(a).match(/\d+/)?.[0] || '9999',10);
+    const bn = parseInt(String(b).match(/\d+/)?.[0] || '9999',10);
+    return an-bn || String(a).localeCompare(String(b));
+  });
+
+  const mentorIndex = new Map(mentors.map((v,i)=>[v,i]));
+  const programIndex = new Map(programs.map((v,i)=>[v,i]));
+  const priorityIndex = new Map(priorities.map((v,i)=>[v,i]));
+  const semesterIndex = new Map(semesters.map((v,i)=>[v,i]));
+
+  const grouped = new Map();
+
+  normalized.forEach(r => {
+    if (!r.Mentors || !r.Program || !r.Priority) return;
+
+    const mi = mentorIndex.get(r.Mentors);
+    const pi = programIndex.get(r.Program);
+    const pri = priorityIndex.get(r.Priority);
+    const semesterValue = r.Semester || 'Not specified';
+    const si = semesterIndex.get(semesterValue);
+    const gk = mi + '|' + pi + '|' + pri + '|' + si;
+
+    if (!grouped.has(gk)){
+      grouped.set(gk, {
+        mi, pi, pri, si,
+        total: 0,
+        paid: 0,
+        not_paid: 0,
+        partial: 0
+      });
+    }
+
+    const g = grouped.get(gk);
+    g.total++;
+
+    const status = classifyPayment(r.ReReg);
+    if (status === 'paid') g.paid++;
+    else if (status === 'partial') g.partial++;
+    else g.not_paid++;
+  });
+
+  const rowsOut = Array.from(grouped.values())
+    .sort((a,b) => a.mi-b.mi || a.pi-b.pi || a.pri-b.pri || a.si-b.si)
+    .map(g => [g.mi,g.pi,g.pri,g.total,g.paid,g.not_paid,g.partial,g.si]);
+
+  return { mentors, programs, priorities, semesters, rows: rowsOut, normalized };
+}
+
+function findColumn(headers, names){
+  for (const wanted of names){
+    const h = headers.find(x => key(x) === key(wanted));
+    if (h) return h;
+  }
+  return null;
+}
+
+function buildISDA(sheet2Rows, sheet1Normalized){
+  const result = [];
+
+  if (sheet2Rows && sheet2Rows.length){
+    const headers = Object.keys(sheet2Rows[0]).map(norm);
+    const mentorCol = findColumn(headers, ['Mentors','Mentor']);
+    const isCol = findColumn(headers, ['IS %','IS%','IS']);
+    const daCol = findColumn(headers, ['DA%','DA %','DA']);
+    const diffCol = findColumn(headers, ['IS vs DA','IS vs DA %','IS vs DA%']);
+
+    if (mentorCol && isCol && daCol){
+      sheet2Rows.forEach(r => {
+        const name = norm(r[mentorCol]);
+        if (!name) return;
+
+        const isPct = pct(r[isCol]);
+        const daPct = pct(r[daCol]);
+
+        let diff = diffCol ? pct(r[diffCol]) : (isPct - daPct);
+
+        // If a percentage-formatted decimal was supplied in the diff column,
+        // pct() converts it. If it is already points, it stays as points.
+        if (Math.abs(Number(r[diffCol])) <= 1.0000001 && diffCol) diff = Number(r[diffCol]) * 100;
+
+        result.push({
+          name,
+          is_pct: isPct,
+          da_pct: daPct,
+          diff
+        });
+      });
+
+      if (result.length) {
+        return result.sort((a,b)=>b.diff-a.diff);
+      }
+    }
+  }
+
+  // Fallback: calculate IS/DA from Sheet1 Lead Name.
+  const byMentor = new Map();
+
+  sheet1Normalized.forEach(r => {
+    if (!r.Mentors) return;
+    const lead = key(r.LeadName);
+    if (lead !== 'is' && lead !== 'da') return;
+
+    if (!byMentor.has(r.Mentors)){
+      byMentor.set(r.Mentors, {
+        isPaid:0, isTotal:0, daPaid:0, daTotal:0
+      });
+    }
+
+    const g = byMentor.get(r.Mentors);
+    const paid = classifyPayment(r.ReReg) === 'paid';
+
+    if (lead === 'is'){
+      g.isTotal++;
+      if (paid) g.isPaid++;
+    } else {
+      g.daTotal++;
+      if (paid) g.daPaid++;
+    }
+  });
+
+  byMentor.forEach((g,name)=>{
+    const isPct = g.isTotal ? g.isPaid/g.isTotal*100 : 0;
+    const daPct = g.daTotal ? g.daPaid/g.daTotal*100 : 0;
+    result.push({
+      name,
+      is_pct:isPct,
+      da_pct:daPct,
+      diff:isPct-daPct
+    });
+  });
+
+  return result.sort((a,b)=>b.diff-a.diff);
+}
+
+function buildNotes(){
+  NOTES = {};
+
+  RAW.mentors.forEach((mentorName, mentorIdx)=>{
+    const mentorRows = RAW.rows.filter(r=>r[0]===mentorIdx);
+
+    const programAgg = new Map();
+    mentorRows.forEach(r=>{
+      if (!programAgg.has(r[1])) {
+        programAgg.set(r[1], {total:0,paid:0,not_paid:0,partial:0});
+      }
+      const o = programAgg.get(r[1]);
+      o.total += r[3];
+      o.paid += r[4];
+      o.not_paid += r[5];
+      o.partial += r[6];
+    });
+
+    let weakest = null;
+    programAgg.forEach((o,pi)=>{
+      const paidPct = o.total ? o.paid/o.total*100 : 0;
+      if (!weakest || paidPct < weakest.paidPct) {
+        weakest = { pi, paidPct, ...o };
+      }
+    });
+
+    if (!weakest) return;
+
+    // Find the priority with the largest unpaid count for this mentor/program.
+    const priorityAgg = new Map();
+    RAW.rows
+      .filter(r=>r[0]===mentorIdx && r[1]===weakest.pi)
+      .forEach(r=>{
+        if (!priorityAgg.has(r[2])) priorityAgg.set(r[2],0);
+        priorityAgg.set(r[2], priorityAgg.get(r[2]) + r[5]);
+      });
+
+    let focusPriority = null;
+    priorityAgg.forEach((unpaid,pri)=>{
+      if (!focusPriority || unpaid > focusPriority.unpaid) {
+        focusPriority = {pri,unpaid};
+      }
+    });
+
+    let note = `${RAW.programs[weakest.pi]} is the weakest program (${fmt(weakest.paidPct)} paid, ${weakest.not_paid.toLocaleString()} unpaid)`;
+    if (focusPriority) {
+      note += `, mostly in ${short(RAW.priorities[focusPriority.pri])} (${focusPriority.unpaid.toLocaleString()} students).`;
+    } else {
+      note += '.';
+    }
+
+    const gap = ISDA.find(d=>key(d.name)===key(mentorName));
+    if (gap && Math.abs(gap.diff) >= 0.05) {
+      if (gap.diff > 0) {
+        note += ` DA leads are lagging IS by ${Math.abs(gap.diff).toFixed(1)} pts — prioritize DA follow-ups.`;
+      } else {
+        note += ` IS leads are lagging DA by ${Math.abs(gap.diff).toFixed(1)} pts — prioritize IS follow-ups.`;
+      }
+    }
+
+    NOTES[mentorName] = note;
+  });
+}
+
+function populateFilters(){
+  const progSel = document.getElementById('progSel');
+  const priSel = document.getElementById('priSel');
+  const semSel = document.getElementById('semSel');
+
+  const oldProgram = state.program !== null ? RAW.programs[state.program] : '';
+  const oldPriority = state.priority !== null ? RAW.priorities[state.priority] : '';
+  const oldSemester = state.semester !== null ? RAW.semesters[state.semester] : '';
+
+  progSel.innerHTML = '<option value="">All programs</option>';
+  RAW.programs.forEach((p,i)=>{
+    progSel.insertAdjacentHTML('beforeend', `<option value="${i}">${p}</option>`);
+  });
+
+  semSel.innerHTML = '<option value="">All semesters</option>';
+  RAW.semesters.forEach((p,i)=>{
+    semSel.insertAdjacentHTML('beforeend', `<option value="${i}">${p}</option>`);
+  });
+
+  priSel.innerHTML = '<option value="">All priority categories</option>';
+  RAW.priorities.forEach((p,i)=>{
+    priSel.insertAdjacentHTML('beforeend', `<option value="${i}">${p}</option>`);
+  });
+
+  const newProgramIndex = RAW.programs.indexOf(oldProgram);
+  const newPriorityIndex = RAW.priorities.indexOf(oldPriority);
+  const newSemesterIndex = RAW.semesters.indexOf(oldSemester);
+
+  state.program = newProgramIndex >= 0 ? newProgramIndex : null;
+  state.priority = newPriorityIndex >= 0 ? newPriorityIndex : null;
+  state.semester = newSemesterIndex >= 0 ? newSemesterIndex : null;
+
+  progSel.value = state.program === null ? '' : state.program;
+  priSel.value = state.priority === null ? '' : state.priority;
+  semSel.value = state.semester === null ? '' : state.semester;
+}
+
+function filteredRows(ignore){
+  return RAW.rows.filter(r=>
+    (ignore==='mentor' || state.mentor===null || r[0]===state.mentor) &&
+    (ignore==='program' || state.program===null || r[1]===state.program) &&
+    (ignore==='priority' || state.priority===null || r[2]===state.priority) &&
+    (ignore==='semester' || state.semester===null || r[7]===state.semester)
+  );
+}
+
+function aggBy(rows, dim){
+  const m = new Map();
+
+  rows.forEach(r=>{
+    const k = r[dim];
+    if(!m.has(k)) m.set(k, {total:0,paid:0,not_paid:0,partial:0});
+
+    const o = m.get(k);
+    o.total += r[3];
+    o.paid += r[4];
+    o.not_paid += r[5];
+    o.partial += r[6];
+  });
+
+  return m;
+}
+
+function renderChips(){
+  const chips = [];
+
+  if(state.mentor!==null) chips.push({label: RAW.mentors[state.mentor], key:'mentor'});
+  if(state.program!==null) chips.push({label: RAW.programs[state.program], key:'program'});
+  if(state.priority!==null) chips.push({label: short(RAW.priorities[state.priority]), key:'priority'});
+  if(state.semester!==null) chips.push({label: RAW.semesters[state.semester], key:'semester'});
+
+  document.getElementById('chips').innerHTML = chips.map(c=>
+    `<button class="chip" data-k="${c.key}">${c.label} <span class="x">✕</span></button>`
+  ).join('');
+
+  document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click', ()=>{
+    const k = b.dataset.k;
+    state[k] = null;
+
+    if(k==='program') document.getElementById('progSel').value='';
+    if(k==='priority') document.getElementById('priSel').value='';
+    if(k==='semester') document.getElementById('semSel').value='';
+
+    render();
+  }));
+
+  document.getElementById('clearAll').style.display =
+    chips.length ? 'inline-block' : 'none';
+}
+
+function render(){
+  renderChips();
+
+  if(!RAW.rows.length){
+    document.getElementById('topCard').innerHTML =
+      `<div class="tag">No Excel data</div>
+       <h3>Connect your Excel workbook</h3>
+       <p>Use “Connect Excel” or “Load Excel” above to populate the dashboard.</p>`;
+    document.getElementById('kpis').innerHTML = '';
+    document.getElementById('mentorChart').innerHTML = '';
+    document.getElementById('programChart').innerHTML = '';
+    document.getElementById('priBody').innerHTML =
+      `<tr><td colspan="5" class="empty">No Excel data loaded.</td></tr>`;
+    document.getElementById('isdaChart').innerHTML = '';
+    return;
+  }
+
+  const rows = filteredRows(null);
+
+  const totals = {total:0,paid:0,not_paid:0};
+  rows.forEach(r=>{
+    totals.total += r[3];
+    totals.paid += r[4];
+    totals.not_paid += r[5];
+  });
+
+  const overallPct = totals.total ? totals.paid/totals.total*100 : 0;
+
+  // Mentor ranking
+  const mentorRows = filteredRows('mentor');
+  const mAgg = aggBy(mentorRows, 0);
+
+  let mentorList = [...mAgg.entries()].map(([idx,o])=>({
+    idx,
+    name: RAW.mentors[idx],
+    total:o.total,
+    paid:o.paid,
+    not_paid:o.not_paid,
+    paid_pct:o.total ? o.paid/o.total*100 : 0
+  })).sort((a,b)=>b.paid_pct-a.paid_pct);
+
+  const searchQ = document.getElementById('mentorSearch').value.toLowerCase().trim();
+  if(searchQ){
+    mentorList = mentorList.filter(m=>m.name.toLowerCase().includes(searchQ));
+  }
+
+  // Top performer
+  const allMentorAgg = [...aggBy(filteredRows('mentor'), 0).entries()].map(([idx,o])=>({
+    idx,
+    name: RAW.mentors[idx],
+    total:o.total,
+    paid:o.paid,
+    not_paid:o.not_paid,
+    paid_pct:o.total ? o.paid/o.total*100:0
+  })).sort((a,b)=>b.paid_pct-a.paid_pct);
+
+  const kpis = [
+    {
+      label:'Students (filtered)',
+      value: totals.total.toLocaleString(),
+      sub: rows.length===RAW.rows.length ? 'all students' : 'filtered view'
+    },
+    {
+      label:'Paid',
+      value: fmt(overallPct),
+      sub:`${totals.paid.toLocaleString()} of ${totals.total.toLocaleString()}`
+    },
+    {
+      label:'Not paid',
+      value: totals.not_paid.toLocaleString(),
+      sub:'re-registration pending'
+    },
+    {
+      label: state.mentor!==null?'Selected mentor':'Top performer',
+      value: state.mentor!==null
+        ? RAW.mentors[state.mentor]
+        : (allMentorAgg[0] ? allMentorAgg[0].name : '—'),
+      sub: state.mentor!==null
+        ? fmt(mentorList.find(m=>m.idx===state.mentor)?.paid_pct||0)+' paid'
+        : (allMentorAgg[0] ? fmt(allMentorAgg[0].paid_pct)+' paid':'')
+    }
+  ];
+
+  document.getElementById('kpis').innerHTML = kpis.map(k=>
+    `<div class="kpi">
+      <div class="label">${k.label}</div>
+      <div class="value">${k.value}</div>
+      <div class="sub">${k.sub}</div>
+    </div>`
+  ).join('');
+
+  const best = allMentorAgg[0];
+
+  if(best){
+    document.getElementById('topCard').innerHTML = `
+      <div class="tag">Best performing mentor${state.program!==null||state.priority!==null?' (in current filter)':''}</div>
+      <h3>${best.name} — ${fmt(best.paid_pct)} paid</h3>
+      <p>${best.paid.toLocaleString()} of ${best.total.toLocaleString()} students paid${
+        best.paid_pct-overallPct>=0
+          ? `, ${(best.paid_pct-overallPct).toFixed(1)} points above the current average of ${fmt(overallPct)}.`
+          : '.'
+      }</p>`;
+  } else {
+    document.getElementById('topCard').innerHTML =
+      `<div class="tag">No data</div>
+       <h3>No students match this filter</h3>
+       <p>Try clearing a filter.</p>`;
+  }
+
+  // Mentor chart
+  document.getElementById('mentorHeading').textContent =
+    state.mentor!==null
+      ? `${RAW.mentors[state.mentor]} — program breakdown`
+      : 'Mentor-wise re-registration status';
+
+  if(mentorList.length===0){
+    document.getElementById('mentorChart').innerHTML =
+      `<div class="empty">No mentors match this filter.</div>`;
+  } else {
+    document.getElementById('mentorChart').innerHTML = mentorList.map((m,i)=>{
+      const isActive = state.mentor===m.idx;
+      let pillsHtml = '';
+
+      if(isActive){
+        const progAgg = aggBy(
+          RAW.rows.filter(r=>r[0]===m.idx &&
+            (state.priority===null || r[2]===state.priority) &&
+            (state.semester===null || r[7]===state.semester)), 1
+        );
+
+        const pills = [...progAgg.entries()].map(([idx,o])=>
+          `<span class="pill">${RAW.programs[idx]} <b>${fmt(o.total?o.paid/o.total*100:0)}</b> (${o.total})</span>`
+        ).join('');
+
+        pillsHtml = `<div class="pills">${pills}</div>`;
+
+        const noteText = NOTES[m.name];
+        if(noteText){
+          pillsHtml += `
+            <div class="focus-note">
+              <span class="flabel">Focus for ${m.name}</span>
+              ${noteText}
+            </div>`;
+        }
+      }
+
+      return `
+        <div class="row ${isActive?'active':''}" data-mentor="${m.idx}">
+          <div class="row-head">
+            <div class="rank">${i+1}</div>
+            <div class="name" title="${m.name}">${m.name}</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width:${m.paid_pct}%"></div>
+            </div>
+            <div class="meta"><b>${fmt(m.paid_pct)}</b> · ${m.not_paid} unpaid</div>
+          </div>
+          ${pillsHtml}
+        </div>`;
+    }).join('');
+
+    document.querySelectorAll('#mentorChart .row').forEach(el=>
+      el.addEventListener('click', ()=>{
+        const idx = +el.dataset.mentor;
+        state.mentor = state.mentor===idx ? null : idx;
+        render();
+      })
+    );
+  }
+
+  // Program chart
+  document.getElementById('programHeading').textContent =
+    state.program!==null
+      ? `${RAW.programs[state.program]} — re-registration status`
+      : 'Program-wise re-registration status';
+
+  const progAggAll = [...aggBy(filteredRows('program'), 1).entries()]
+    .map(([idx,o])=>({
+      idx,
+      name:RAW.programs[idx],
+      total:o.total,
+      paid:o.paid,
+      not_paid:o.not_paid,
+      paid_pct:o.total?o.paid/o.total*100:0
+    }))
+    .sort((a,b)=>a.paid_pct-b.paid_pct);
+
+  document.getElementById('programChart').innerHTML = progAggAll.map(p=>{
+    const isActive = state.program===p.idx;
+
+    return `
+      <div class="row ${isActive?'active':''}" data-program="${p.idx}">
+        <div class="row-head">
+          <div class="rank"></div>
+          <div class="name">${p.name}</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:${p.paid_pct}%"></div>
+          </div>
+          <div class="meta"><b>${fmt(p.paid_pct)}</b> · ${p.not_paid.toLocaleString()} unpaid</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  document.querySelectorAll('#programChart .row').forEach(el=>
+    el.addEventListener('click', ()=>{
+      const idx = +el.dataset.program;
+      state.program = state.program===idx ? null : idx;
+      document.getElementById('progSel').value =
+        state.program===null ? '' : idx;
+      render();
+    })
+  );
+
+  // Priority table
+  document.getElementById('priorityHeading').textContent =
+    state.priority!==null
+      ? `${RAW.priorities[state.priority]} — detail`
+      : 'Priority category breakdown';
+
+  const priAgg = [...aggBy(filteredRows('priority'), 2).entries()]
+    .map(([idx,o])=>({
+      idx,
+      name:RAW.priorities[idx],
+      total:o.total,
+      paid:o.paid,
+      not_paid:o.not_paid,
+      not_paid_pct:o.total?o.not_paid/o.total*100:0
+    }))
+    .sort((a,b)=>b.not_paid-a.not_paid);
+
+  document.getElementById('priBody').innerHTML = priAgg.length
+    ? priAgg.map(p=>{
+        const cls = p.not_paid_pct>=60
+          ? 'neg'
+          : (p.not_paid_pct>=25 ? 'warn' : 'pos');
+
+        const isActive = state.priority===p.idx;
+
+        return `
+          <tr class="${isActive?'active':''}" data-priority="${p.idx}">
+            <td>${p.name}</td>
+            <td class="num">${p.total.toLocaleString()}</td>
+            <td class="num">${p.paid.toLocaleString()}</td>
+            <td class="num">${p.not_paid.toLocaleString()}</td>
+            <td class="num">
+              <span class="badge ${cls}">${fmt(p.not_paid_pct)}</span>
+            </td>
+          </tr>`;
+      }).join('')
+    : `<tr><td colspan="5" class="empty">No data for this filter.</td></tr>`;
+
+  document.querySelectorAll('#priBody tr[data-priority]').forEach(el=>
+    el.addEventListener('click', ()=>{
+      const idx = +el.dataset.priority;
+      state.priority = state.priority===idx ? null : idx;
+      document.getElementById('priSel').value =
+        state.priority===null ? '' : idx;
+      render();
+    })
+  );
+
+  renderISDA();
+}
+
+function renderISDA(){
+  const maxAbs = Math.max(
+    1,
+    ...ISDA.map(d=>Math.abs(Number(d.diff)||0))
+  );
+
+  document.getElementById('isdaChart').innerHTML = ISDA.length
+    ? ISDA.map(d=>{
+        const cls = d.diff<0?'neg':'';
+        const width = (Math.abs(d.diff)/maxAbs*50).toFixed(1);
+        const left = d.diff>=0 ? '50%' : (50-parseFloat(width))+'%';
+        const sign = d.diff>0?'+':'';
+
+        return `
+          <div class="div-row">
+            <div class="name" title="${d.name}">${d.name}</div>
+            <div class="div-track">
+              <div class="div-mid"></div>
+              <div class="div-fill ${cls}" style="left:${left}; width:${width}%"></div>
+            </div>
+            <div class="meta">
+              IS ${Number(d.is_pct).toFixed(1)}% ·
+              DA ${Number(d.da_pct).toFixed(1)}% ·
+              <b class="${cls}">${sign}${Number(d.diff).toFixed(1)}</b>
+            </div>
+          </div>`;
+      }).join('')
+    : `<div class="empty">No IS/DA data available in Sheet2.</div>`;
+}
+
+// =========================
+// GOOGLE SHEETS DATA LOADING
+// =========================
+function googleSheetCsvUrl(sheetName){
+  return 'https://docs.google.com/spreadsheets/d/' + encodeURIComponent(GOOGLE_SHEET_ID) +
+    '/gviz/tq?tqx=out:csv&sheet=' + encodeURIComponent(sheetName);
+}
+
+async function fetchGoogleSheetRows(sheetName){
+  const response = await fetch(googleSheetCsvUrl(sheetName), { cache: 'no-store' });
+
+  if (!response.ok){
+    throw new Error('Could not read ' + sheetName + ' from Google Sheets. HTTP ' + response.status);
+  }
+
+  const csv = await response.text();
+  if (!csv.trim()) throw new Error(sheetName + ' is empty.');
+
+  const workbook = XLSX.read(csv, { type:'string', raw:true });
+  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+
+  return XLSX.utils.sheet_to_json(sheet, {
+    defval: '',
+    raw: true
+  });
+}
+
+async function loadFromGoogleSheet(){
+  if (refreshBusy) return;
+
+  if (!GOOGLE_SHEET_ID || GOOGLE_SHEET_ID === 'PASTE_YOUR_GOOGLE_SHEET_ID_HERE'){
+    setStatus('Google Sheet ID is not configured');
+    return;
+  }
+
+  refreshBusy = true;
+
+  try{
+    setStatus('Loading Google Sheet…');
+
+    const [rows1, rows2] = await Promise.all([
+      fetchGoogleSheetRows(GOOGLE_SHEET1_NAME),
+      fetchGoogleSheetRows(GOOGLE_SHEET2_NAME)
+    ]);
+
+    const built = buildRawFromSheet1(rows1);
+
+    RAW.mentors = built.mentors;
+    RAW.programs = built.programs;
+    RAW.priorities = built.priorities;
+    RAW.semesters = built.semesters;
+    RAW.rows = built.rows;
+
+    // Preserve active filters after an automatic refresh.
+    const mentorName = state._mentorName;
+    const programName = state._programName;
+    const priorityName = state._priorityName;
+    const semesterName = state._semesterName;
+
+    state.mentor = mentorName ? RAW.mentors.indexOf(mentorName) : null;
+    state.program = programName ? RAW.programs.indexOf(programName) : null;
+    state.priority = priorityName ? RAW.priorities.indexOf(priorityName) : null;
+    state.semester = semesterName ? RAW.semesters.indexOf(semesterName) : null;
+
+    if (state.mentor < 0) state.mentor = null;
+    if (state.program < 0) state.program = null;
+    if (state.priority < 0) state.priority = null;
+    if (state.semester < 0) state.semester = null;
+
+    state._mentorName = state.mentor === null ? null : RAW.mentors[state.mentor];
+    state._programName = state.program === null ? null : RAW.programs[state.program];
+    state._priorityName = state.priority === null ? null : RAW.priorities[state.priority];
+    state._semesterName = state.semester === null ? null : RAW.semesters[state.semester];
+
+    ISDA = buildISDA(rows2, built.normalized);
+    buildNotes();
+    populateFilters();
+    render();
+
+    setStatus(
+      'Google Sheet connected · ' + built.normalized.length.toLocaleString() +
+      ' students · last refreshed ' + new Date().toLocaleTimeString(),
+      true
+    );
+  }catch(err){
+    console.error(err);
+    setStatus('Google Sheet error: ' + err.message);
+  }finally{
+    refreshBusy = false;
+  }
+}
+
+function startGoogleRefresh(){
+  if (refreshTimer) clearInterval(refreshTimer);
+  refreshTimer = setInterval(loadFromGoogleSheet, GOOGLE_REFRESH_MS);
+}
+
+// Load immediately and keep checking for changes automatically.
+loadFromGoogleSheet();
+startGoogleRefresh();
+
+document.getElementById('progSel').addEventListener('change', ()=>{
+  state.program =
+    document.getElementById('progSel').value==='' ?
+      null :
+      +document.getElementById('progSel').value;
+  render();
+});
+
+document.getElementById('priSel').addEventListener('change', ()=>{
+  state.priority =
+    document.getElementById('priSel').value==='' ?
+      null :
+      +document.getElementById('priSel').value;
+  render();
+});
+
+document.getElementById('semSel').addEventListener('change', ()=>{
+  state.semester =
+    document.getElementById('semSel').value==='' ?
+      null :
+      +document.getElementById('semSel').value;
+  state._semesterName = state.semester===null ? null : RAW.semesters[state.semester];
+  render();
+});
+
+document.getElementById('mentorSearch').addEventListener('input', render);
+
+document.getElementById('clearAll').addEventListener('click', ()=>{
+  state.mentor=null;
+  state.program=null;
+  state.priority=null;
+  state.semester=null;
+  state._semesterName=null;
+
+  document.getElementById('progSel').value='';
+  document.getElementById('priSel').value='';
+  document.getElementById('semSel').value='';
+  document.getElementById('mentorSearch').value='';
+
+  render();
+});
+
+// Start with an empty dashboard until Excel is connected/loaded.
+render();
+</script>
+</body>
+</html>
