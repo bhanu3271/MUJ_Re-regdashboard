@@ -1,471 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>MUJ Re-Registration Dashboard</title>
-
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MUJ Re-Registration Dashboard · Learner View</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 </head>
-
-
 <body>
-
-    <div class="container">
-
-
-        <!-- ================================================= -->
-        <!-- HEADER -->
-        <!-- ================================================= -->
-
-        <header>
-
-            <h1>
-                MUJ Re-Registration Dashboard
-            </h1>
-
-            <p>
-                Aug - Sep 2026
-            </p>
-
-        </header>
-
-
-
-        <!-- ================================================= -->
-        <!-- KPI CARDS -->
-        <!-- ================================================= -->
-
-        <section class="kpi-grid">
-
-
-            <!-- TOTAL -->
-
-            <div class="card">
-
-                <h3>
-                    Total Learners
-                </h3>
-
-                <div
-                    id="totalLearners"
-                    class="number"
-                >
-                    0
-                </div>
-
-            </div>
-
-
-
-            <!-- EXAM ATTENDED -->
-
-            <div class="card">
-
-                <h3>
-                    Exam Attended
-                </h3>
-
-                <div
-                    id="examAttended"
-                    class="number"
-                >
-                    0
-                </div>
-
-            </div>
-
-
-
-            <!-- ASSIGNMENT -->
-
-            <div class="card">
-
-                <h3>
-                    Assignment Submitted
-                </h3>
-
-                <div
-                    id="assignmentSubmitted"
-                    class="number"
-                >
-                    0
-                </div>
-
-            </div>
-
-
-
-            <!-- RE-REG DONE -->
-
-            <div class="card">
-
-                <h3>
-                    Re-Reg Done
-                </h3>
-
-                <div
-                    id="reregDone"
-                    class="number"
-                >
-                    0
-                </div>
-
-            </div>
-
-
-
-            <!-- RE-REG NOT DONE -->
-
-            <div class="card">
-
-                <h3>
-                    Re-Reg Not Done
-                </h3>
-
-                <div
-                    id="reregNotDone"
-                    class="number"
-                >
-                    0
-                </div>
-
-            </div>
-
-
-
-            <!-- RE-REG PERCENTAGE -->
-
-            <div class="card">
-
-                <h3>
-                    Re-Reg %
-                </h3>
-
-                <div
-                    id="reregPercentage"
-                    class="number"
-                >
-                    0%
-                </div>
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- ================================================= -->
-        <!-- FILTERS -->
-        <!-- ================================================= -->
-
-        <section class="filters">
-
-
-            <!-- PROGRAM -->
-
-            <select id="programFilter">
-
-                <option value="">
-                    All Programs
-                </option>
-
-            </select>
-
-
-
-            <!-- BATCH -->
-
-            <select id="batchFilter">
-
-                <option value="">
-                    All Batches
-                </option>
-
-            </select>
-
-
-
-            <!-- SALES TYPE -->
-
-            <select id="salesTypeFilter">
-
-                <option value="">
-                    All Sales Types
-                </option>
-
-            </select>
-
-
-
-            <!-- CURRENT SEMESTER -->
-
-            <select id="currentSemFilter">
-
-                <option value="">
-                    All Current Semesters
-                </option>
-
-            </select>
-
-
-
-            <!-- EXAM ATTENDANCE -->
-
-            <select id="attendanceFilter">
-
-                <option value="">
-                    All Exam Attendance
-                </option>
-
-            </select>
-
-
-
-            <!-- ASSIGNMENT -->
-
-            <select id="assignmentFilter">
-
-                <option value="">
-                    All Assignment Status
-                </option>
-
-            </select>
-
-
-
-            <!-- RE-REG -->
-
-            <select id="reregFilter">
-
-                <option value="">
-                    All Re-Reg Status
-                </option>
-
-            </select>
-
-
-        </section>
-
-
-
-        <!-- ================================================= -->
-        <!-- SEARCH + RESET -->
-        <!-- ================================================= -->
-
-        <section class="search">
-
-
-            <input
-                type="text"
-                id="searchInput"
-                placeholder="Search Roll No or Learner Name..."
-            >
-
-
-            <button
-                id="resetFilters"
-                type="button"
-            >
-                Reset Filters
-            </button>
-
-
-        </section>
-
-
-
-        <!-- ================================================= -->
-        <!-- SALES TYPE ANALYSIS -->
-        <!-- ================================================= -->
-
-        <section class="analysis-section">
-
-
-            <div class="section-header">
-
-                <h2>
-                    Sales Type Analysis
-                </h2>
-
-            </div>
-
-
-            <div id="salesTypeAnalysis">
-
-                <p>
-                    Loading...
-                </p>
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- ================================================= -->
-        <!-- COMBINATION ANALYSIS -->
-        <!-- ================================================= -->
-
-        <section class="analysis-section">
-
-
-            <div class="section-header">
-
-                <h2>
-                    Learner Status Combination
-                </h2>
-
-                <p>
-                    Exam Attendance + Assignment + Re-Registration
-                </p>
-
-            </div>
-
-
-            <div id="combinationAnalysis">
-
-                <p>
-                    Loading...
-                </p>
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- ================================================= -->
-        <!-- LEARNER TABLE -->
-        <!-- ================================================= -->
-
-        <section class="table-section">
-
-
-            <div class="table-header">
-
-
-                <div>
-
-                    <h2>
-                        Learner Details
-                    </h2>
-
-                    <span id="recordCount">
-                        0 learners
-                    </span>
-
-                </div>
-
-
-            </div>
-
-
-
-            <div class="table-wrapper">
-
-
-                <table>
-
-
-                    <thead>
-
-                        <tr>
-
-                            <th>
-                                Roll No
-                            </th>
-
-                            <th>
-                                Name
-                            </th>
-
-                            <th>
-                                Program
-                            </th>
-
-                            <th>
-                                Batch
-                            </th>
-
-                            <th>
-                                Sales Type
-                            </th>
-
-                            <th>
-                                Exam Attendance
-                            </th>
-
-                            <th>
-                                Assignment
-                            </th>
-
-                            <th>
-                                Current Sem
-                            </th>
-
-                            <th>
-                                Re-Reg
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-
-                    <tbody id="learnerTableBody">
-
-                    </tbody>
-
-
-                </table>
-
-
-            </div>
-
-
-        </section>
-
-
-
-        <!-- ================================================= -->
-        <!-- LOADING -->
-        <!-- ================================================= -->
-
-        <div
-            id="loading"
-            class="loading"
-        >
-            Loading dashboard...
-        </div>
-
-
+<header>
+  <div class="container">
+    <h1>MUJ Re-Registration Dashboard</h1>
+    <p>Aug - Sep 2026</p>
+  </div>
+</header>
+
+<nav class="page-nav">
+  <div class="container nav-inner">
+    <a class="nav-link active" href="index.html">Page 1 · Learner Dashboard</a>
+    <a class="nav-link" href="page2.html">Page 2 · Re-Registration Analysis</a>
+  </div>
+</nav>
+
+<main class="container">
+  <section class="kpi-grid">
+    <div class="card"><h3>Total Learners</h3><div id="totalLearners" class="number">0</div></div>
+    <div class="card"><h3>Exam Attended</h3><div id="examAttended" class="number">0</div></div>
+    <div class="card"><h3>Assignment Submitted</h3><div id="assignmentSubmitted" class="number">0</div></div>
+    <div class="card"><h3>Re-Reg Done</h3><div id="reregDone" class="number">0</div></div>
+    <div class="card"><h3>Re-Reg Not Done</h3><div id="reregNotDone" class="number">0</div></div>
+    <div class="card"><h3>Re-Reg %</h3><div id="reregPercentage" class="number">0%</div></div>
+  </section>
+
+  <section class="filters">
+    <select id="programFilter"><option value="">All Programs</option></select>
+    <select id="batchFilter"><option value="">All Batches</option></select>
+    <select id="salesTypeFilter"><option value="">All Sales Types</option></select>
+    <select id="currentSemFilter"><option value="">All Current Semesters</option></select>
+    <select id="attendanceFilter"><option value="">All Exam Attendance</option></select>
+    <select id="assignmentFilter"><option value="">All Assignment Status</option></select>
+    <select id="reregFilter"><option value="">All Re-Reg Status</option></select>
+  </section>
+
+  <section class="search-row">
+    <input type="text" id="searchInput" placeholder="Search Roll No or Learner Name...">
+    <button id="resetFilters" type="button">Reset Filters</button>
+    <span id="sheetStatus">Connecting to Google Sheet…</span>
+  </section>
+
+  <section class="analysis-section">
+    <div class="section-header"><h2>Sales Type Analysis</h2></div>
+    <div id="salesTypeAnalysis"><p>Loading...</p></div>
+  </section>
+
+  <section class="analysis-section">
+    <div class="section-header">
+      <h2>Learner Status Combination</h2>
+      <p>Exam Attendance + Assignment + Re-Registration</p>
     </div>
+    <div id="combinationAnalysis"><p>Loading...</p></div>
+  </section>
 
+  <section class="table-section">
+    <div class="table-header">
+      <div><h2>Learner Details</h2><span id="recordCount">0 learners</span></div>
+    </div>
+    <div class="table-wrapper">
+      <table>
+        <thead><tr>
+          <th>Roll No</th><th>Name</th><th>Program</th><th>Batch</th><th>Sales Type</th>
+          <th>Exam Attendance</th><th>Assignment</th><th>Current Sem</th><th>Re-Reg</th>
+        </tr></thead>
+        <tbody id="learnerTableBody"></tbody>
+      </table>
+    </div>
+  </section>
 
+  <div id="loading" class="loading">Loading dashboard...</div>
+</main>
 
-    <!-- ================================================= -->
-    <!-- JAVASCRIPT -->
-    <!-- ================================================= -->
-
-    <script src="script.js"></script>
-
-
+<footer class="container">Data source: Google Sheets · Automatically refreshed every 60 seconds.</footer>
+<script src="script.js"></script>
 </body>
-
 </html>
