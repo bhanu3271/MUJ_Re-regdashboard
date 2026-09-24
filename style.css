@@ -1,237 +1,1028 @@
+/* =========================================================
+   MUJ RE-REGISTRATION DASHBOARD
+   Modern Corporate UI
+   ========================================================= */
+
+:root {
+    --primary: #12395b;
+    --primary-light: #eaf2f9;
+    --primary-hover: #0d2f4d;
+
+    --text: #172033;
+    --text-light: #667085;
+    --muted: #98a2b3;
+
+    --background: #f4f7fb;
+    --surface: #ffffff;
+    --surface-soft: #f8fafc;
+
+    --border: #e4e9ef;
+
+    --success: #16845b;
+    --success-bg: #e9f7f0;
+
+    --danger: #c63f3f;
+    --danger-bg: #fff0f0;
+
+    --warning: #a86b08;
+    --warning-bg: #fff6df;
+
+    --shadow:
+        0 4px 14px rgba(16, 36, 60, 0.06);
+
+    --shadow-hover:
+        0 8px 24px rgba(16, 36, 60, 0.10);
+
+    --radius: 14px;
+}
+
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
 * {
     box-sizing: border-box;
 }
 
 
-body {
-
-    margin: 0;
-
-    font-family: Arial, sans-serif;
-
-    background: #f5f6fa;
-
-    color: #222;
-
+html {
+    scroll-behavior: smooth;
 }
 
 
-.container {
+body {
+    margin: 0;
 
-    width: 95%;
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            180deg,
+            #eef4fa 0px,
+            #f4f7fb 260px
+        );
+
+    color: var(--text);
+
+    -webkit-font-smoothing: antialiased;
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.container {
+    width: calc(100% - 48px);
 
     max-width: 1500px;
 
-    margin: auto;
+    margin: 0 auto;
 
-    padding: 30px 0;
-
+    padding: 28px 0 60px;
 }
 
 
+/* =========================================================
+   HEADER
+   ========================================================= */
+
 header {
+    margin-bottom: 24px;
 
-    margin-bottom: 25px;
+    padding:
+        26px 28px;
 
+    border-radius: var(--radius);
+
+    background:
+        linear-gradient(
+            135deg,
+            #102f4e 0%,
+            #17466e 55%,
+            #24638f 100%
+        );
+
+    color: white;
+
+    box-shadow:
+        0 8px 25px rgba(16, 47, 78, 0.16);
 }
 
 
 header h1 {
-
     margin: 0;
 
-    font-size: 30px;
+    font-size: 29px;
 
+    line-height: 1.2;
+
+    font-weight: 750;
+
+    letter-spacing: -0.5px;
 }
 
 
 header p {
+    margin: 8px 0 0;
 
-    margin-top: 8px;
+    color: #dce9f5;
 
-    color: #666;
+    font-size: 13px;
 
+    font-weight: 500;
 }
 
 
-/* KPI */
+/* =========================================================
+   KPI SECTION
+   ========================================================= */
 
 .kpi-grid {
-
     display: grid;
 
     grid-template-columns:
-        repeat(6, 1fr);
+        repeat(6, minmax(0, 1fr));
 
-    gap: 15px;
+    gap: 14px;
 
-    margin-bottom: 25px;
-
+    margin-bottom: 22px;
 }
 
+
+/* KPI CARD */
 
 .card {
+    position: relative;
 
-    background: white;
+    min-height: 125px;
 
-    padding: 20px;
+    display: flex;
 
-    border-radius: 10px;
+    flex-direction: column;
 
-    box-shadow:
-        0 2px 8px rgba(0,0,0,0.08);
+    justify-content: space-between;
 
+    padding: 18px 18px 17px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease;
 }
 
+
+.card:hover {
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-hover);
+
+    border-color: #d4dce6;
+}
+
+
+/* Small accent line */
+
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    top: 16px;
+
+    width: 3px;
+
+    height: 34px;
+
+    border-radius: 0 4px 4px 0;
+
+    background: var(--primary);
+}
+
+
+/* KPI TITLE */
 
 .card h3 {
+    margin: 0;
 
-    font-size: 14px;
+    padding-left: 4px;
 
-    margin: 0 0 10px;
+    color: var(--text-light);
 
-    color: #666;
+    font-size: 11px;
 
+    line-height: 1.3;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.06em;
 }
 
+
+/* KPI NUMBER */
 
 .number {
+    margin-top: 15px;
 
-    font-size: 28px;
+    color: var(--primary);
 
-    font-weight: bold;
+    font-size: 29px;
 
+    line-height: 1;
+
+    font-weight: 800;
+
+    letter-spacing: -0.7px;
+
+    font-variant-numeric: tabular-nums;
 }
 
 
-/* FILTERS */
+/* =========================================================
+   FILTER PANEL
+   ========================================================= */
 
 .filters {
-
     display: grid;
 
     grid-template-columns:
-        repeat(6, 1fr);
+        repeat(6, minmax(0, 1fr));
 
-    gap: 10px;
+    gap: 11px;
 
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 
+    padding: 15px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
 }
 
+
+/* =========================================================
+   INPUTS / SELECTS
+   ========================================================= */
 
 select,
 input {
-
     width: 100%;
 
-    padding: 12px;
+    height: 43px;
 
-    border: 1px solid #ddd;
+    padding:
+        0 12px;
 
-    border-radius: 7px;
+    border:
+        1px solid #d7dee7;
 
-    background: white;
+    border-radius: 9px;
 
+    background: var(--surface-soft);
+
+    color: var(--text);
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    outline: none;
+
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        background 0.15s ease;
 }
 
 
-/* SEARCH */
+select:hover,
+input:hover {
+    border-color: #c4ceda;
+
+    background: #ffffff;
+}
+
+
+select:focus,
+input:focus {
+    border-color: #6f9bc2;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 0 0 3px rgba(36, 99, 143, 0.10);
+}
+
+
+select {
+    cursor: pointer;
+}
+
+
+/* Placeholder */
+
+input::placeholder {
+    color: #98a2b3;
+}
+
+
+/* =========================================================
+   SEARCH AREA
+   ========================================================= */
 
 .search {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
 
     margin-bottom: 20px;
-
 }
 
 
-/* TABLE */
+.search input {
+    flex: 1;
 
-.table-section {
+    background: #ffffff;
+}
 
-    background: white;
+
+/* Buttons if present in search area */
+
+.search button,
+button {
+    height: 43px;
+
+    padding:
+        0 17px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: var(--primary);
+
+    color: #ffffff;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+
+.search button:hover,
+button:hover {
+    background: var(--primary-hover);
+
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 5px 12px rgba(18, 57, 91, 0.18);
+}
+
+
+/* =========================================================
+   ANALYSIS SECTIONS
+   ========================================================= */
+
+.analysis-section {
+    margin-bottom: 20px;
+
+    background: var(--surface);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+
+    overflow: hidden;
+}
+
+
+.analysis-section h2 {
+    margin: 0;
+
+    padding: 18px 20px 15px;
+
+    border-bottom:
+        1px solid var(--border);
+
+    color: var(--text);
+
+    font-size: 17px;
+
+    font-weight: 750;
+
+    letter-spacing: -0.2px;
+}
+
+
+/* Analysis content */
+
+#salesTypeAnalysis,
+#combinationAnalysis {
+    padding: 18px 20px;
+}
+
+
+/* =========================================================
+   ANALYSIS TABLES
+   ========================================================= */
+
+#salesTypeAnalysis table,
+#combinationAnalysis table {
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+
+    border:
+        1px solid var(--border);
 
     border-radius: 10px;
 
-    overflow-x: auto;
-
+    overflow: hidden;
 }
 
 
-table {
+#salesTypeAnalysis th,
+#salesTypeAnalysis td,
+#combinationAnalysis th,
+#combinationAnalysis td {
+    padding:
+        11px 13px;
 
+    border-bottom:
+        1px solid #edf0f4;
+
+    font-size: 13px;
+
+    text-align: left;
+}
+
+
+#salesTypeAnalysis th,
+#combinationAnalysis th {
+    background: #f7f9fc;
+
+    color: var(--text-light);
+
+    font-size: 10.5px;
+
+    font-weight: 750;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.05em;
+}
+
+
+#salesTypeAnalysis tr:last-child td,
+#combinationAnalysis tr:last-child td {
+    border-bottom: none;
+}
+
+
+#salesTypeAnalysis tbody tr:hover td,
+#combinationAnalysis tbody tr:hover td {
+    background: #f8fbff;
+}
+
+
+/* =========================================================
+   TABLE SECTION
+   ========================================================= */
+
+.table-section {
+    background: var(--surface);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+
+    overflow: hidden;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.table-section table {
     width: 100%;
 
-    border-collapse: collapse;
+    border-collapse: separate;
 
+    border-spacing: 0;
 }
 
 
-th,
-td {
+.table-section th {
+    position: sticky;
 
-    padding: 12px;
+    top: 0;
+
+    z-index: 2;
+
+    padding:
+        13px 14px;
+
+    background: #f7f9fc;
+
+    color: var(--text-light);
+
+    border-bottom:
+        1px solid var(--border);
+
+    font-size: 10.5px;
+
+    font-weight: 750;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.045em;
 
     text-align: left;
 
-    border-bottom: 1px solid #eee;
+    white-space: nowrap;
+}
+
+
+.table-section td {
+    padding:
+        12px 14px;
+
+    color: #344054;
+
+    border-bottom:
+        1px solid #edf0f4;
+
+    font-size: 12.5px;
+
+    line-height: 1.35;
 
     white-space: nowrap;
-
 }
 
 
-th {
+.table-section tbody tr {
+    transition:
+        background 0.12s ease;
+}
 
-    background: #f7f7f7;
+
+.table-section tbody tr:hover td {
+    background: #f8fbff;
+}
+
+
+.table-section tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   STATUS / BADGES
+   ========================================================= */
+
+.badge,
+.status {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 26px;
+
+    padding:
+        4px 9px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+/* Common status colors */
+
+.success {
+    color: var(--success);
+
+    background: var(--success-bg);
+}
+
+
+.danger {
+    color: var(--danger);
+
+    background: var(--danger-bg);
+}
+
+
+.warning {
+    color: var(--warning);
+
+    background: var(--warning-bg);
+}
+
+
+/* =========================================================
+   RESET / CLEAR BUTTON
+   ========================================================= */
+
+#resetFilters {
+    height: 43px;
+
+    padding:
+        0 16px;
+
+    border:
+        1px solid #d5dce5;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    color: #475467;
+
+    font-family: inherit;
 
     font-size: 13px;
 
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease;
 }
 
 
-td {
+#resetFilters:hover {
+    background: #f5f7fa;
+
+    border-color: #c4ceda;
+
+    color: var(--text);
+}
+
+
+/* =========================================================
+   LOADING / EMPTY
+   ========================================================= */
+
+.loading,
+.empty {
+    padding: 35px 20px;
+
+    color: var(--text-light);
+
+    text-align: center;
 
     font-size: 13px;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    margin-top: 24px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   TABLE SCROLLBAR
+   ========================================================= */
+
+.table-section::-webkit-scrollbar {
+    height: 8px;
+}
+
+
+.table-section::-webkit-scrollbar-track {
+    background: #f1f4f7;
+}
+
+
+.table-section::-webkit-scrollbar-thumb {
+    background: #c8d1dc;
+
+    border-radius: 20px;
+}
+
+
+.table-section::-webkit-scrollbar-thumb:hover {
+    background: #aebbc9;
+}
+
+
+/* =========================================================
+   LARGE DESKTOP
+   ========================================================= */
+
+@media (max-width: 1250px) {
+
+    .kpi-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+    .filters {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
 
 }
 
 
-/* MOBILE */
+/* =========================================================
+   TABLET
+   ========================================================= */
 
-@media(max-width: 1000px) {
+@media (max-width: 850px) {
+
+    .container {
+        width: calc(100% - 30px);
+
+        padding-top: 20px;
+    }
+
+    header {
+        padding: 22px;
+
+        margin-bottom: 18px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
 
     .kpi-grid {
-
         grid-template-columns:
-            repeat(3, 1fr);
+            repeat(2, minmax(0, 1fr));
 
+        gap: 11px;
     }
 
     .filters {
-
         grid-template-columns:
-            repeat(2, 1fr);
+            repeat(2, minmax(0, 1fr));
+    }
 
+    .search {
+        flex-wrap: wrap;
+    }
+
+    .search input {
+        width: 100%;
+
+        flex-basis: 100%;
     }
 
 }
 
 
-@media(max-width: 600px) {
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
-    .kpi-grid {
+@media (max-width: 600px) {
 
-        grid-template-columns:
-            repeat(2, 1fr);
-
+    body {
+        background: #f4f7fb;
     }
 
+
+    .container {
+        width: calc(100% - 20px);
+
+        padding:
+            12px 0 35px;
+    }
+
+
+    header {
+        padding: 20px 18px;
+
+        border-radius: 12px;
+    }
+
+
+    header h1 {
+        font-size: 21px;
+
+        line-height: 1.25;
+    }
+
+
+    header p {
+        font-size: 12px;
+    }
+
+
+    .kpi-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 9px;
+
+        margin-bottom: 14px;
+    }
+
+
+    .card {
+        min-height: 105px;
+
+        padding:
+            14px 13px;
+    }
+
+
+    .card::before {
+        top: 13px;
+
+        height: 27px;
+    }
+
+
+    .card h3 {
+        font-size: 9.5px;
+    }
+
+
+    .number {
+        font-size: 23px;
+
+        margin-top: 11px;
+    }
+
+
     .filters {
+        grid-template-columns:
+            1fr;
+
+        gap: 9px;
+
+        padding: 11px;
+
+        border-radius: 12px;
+    }
+
+
+    select,
+    input,
+    .search button,
+    button,
+    #resetFilters {
+        height: 42px;
+    }
+
+
+    .search {
+        display: grid;
 
         grid-template-columns:
             1fr;
 
+        gap: 8px;
+
+        margin-bottom: 14px;
+    }
+
+
+    .search input {
+        width: 100%;
+    }
+
+
+    .analysis-section {
+        border-radius: 12px;
+
+        margin-bottom: 14px;
+    }
+
+
+    .analysis-section h2 {
+        padding:
+            15px;
+
+        font-size: 15px;
+    }
+
+
+    #salesTypeAnalysis,
+    #combinationAnalysis {
+        padding: 13px;
+    }
+
+
+    .table-section {
+        border-radius: 12px;
+
+        overflow-x: auto;
+    }
+
+
+    .table-section table {
+        min-width: 1000px;
+    }
+
+
+    .table-section th {
+        padding:
+            11px;
+
+        font-size: 9.5px;
+    }
+
+
+    .table-section td {
+        padding:
+            10px 11px;
+
+        font-size: 11.5px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .kpi-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .card {
+        min-height: 92px;
+    }
+
+
+    .number {
+        font-size: 24px;
     }
 
 }
