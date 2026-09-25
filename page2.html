@@ -1,418 +1,1129 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MUJ Re-Registration Dashboard</title>
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1, viewport-fit=cover"
+>
+
+<title>Re-Registration Analysis</title>
 
 <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
 
 <style>
-* {
-  box-sizing: border-box;
-}
 
-:root {
-  --bg:#f5f6fa;
-  --card:#ffffff;
+:root{
+
   --ink:#222;
   --ink-soft:#666;
   --line:#e2e6ea;
+
+  --bg:#f5f6fa;
+  --card:#ffffff;
+
   --navy:#26415e;
   --navy-deep:#182b40;
   --navy-light:#e7edf3;
+
   --gold:#c9962c;
-  --green:#2f7d5c;
-  --green-bg:#e7f3ed;
-  --red:#b1483f;
-  --red-bg:#fbebe9;
+
+  --pos:#2f7d5c;
+  --pos-bg:#e7f3ed;
+
+  --neg:#b1483f;
+  --neg-bg:#fbebe9;
+
+  --warn:#b17a1f;
+  --warn-bg:#fbf1e0;
+
   --track:#eef1f4;
+
 }
 
-body {
+
+*{
+  box-sizing:border-box;
+}
+
+
+html{
+  height:100%;
+}
+
+
+body{
+
   margin:0;
-  font-family:Arial,sans-serif;
+
+  min-height:100%;
+
   background:var(--bg);
+
   color:var(--ink);
+
+  /*
+    Same font as Page 1.
+  */
+  font-family:Arial,sans-serif;
+
 }
 
-.container {
-  width:95%;
-  max-width:1500px;
-  margin:auto;
-  padding:30px 0;
-}
 
 /* HEADER */
 
-header {
-  background:linear-gradient(160deg,var(--navy-deep),var(--navy));
-  color:white;
-  padding:24px 2.5%;
-  margin-bottom:0;
+header{
+
+  background:
+    linear-gradient(
+      160deg,
+      var(--navy-deep),
+      var(--navy)
+    );
+
+  color:#f2f4f7;
+
+  padding:
+    24px
+    20px
+    18px;
+
 }
 
-header h1 {
+
+header .wrap{
+
+  max-width:1180px;
+
+  margin:0 auto;
+
+}
+
+
+header h1{
+
+  font-size:24px;
+
+  margin:0 0 4px;
+
+  font-weight:600;
+
+}
+
+
+header p{
+
   margin:0;
-  font-size:30px;
+
+  color:#c7d2de;
+
+  font-size:13.5px;
+
 }
 
-header p {
-  margin-top:8px;
-  color:#d9e3ed;
-  font-size:14px;
-}
 
 /* NAV */
 
-.page-nav {
+.page-nav{
+
   background:var(--navy-deep);
-  border-bottom:1px solid rgba(255,255,255,.12);
+
+  border-bottom:
+    1px solid
+    rgba(255,255,255,.12);
+
 }
 
-.page-nav-wrap {
-  width:95%;
-  max-width:1500px;
-  margin:auto;
-  padding:8px 0;
+
+.page-nav-wrap{
+
+  max-width:1180px;
+
+  margin:0 auto;
+
+  padding:8px 20px;
+
   display:flex;
+
   gap:8px;
+
   flex-wrap:wrap;
+
 }
 
-.page-link {
+
+.page-link{
+
   display:inline-block;
+
   text-decoration:none;
+
   color:#d9e3ed;
-  border:1px solid rgba(255,255,255,.18);
-  padding:7px 12px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.18);
+
+  padding:6px 11px;
+
   border-radius:6px;
+
   font-size:12px;
+
 }
+
 
 .page-link:hover,
-.page-link.active {
+.page-link.active{
+
   background:var(--gold);
+
   color:#182b40;
+
   border-color:var(--gold);
+
 }
 
-/* STATUS */
 
-.connection-status {
-  margin-top:12px;
+/* FILTER */
+
+.filterbar{
+
+  position:sticky;
+
+  top:0;
+
+  z-index:5;
+
+  background:var(--card);
+
+  border-bottom:
+    1px solid
+    var(--line);
+
+  padding:10px 20px;
+
+}
+
+
+.filterbar .wrap{
+
+  max-width:1180px;
+
+  margin:0 auto;
+
+  display:flex;
+
+  gap:10px;
+
+  flex-wrap:wrap;
+
+  align-items:center;
+
+}
+
+
+.filterbar select,
+.filterbar input{
+
+  font-family:Arial,sans-serif;
+
+  font-size:13px;
+
+  padding:6px 10px;
+
+  border:
+    1px solid
+    var(--line);
+
+  border-radius:6px;
+
+  background:var(--card);
+
+  color:var(--ink);
+
+}
+
+
+.chip{
+
+  display:inline-flex;
+
+  align-items:center;
+
+  gap:6px;
+
   font-size:12px;
-  color:#d9e3ed;
+
+  background:var(--navy-light);
+
+  color:var(--navy);
+
+  padding:4px 10px;
+
+  border-radius:20px;
+
+  cursor:pointer;
+
+  border:none;
+
 }
+
+
+.chip .x{
+
+  font-weight:700;
+
+}
+
+
+#clearAll{
+
+  display:none;
+
+  font-size:12px;
+
+  color:var(--ink-soft);
+
+  background:none;
+
+  border:
+    1px solid
+    var(--line);
+
+  border-radius:6px;
+
+  padding:6px 10px;
+
+  cursor:pointer;
+
+  font-family:Arial,sans-serif;
+
+}
+
+
+/* MAIN */
+
+main{
+
+  max-width:1180px;
+
+  margin:0 auto;
+
+  padding:20px 20px 60px;
+
+}
+
+
+/* TOP CARD */
+
+.top-card{
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--pos-bg),
+      var(--card)
+    );
+
+  border:
+    1px solid
+    var(--pos);
+
+  border-radius:8px;
+
+  padding:16px 18px;
+
+  margin-bottom:22px;
+
+}
+
+
+.top-card .tag{
+
+  font-size:11px;
+
+  text-transform:uppercase;
+
+  letter-spacing:.06em;
+
+  color:var(--pos);
+
+  font-weight:700;
+
+}
+
+
+.top-card h3{
+
+  margin:6px 0 4px;
+
+  font-size:19px;
+
+}
+
+
+.top-card p{
+
+  margin:0;
+
+  font-size:13.5px;
+
+  color:var(--ink);
+
+  line-height:1.5;
+
+}
+
 
 /* KPI */
 
-.kpi-grid {
+.kpis{
+
   display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:15px;
-  margin-bottom:25px;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:12px;
+
+  margin-bottom:22px;
+
 }
 
-.card {
+
+.kpi{
+
   background:var(--card);
-  padding:20px;
-  border-radius:10px;
-  border:1px solid var(--line);
-  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+
+  border:
+    1px solid
+    var(--line);
+
+  border-radius:8px;
+
+  padding:14px 16px;
+
+  box-shadow:
+    0 4px 14px
+    rgba(20,30,45,.06);
+
 }
 
-.card h3 {
-  font-size:14px;
-  margin:0 0 10px;
+
+.kpi .label{
+
+  font-size:11.5px;
+
   color:var(--ink-soft);
+
+  text-transform:uppercase;
+
+  letter-spacing:.06em;
+
 }
 
-.number {
-  font-size:28px;
-  font-weight:bold;
+
+.kpi .value{
+
+  font-size:23px;
+
+  margin-top:4px;
+
+  font-weight:700;
+
 }
 
-/* FILTERS */
 
-.filters {
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:10px;
-  margin-bottom:15px;
+.kpi .sub{
+
+  font-size:12px;
+
+  color:var(--ink-soft);
+
+  margin-top:2px;
+
 }
 
-.filters select,
-.search input {
-  width:100%;
-  padding:12px;
-  border:1px solid #ddd;
-  border-radius:7px;
-  background:white;
-  font-family:Arial,sans-serif;
-  color:#222;
+
+/* SECTIONS */
+
+section{
+
+  margin-bottom:30px;
+
 }
 
-.filters select:focus,
-.search input:focus {
-  outline:none;
-  border-color:var(--navy);
+
+h2{
+
+  font-size:16px;
+
+  font-weight:700;
+
+  margin:0 0 4px;
+
 }
 
-/* SEARCH */
 
-.search {
-  margin-bottom:20px;
-  display:flex;
-  gap:10px;
+.section-note{
+
+  font-size:12.5px;
+
+  color:var(--ink-soft);
+
+  margin:0 0 14px;
+
 }
 
-.search input {
-  flex:1;
+
+.chart-card{
+
+  background:var(--card);
+
+  border:
+    1px solid
+    var(--line);
+
+  border-radius:8px;
+
+  padding:14px 18px 6px;
+
 }
 
-.reset-btn {
-  padding:12px 18px;
-  border:none;
-  border-radius:7px;
-  background:var(--navy);
-  color:white;
+
+/* ROW */
+
+.row{
+
+  padding:8px 0;
+
+  border-bottom:
+    1px solid
+    var(--line);
+
   cursor:pointer;
-  font-family:Arial,sans-serif;
+
+  border-radius:6px;
+
 }
 
-.reset-btn:hover {
-  background:var(--navy-deep);
+
+.row:hover{
+
+  background:var(--track);
+
 }
 
-/* SECTION */
 
-.section {
-  margin-bottom:25px;
+.row.active{
+
+  background:var(--navy-light);
+
 }
 
-.section-title {
-  font-size:20px;
-  font-weight:bold;
-  margin-bottom:5px;
+
+.row:last-child{
+
+  border-bottom:none;
+
 }
 
-.section-note {
+
+.row-head{
+
+  display:grid;
+
+  grid-template-columns:
+    22px
+    180px
+    1fr
+    128px;
+
+  align-items:center;
+
+  gap:10px;
+
+}
+
+
+.row-head .rank{
+
+  font-family:
+    'Courier New',
+    monospace;
+
+  font-size:12px;
+
   color:var(--ink-soft);
-  font-size:13px;
-  margin-bottom:12px;
+
 }
+
+
+.row-head .name{
+
+  font-size:13.5px;
+
+  font-weight:600;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+
+  white-space:nowrap;
+
+}
+
+
+.bar-track{
+
+  position:relative;
+
+  height:15px;
+
+  background:var(--track);
+
+  border-radius:3px;
+
+  overflow:hidden;
+
+}
+
+
+.bar-fill{
+
+  position:absolute;
+
+  left:0;
+
+  top:0;
+
+  height:100%;
+
+  background:var(--navy);
+
+}
+
+
+.meta{
+
+  font-size:12px;
+
+  text-align:right;
+
+  color:var(--ink-soft);
+
+  white-space:nowrap;
+
+}
+
+
+.meta b{
+
+  color:var(--ink);
+
+  font-family:
+    'Courier New',
+    monospace;
+
+}
+
+
+.pills{
+
+  grid-column:2/-1;
+
+  display:flex;
+
+  flex-wrap:wrap;
+
+  gap:6px;
+
+  margin-top:6px;
+
+}
+
+
+.pill{
+
+  font-size:11px;
+
+  padding:2px 8px;
+
+  border-radius:20px;
+
+  background:var(--track);
+
+  color:var(--ink-soft);
+
+  white-space:nowrap;
+
+}
+
+
+.pill b{
+
+  color:var(--ink);
+
+  font-family:
+    'Courier New',
+    monospace;
+
+}
+
+
+.focus-note{
+
+  grid-column:2/-1;
+
+  margin-top:8px;
+
+  padding:10px 12px;
+
+  background:var(--warn-bg);
+
+  border:
+    1px solid
+    var(--warn);
+
+  border-radius:6px;
+
+  font-size:12.5px;
+
+  color:var(--ink);
+
+  line-height:1.5;
+
+}
+
+
+.focus-note .flabel{
+
+  font-size:10.5px;
+
+  text-transform:uppercase;
+
+  letter-spacing:.05em;
+
+  color:var(--warn);
+
+  font-weight:700;
+
+  display:block;
+
+  margin-bottom:3px;
+
+}
+
 
 /* TABLE */
 
-.table-section {
-  background:var(--card);
-  border-radius:10px;
+.table-wrap{
+
   overflow-x:auto;
-  border:1px solid var(--line);
+
+  border:
+    1px solid
+    var(--line);
+
+  border-radius:8px;
+
+  background:var(--card);
+
 }
 
-table {
-  width:100%;
+
+table{
+
   border-collapse:collapse;
+
+  width:100%;
+
+  min-width:560px;
+
+  font-size:13px;
+
 }
+
 
 th,
-td {
-  padding:12px;
-  text-align:left;
-  border-bottom:1px solid #eee;
+td{
+
+  padding:9px 12px;
+
+  text-align:right;
+
+  border-bottom:
+    1px solid
+    var(--line);
+
   white-space:nowrap;
+
 }
 
-th {
-  background:#f7f7f7;
-  font-size:13px;
-  color:#555;
+
+th:first-child,
+td:first-child{
+
+  text-align:left;
+
   position:sticky;
-  top:0;
-  z-index:1;
+
+  left:0;
+
+  background:var(--card);
+
 }
 
-td {
-  font-size:13px;
+
+th{
+
+  font-size:11px;
+
+  text-transform:uppercase;
+
+  letter-spacing:.04em;
+
+  color:var(--ink-soft);
+
+  background:var(--card);
+
 }
 
-tbody tr:hover {
-  background:#f8fafc;
+
+tbody tr{
+
+  cursor:pointer;
+
 }
+
+
+tbody tr:hover td{
+
+  background:var(--track);
+
+}
+
+
+tbody tr.active td{
+
+  background:var(--navy-light);
+
+}
+
 
 /* BADGES */
 
-.badge {
+.badge{
+
   display:inline-block;
-  padding:4px 9px;
+
+  padding:2px 8px;
+
   border-radius:20px;
-  font-size:11px;
-  font-weight:bold;
+
+  font-size:12px;
+
 }
 
-.badge-green {
-  background:var(--green-bg);
-  color:var(--green);
+
+.badge.pos{
+
+  background:var(--pos-bg);
+
+  color:var(--pos);
+
 }
 
-.badge-red {
-  background:var(--red-bg);
-  color:var(--red);
+
+.badge.neg{
+
+  background:var(--neg-bg);
+
+  color:var(--neg);
+
 }
 
-.badge-blue {
-  background:var(--navy-light);
-  color:var(--navy);
+
+.badge.warn{
+
+  background:var(--warn-bg);
+
+  color:var(--warn);
+
 }
 
-/* SEMESTER TABLE */
 
-.semester-row {
-  cursor:pointer;
+/* IS DA */
+
+.div-row{
+
+  display:grid;
+
+  grid-template-columns:
+    180px
+    1fr
+    170px;
+
+  align-items:center;
+
+  gap:10px;
+
+  padding:6px 0;
+
+  border-bottom:
+    1px solid
+    var(--line);
+
 }
 
-.semester-row.selected {
-  background:var(--navy-light);
+
+.div-row:last-child{
+
+  border-bottom:none;
+
 }
 
-.percent {
-  font-weight:bold;
-}
 
-/* SALES MATRIX */
+.div-row .name{
 
-.sales-table th,
-.sales-table td {
-  text-align:center;
-}
+  font-size:13px;
 
-.sales-table th:first-child,
-.sales-table td:first-child {
-  text-align:left;
-}
-
-.sales-inside {
-  color:#26415e;
-  font-weight:bold;
-}
-
-.sales-channel {
-  color:#2f7d5c;
-  font-weight:bold;
-}
-
-.sales-other {
-  color:#b17a1f;
-  font-weight:bold;
-}
-
-/* COMBINATION */
-
-.combination-bar {
-  height:8px;
-  background:var(--track);
-  border-radius:5px;
   overflow:hidden;
-  margin-top:6px;
+
+  text-overflow:ellipsis;
+
+  white-space:nowrap;
+
 }
 
-.combination-fill {
+
+.div-track{
+
+  position:relative;
+
+  height:15px;
+
+  background:var(--track);
+
+  border-radius:3px;
+
+}
+
+
+.div-mid{
+
+  position:absolute;
+
+  left:50%;
+
+  top:-2px;
+
+  width:1px;
+
+  height:19px;
+
+  background:var(--ink-soft);
+
+  opacity:.4;
+
+}
+
+
+.div-fill{
+
+  position:absolute;
+
+  top:0;
+
   height:100%;
+
+  border-radius:2px;
+
   background:var(--navy);
+
 }
 
-/* EMPTY */
 
-.empty {
-  text-align:center;
-  padding:25px;
+.div-fill.neg{
+
+  background:var(--neg);
+
+}
+
+
+.div-row .meta{
+
+  font-size:12px;
+
+  text-align:right;
+
   color:var(--ink-soft);
+
+  white-space:nowrap;
+
 }
+
+
+.div-row .meta b{
+
+  color:var(--ink);
+
+  font-family:
+    'Courier New',
+    monospace;
+
+}
+
+
+.div-row .meta b.neg{
+
+  color:var(--neg);
+
+}
+
+
+.empty{
+
+  padding:20px;
+
+  text-align:center;
+
+  color:var(--ink-soft);
+
+  font-size:13px;
+
+}
+
 
 /* FOOTER */
 
-footer {
-  text-align:center;
-  padding:20px;
+footer{
+
+  max-width:1180px;
+
+  margin:0 auto;
+
+  padding:0 20px 30px;
+
+  font-size:11.5px;
+
   color:var(--ink-soft);
-  font-size:12px;
+
 }
+
 
 /* MOBILE */
 
-@media(max-width:1200px) {
+@media(max-width:720px){
 
-  .kpi-grid {
-    grid-template-columns:repeat(3,1fr);
+  .kpis{
+
+    grid-template-columns:
+      repeat(2,1fr);
+
   }
 
-  .filters {
-    grid-template-columns:repeat(3,1fr);
+
+  .row-head{
+
+    grid-template-columns:
+      18px
+      1fr
+      80px;
+
+    gap:6px;
+
   }
+
+
+  .pills{
+
+    grid-column:1/-1;
+
+  }
+
+
+  .div-row{
+
+    grid-template-columns:
+      120px
+      1fr;
+
+  }
+
+
+  .div-row .meta{
+
+    grid-column:1/-1;
+
+    text-align:left;
+
+  }
+
 }
 
-@media(max-width:800px) {
-
-  .kpi-grid {
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .filters {
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .search {
-    flex-direction:column;
-  }
-}
-
-@media(max-width:600px) {
-
-  .container {
-    width:94%;
-  }
-
-  header h1 {
-    font-size:24px;
-  }
-
-  .kpi-grid {
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .filters {
-    grid-template-columns:1fr;
-  }
-}
 </style>
+
 </head>
+
 
 <body>
 
+
 <header>
 
-  <h1>MUJ Re-Registration Dashboard</h1>
+  <div class="wrap">
 
-  <p>Aug - Sep 2026</p>
+    <h1>
+      Re-Registration Dashboard
+    </h1>
 
-  <div id="connectionStatus" class="connection-status">
-    Connecting to Google Sheet…
+    <div
+      style="
+        display:flex;
+        align-items:center;
+        gap:10px;
+        flex-wrap:wrap;
+        margin-top:10px;
+      "
+    >
+
+      <span
+        id="excelStatus"
+        style="
+          font-size:12px;
+          color:#d9e3ed;
+        "
+      >
+        Connecting to Google Sheet…
+      </span>
+
+    </div>
+
   </div>
 
 </header>
+
 
 <div class="page-nav">
 
   <div class="page-nav-wrap">
 
-    <a href="index.html" class="page-link active">
+    <a
+      class="page-link"
+      href="index.html"
+    >
       Page 1 · Learner Dashboard
     </a>
 
-    <a href="page2.html" class="page-link">
+    <a
+      class="page-link active"
+      href="page2.html"
+    >
       Page 2 · Re-Registration Analysis
     </a>
 
@@ -420,699 +1131,3009 @@ footer {
 
 </div>
 
-<div class="container">
 
-  <!-- KPI -->
+<div class="filterbar">
 
-  <div class="kpi-grid">
+  <div class="wrap">
 
-    <div class="card">
-      <h3>Total Learners</h3>
-      <div class="number" id="kpiTotal">0</div>
-    </div>
-
-    <div class="card">
-      <h3>Exam Attended</h3>
-      <div class="number" id="kpiExam">0</div>
-    </div>
-
-    <div class="card">
-      <h3>Assignment Submitted</h3>
-      <div class="number" id="kpiAssignment">0</div>
-    </div>
-
-    <div class="card">
-      <h3>Re-Reg Done</h3>
-      <div class="number" id="kpiDone">0</div>
-    </div>
-
-    <div class="card">
-      <h3>Re-Reg Not Done</h3>
-      <div class="number" id="kpiNotDone">0</div>
-    </div>
-
-    <div class="card">
-      <h3>Re-Reg %</h3>
-      <div class="number" id="kpiPercent">0%</div>
-    </div>
-
-  </div>
-
-
-  <!-- FILTERS -->
-
-  <div class="filters">
-
-    <select id="programFilter">
-      <option value="">All Programs</option>
+    <select id="progSel">
+      <option value="">
+        All programs
+      </option>
     </select>
 
-    <select id="batchFilter">
-      <option value="">All Batches</option>
+
+    <select id="semSel">
+      <option value="">
+        All semesters
+      </option>
     </select>
 
-    <select id="semesterFilter">
-      <option value="">All Semesters</option>
+
+    <select id="priSel">
+      <option value="">
+        All priority categories
+      </option>
     </select>
 
-    <select id="examFilter">
-      <option value="">All Exam Attendance</option>
-      <option value="Present">Present</option>
-      <option value="Absent">Absent</option>
-    </select>
-
-    <select id="assignmentFilter">
-      <option value="">All Assignment Status</option>
-      <option value="Submitted">Submitted</option>
-      <option value="Not Submitted">Not Submitted</option>
-    </select>
-
-  </div>
-
-  <div class="filters">
-
-    <select id="reregFilter">
-      <option value="">All Re-Reg Status</option>
-      <option value="Done">Done</option>
-      <option value="Not Done">Not Done</option>
-    </select>
-
-  </div>
-
-
-  <!-- SEARCH -->
-
-  <div class="search">
 
     <input
       type="text"
-      id="searchInput"
-      placeholder="Search by Roll No or Learner Name..."
+      id="mentorSearch"
+      placeholder="Search mentor…"
     >
 
-    <button
-      class="reset-btn"
-      id="resetBtn"
-    >
-      Reset Filters
+
+    <span id="chips"></span>
+
+
+    <button id="clearAll">
+      Clear all filters ✕
     </button>
-
-  </div>
-
-
-  <!-- SEMESTER PERFORMANCE -->
-
-  <div class="section">
-
-    <div class="section-title">
-      Semester-wise Performance
-    </div>
-
-    <div class="section-note">
-      Semester-wise learner, exam attendance, assignment and re-registration performance.
-    </div>
-
-    <div class="table-section">
-
-      <table>
-
-        <thead>
-
-          <tr>
-            <th>Semester</th>
-            <th>Total Learners</th>
-            <th>Exam Attended</th>
-            <th>Exam %</th>
-            <th>Assignment Submitted</th>
-            <th>Assignment %</th>
-            <th>Re-Reg Done</th>
-            <th>Re-Reg %</th>
-          </tr>
-
-        </thead>
-
-        <tbody id="semesterBody"></tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-
-  <!-- SALES TYPE -->
-
-  <div class="section">
-
-    <div class="section-title">
-      Sales Type Bifurcation — Semester-wise
-    </div>
-
-    <div class="section-note">
-      Sales Type is derived from Lead Name: IS = Inside Sales, DA = Channel.
-    </div>
-
-    <div class="table-section">
-
-      <table class="sales-table">
-
-        <thead>
-
-          <tr>
-            <th>Semester</th>
-            <th>Inside Sales</th>
-            <th>Channel</th>
-            <th>Other</th>
-            <th>Total</th>
-          </tr>
-
-        </thead>
-
-        <tbody id="salesBody"></tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-
-  <!-- STATUS COMBINATION -->
-
-  <div class="section">
-
-    <div class="section-title">
-      Learner Status Combination
-    </div>
-
-    <div class="section-note">
-      Combination of exam attendance, assignment submission and re-registration status.
-    </div>
-
-    <div class="table-section">
-
-      <table>
-
-        <thead>
-
-          <tr>
-            <th>Status Combination</th>
-            <th>Learners</th>
-            <th>Percentage</th>
-            <th>Distribution</th>
-          </tr>
-
-        </thead>
-
-        <tbody id="combinationBody"></tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
-
-  <!-- LEARNER DETAILS -->
-
-  <div class="section">
-
-    <div class="section-title">
-      Learner Details
-    </div>
-
-    <div class="section-note">
-      Showing learners based on the selected filters.
-    </div>
-
-    <div class="table-section">
-
-      <table>
-
-        <thead>
-
-          <tr>
-            <th>Roll No</th>
-            <th>Name</th>
-            <th>Program</th>
-            <th>Batch</th>
-            <th>Sales Type</th>
-            <th>Exam Attendance</th>
-            <th>Assignment</th>
-            <th>Current Sem</th>
-            <th>Re-Reg</th>
-          </tr>
-
-        </thead>
-
-        <tbody id="learnerBody"></tbody>
-
-      </table>
-
-    </div>
 
   </div>
 
 </div>
 
+
+<main>
+
+
+  <div
+    class="top-card"
+    id="topCard"
+  ></div>
+
+
+  <div
+    class="kpis"
+    id="kpis"
+  ></div>
+
+
+  <section>
+
+    <h2 id="mentorHeading">
+      Mentor-wise re-registration status
+    </h2>
+
+    <p class="section-note">
+      Click a mentor to see their program breakdown and a focus note on where to concentrate re-registration effort.
+    </p>
+
+    <div class="chart-card">
+
+      <div id="mentorChart"></div>
+
+    </div>
+
+  </section>
+
+
+  <section>
+
+    <h2 id="programHeading">
+      Program-wise re-registration status
+    </h2>
+
+    <p class="section-note">
+      Click a program to filter everything to it.
+    </p>
+
+    <div class="chart-card">
+
+      <div id="programChart"></div>
+
+    </div>
+
+  </section>
+
+
+  <section>
+
+    <h2 id="priorityHeading">
+      Priority category breakdown
+    </h2>
+
+    <p class="section-note">
+      P1 = closest to full payment, P7 = nil submission — the least engaged. Click a row to filter.
+    </p>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Priority category
+            </th>
+
+            <th>
+              Total
+            </th>
+
+            <th>
+              Paid
+            </th>
+
+            <th>
+              Not paid
+            </th>
+
+            <th>
+              Not paid %
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="priBody"></tbody>
+
+      </table>
+
+    </div>
+
+  </section>
+
+
+  <section>
+
+    <h2>
+      IS vs DA — course completion gap by mentor
+    </h2>
+
+    <p class="section-note">
+      IS (In-Semester) minus DA (Direct Admission) completion %. Use the Semester filter above to change this analysis to the selected semester.
+    </p>
+
+    <div class="chart-card">
+
+      <div id="isdaChart"></div>
+
+    </div>
+
+  </section>
+
+
+</main>
+
+
 <footer>
-  Data Source: Google Sheets · Automatically refreshed every 60 seconds
+
+  Re-reg status: Paid / Not Paid / Partially Paid.
+  Priority category uses the updated field.
+  Click any chart element or row to cross-filter.
+  Data source: Google Sheets.
+
 </footer>
 
 
 <script>
 
+
 const GOOGLE_SHEET_ID =
   '1iwtwKK5JAG-qDRnjcMf5GGL5CMBMW9X3QFYtaawvCqg';
 
-const SHEET_NAME = 'Sheet1';
+const GOOGLE_SHEET1_NAME =
+  'Sheet1';
 
-const REFRESH_MS = 60000;
+const GOOGLE_SHEET2_NAME =
+  'Sheet2';
 
-let RAW = [];
+const GOOGLE_REFRESH_MS =
+  60000;
+
+
+let RAW = {
+
+  mentors:[],
+  programs:[],
+  priorities:[],
+  semesters:[],
+  rows:[]
+
+};
+
+
+let ISDA = [];
+
+let NOTES = {};
 
 let refreshTimer = null;
 
 let refreshBusy = false;
 
 
+const state = {
+
+  mentor:null,
+
+  program:null,
+
+  priority:null,
+
+  semester:null,
+
+  _mentorName:null,
+
+  _programName:null,
+
+  _priorityName:null,
+
+  _semesterName:null
+
+};
+
+
 /* =========================
-   BASIC HELPERS
+   HELPERS
 ========================= */
 
-function norm(value) {
+function norm(value){
 
-  if (value === null || value === undefined) {
-    return '';
-  }
-
-  return String(value).trim();
+  return String(
+    value ?? ''
+  ).trim();
 
 }
 
 
-function key(value) {
+function key(value){
 
   return norm(value)
     .toLowerCase()
-    .replace(/[\s._-]+/g, ' ')
+    .replace(/[\s._-]+/g,' ')
     .trim();
 
 }
 
 
+function fmt(value){
+
+  return Number(
+    value || 0
+  ).toFixed(1) + '%';
+
+}
+
+
+function short(value){
+
+  return String(
+    value || ''
+  ).split(' - ')[0];
+
+}
+
+
+function pct(value){
+
+  const n =
+    Number(value);
+
+  if (
+    !Number.isFinite(n)
+  ){
+
+    return 0;
+
+  }
+
+
+  return Math.abs(n) <= 1.0000001
+    ? n * 100
+    : n;
+
+}
+
+
 /* =========================
-   HEADER FINDER
+   SEMESTER NORMALIZATION
 ========================= */
 
-function findColumn(headers, aliases) {
+function semesterKey(value){
 
-  const normalizedHeaders =
-    headers.map(h => ({
-      original:h,
-      normalized:key(h)
-    }));
+  const s =
+    norm(value).toLowerCase();
 
-  for (const alias of aliases) {
 
-    const aliasKey = key(alias);
+  /*
+    Examples:
 
-    const found = normalizedHeaders.find(
-      h => h.normalized === aliasKey
+    Sem 1       -> 1
+    Semester 1  -> 1
+    Semester-1  -> 1
+    Term 1      -> 1
+    1           -> 1
+  */
+
+  const match =
+    s.match(/\d+/);
+
+
+  if (match){
+
+    return String(
+      parseInt(
+        match[0],
+        10
+      )
     );
 
-    if (found) {
-      return found.original;
+  }
+
+
+  return s
+    .replace(
+      /\bsemester\b|\bsem\b|\bterm\b/g,
+      ''
+    )
+    .trim();
+
+}
+
+
+function sameSemester(
+  a,
+  b
+){
+
+  return (
+    semesterKey(a) ===
+    semesterKey(b)
+  );
+
+}
+
+
+/* =========================
+   FIND COLUMN
+========================= */
+
+function findColumn(
+  headers,
+  names
+){
+
+  for(
+    const wanted of names
+  ){
+
+    const wantedKey =
+      key(wanted);
+
+
+    const found =
+      headers.find(
+        header =>
+          key(header) ===
+          wantedKey
+      );
+
+
+    if(found){
+
+      return found;
+
     }
 
   }
 
+
   return null;
-}
-
-
-/* =========================
-   ROLL NUMBER
-========================= */
-
-function cleanRollNo(value) {
-
-  if (value === null || value === undefined) {
-    return '';
-  }
-
-  /*
-    Google Sheets sometimes returns numeric
-    roll numbers as numbers.
-
-    Convert to string and remove unnecessary
-    decimal .0 if present.
-  */
-
-  let valueString = String(value).trim();
-
-  if (/^\d+\.0$/.test(valueString)) {
-    valueString = valueString.replace(/\.0$/, '');
-  }
-
-  return valueString;
 
 }
 
 
 /* =========================
-   EXAM STATUS
+   SHEET 1
 ========================= */
 
-function normalizeExam(value) {
-
-  const s = norm(value).toLowerCase();
-
-  /*
-    ONLY these two values are Present.
-
-    Full Attended
-    Partially Attended
-
-    Everything else = Absent.
-  */
-
-  if (
-    s.includes('full attended') ||
-    s.includes('partially attended')
-  ) {
-    return 'Present';
-  }
-
-  return 'Absent';
-
-}
-
-
-/* =========================
-   ASSIGNMENT
-========================= */
-
-function normalizeAssignment(value) {
-
-  const s = norm(value).toLowerCase();
-
-  if (
-    s.includes('submitted') ||
-    s === 'yes' ||
-    s === 'done' ||
-    s === 'completed' ||
-    s === 'complete' ||
-    s === 'true' ||
-    s === '1'
-  ) {
-
-    return 'Submitted';
-
-  }
-
-  return 'Not Submitted';
-
-}
-
-
-/* =========================
-   RE-REG
-========================= */
-
-function normalizeReReg(value) {
-
-  const s = norm(value).toLowerCase();
-
-  /*
-    Re-registration is considered DONE
-    only when it is paid / completed.
-
-    Partially Paid is NOT treated as Done.
-  */
-
-  if (
-    s === 'paid' ||
-    s === 'done' ||
-    s === 'yes' ||
-    s === 'completed' ||
-    s === 'registered'
-  ) {
-
-    return 'Done';
-
-  }
-
-  return 'Not Done';
-
-}
-
-
-/* =========================
-   SALES TYPE
-========================= */
-
-function normalizeSalesType(value) {
-
-  const s = key(value);
-
-  if (s === 'is') {
-    return 'Inside Sales';
-  }
-
-  if (s === 'da') {
-    return 'Channel';
-  }
-
-  if (!s) {
-    return 'Other';
-  }
-
-  return norm(value);
-
-}
-
-
-/* =========================
-   NORMALIZE DATA
-========================= */
-
-function normalizeRows(rows) {
-
-  if (!rows || !rows.length) {
-    throw new Error('Sheet1 is empty.');
-  }
-
-  const headers =
-    Object.keys(rows[0]).map(norm);
-
-
-  const rollCol = findColumn(
-    headers,
-    [
-      'Roll No',
-      'Roll Number',
-      'Roll_No',
-      'Roll',
-      'Roll No.',
-      'Contact Roll No',
-      'Contact Roll No.',
-      'Contact_Roll_No'
-    ]
-  );
-
-
-  const nameCol = findColumn(
-    headers,
-    [
-      'Learner Name',
-      'Name',
-      'Student Name',
-      'Full Name'
-    ]
-  );
-
-
-  const programCol = findColumn(
-    headers,
-    [
-      'Program',
-      'Program Name'
-    ]
-  );
-
-
-  const batchCol = findColumn(
-    headers,
-    [
-      'Batch',
-      'Current Batch',
-      'Original Batch'
-    ]
-  );
-
-
-  const leadCol = findColumn(
-    headers,
-    [
-      'Lead Name'
-    ]
-  );
-
-
-  const semesterCol = findColumn(
-    headers,
-    [
-      'Current Semester',
-      'Semester',
-      'Current Sem',
-      'Sem'
-    ]
-  );
-
-
-  const mockCol = findColumn(
-    headers,
-    [
-      'Mock Status'
-    ]
-  );
-
-
-  const iaCol = findColumn(
-    headers,
-    [
-      'IA Status'
-    ]
-  );
-
-
-  const reregCol = findColumn(
-    headers,
-    [
-      'Re reg status',
-      'Re-Reg',
-      'Re Reg',
-      'Re-reg',
-      'Re Registration',
-      'Re-Registration',
-      'Rereg'
-    ]
-  );
-
-
-  const required = [];
-
-  if (!programCol) required.push('Program');
-
-  if (!batchCol) required.push('Batch');
-
-  if (!semesterCol) required.push('Semester');
-
-  if (!mockCol) required.push('Mock Status');
-
-  if (!iaCol) required.push('IA Status');
-
-  if (!reregCol) required.push('Re reg status');
-
-  if (!leadCol) required.push('Lead Name');
-
-
-  if (required.length) {
+function normalizeWorkbookRows(rows){
+
+  if(
+    !rows ||
+    !rows.length
+  ){
 
     throw new Error(
-      'Missing required column(s): ' +
-      required.join(', ')
+      'Sheet1 is empty.'
     );
 
   }
 
 
-  return rows
-    .map(row => {
-
-      const rollNo =
-        rollCol
-          ? cleanRollNo(row[rollCol])
-          : '';
+  const headers =
+    Object.keys(
+      rows[0]
+    ).map(norm);
 
 
-      const name =
-        nameCol
-          ? norm(row[nameCol])
-          : '';
+  const required = [
+
+    'Program',
+
+    'Mentors',
+
+    'Re reg status',
+
+    'Priority Category updated',
+
+    'Semester'
+
+  ];
 
 
-      const program =
-        norm(row[programCol]);
+  const missing =
+    required.filter(
+      wanted =>
+        !headers.some(
+          header =>
+            key(header) ===
+            key(wanted)
+        )
+    );
 
 
-      const batch =
-        norm(row[batchCol]);
+  if(
+    missing.length
+  ){
+
+    throw new Error(
+      'Sheet1 is missing required column(s): ' +
+      missing.join(', ')
+    );
+
+  }
+
+
+  const actualHeader =
+    wanted =>
+      headers.find(
+        header =>
+          key(header) ===
+          key(wanted)
+      ) ||
+      wanted;
+
+
+  return rows.map(
+    row => ({
+
+      Program:
+        norm(
+          row[
+            actualHeader(
+              'Program'
+            )
+          ]
+        ),
+
+      Mentors:
+        norm(
+          row[
+            actualHeader(
+              'Mentors'
+            )
+          ]
+        ),
+
+      ReReg:
+        norm(
+          row[
+            actualHeader(
+              'Re reg status'
+            )
+          ]
+        ),
+
+      Priority:
+        norm(
+          row[
+            actualHeader(
+              'Priority Category updated'
+            )
+          ]
+        ),
+
+      Semester:
+        norm(
+          row[
+            actualHeader(
+              'Semester'
+            )
+          ]
+        ),
+
+      LeadName:
+        norm(
+          row[
+            actualHeader(
+              'Lead Name'
+            )
+          ]
+        )
+
+    })
+  )
+  .filter(
+    row =>
+      row.Program ||
+      row.Mentors ||
+      row.ReReg ||
+      row.Priority ||
+      row.Semester
+  );
+
+}
+
+
+/* =========================
+   PAYMENT
+========================= */
+
+function classifyPayment(
+  status
+){
+
+  const s =
+    key(status);
+
+
+  if(
+    s === 'paid' ||
+    (
+      s.includes('paid') &&
+      !s.includes('not') &&
+      !s.includes('partial')
+    )
+  ){
+
+    return 'paid';
+
+  }
+
+
+  if(
+    s.includes('partial')
+  ){
+
+    return 'partial';
+
+  }
+
+
+  return 'not_paid';
+
+}
+
+
+/* =========================
+   RAW DATA
+========================= */
+
+function buildRawFromSheet1(
+  rows
+){
+
+  const normalized =
+    normalizeWorkbookRows(
+      rows
+    );
+
+
+  const preferredPrograms = [
+
+    'B.Com',
+    'BBA',
+    'BCA',
+    'M.Com',
+    'MA in Economics',
+    'MA.JMC',
+    'MBA',
+    'MCA'
+
+  ];
+
+
+  const preferredPriorities = [
+
+    'P1 - Full / Annual Payment',
+    'P2 - All IA_All Exams',
+    'P3 - Full Exam_Part/Nil IA',
+    'P4 - Full IA_Part/Nil Exam',
+    'P5 - Partial IA_Partial Exams',
+    'P6 - Partial IA_Nil Exams/Nil IA_Partial Exams',
+    'P7 - Nil IA_Nil Exams'
+
+  ];
+
+
+  const mentorSet =
+    new Set();
+
+
+  const programSet =
+    new Set();
+
+
+  const prioritySet =
+    new Set();
+
+
+  const semesterSet =
+    new Set();
+
+
+  normalized.forEach(
+    row => {
+
+      if(row.Mentors)
+        mentorSet.add(
+          row.Mentors
+        );
+
+
+      if(row.Program)
+        programSet.add(
+          row.Program
+        );
+
+
+      if(row.Priority)
+        prioritySet.add(
+          row.Priority
+        );
+
+
+      semesterSet.add(
+        row.Semester ||
+        'Not specified'
+      );
+
+    }
+  );
+
+
+  const mentors =
+    Array.from(
+      mentorSet
+    );
+
+
+  const programs = [
+
+    ...preferredPrograms
+      .filter(
+        p =>
+          programSet.has(p)
+      ),
+
+    ...Array.from(
+      programSet
+    ).filter(
+      p =>
+        !preferredPrograms.includes(p)
+    )
+
+  ];
+
+
+  const priorities = [
+
+    ...preferredPriorities
+      .filter(
+        p =>
+          prioritySet.has(p)
+      ),
+
+    ...Array.from(
+      prioritySet
+    ).filter(
+      p =>
+        !preferredPriorities.includes(p)
+    )
+
+  ];
+
+
+  const semesters =
+    Array.from(
+      semesterSet
+    ).sort(
+      (a,b) => {
+
+        const an =
+          parseInt(
+            String(a)
+              .match(/\d+/)
+              ?. [0] ||
+              '9999',
+            10
+          );
+
+
+        const bn =
+          parseInt(
+            String(b)
+              .match(/\d+/)
+              ?. [0] ||
+              '9999',
+            10
+          );
+
+
+        return (
+          an - bn ||
+          String(a)
+            .localeCompare(
+              String(b)
+            )
+        );
+
+      }
+    );
+
+
+  const mentorIndex =
+    new Map(
+      mentors.map(
+        (v,i) => [v,i]
+      )
+    );
+
+
+  const programIndex =
+    new Map(
+      programs.map(
+        (v,i) => [v,i]
+      )
+    );
+
+
+  const priorityIndex =
+    new Map(
+      priorities.map(
+        (v,i) => [v,i]
+      )
+    );
+
+
+  const semesterIndex =
+    new Map(
+      semesters.map(
+        (v,i) => [v,i]
+      )
+    );
+
+
+  const grouped =
+    new Map();
+
+
+  normalized.forEach(
+    row => {
+
+      if(
+        !row.Mentors ||
+        !row.Program ||
+        !row.Priority
+      ){
+
+        return;
+
+      }
+
+
+      const mi =
+        mentorIndex.get(
+          row.Mentors
+        );
+
+
+      const pi =
+        programIndex.get(
+          row.Program
+        );
+
+
+      const pri =
+        priorityIndex.get(
+          row.Priority
+        );
+
+
+      const semesterValue =
+        row.Semester ||
+        'Not specified';
+
+
+      const si =
+        semesterIndex.get(
+          semesterValue
+        );
+
+
+      const groupKey =
+        mi +
+        '|' +
+        pi +
+        '|' +
+        pri +
+        '|' +
+        si;
+
+
+      if(
+        !grouped.has(
+          groupKey
+        )
+      ){
+
+        grouped.set(
+          groupKey,
+          {
+
+            mi,
+            pi,
+            pri,
+            si,
+
+            total:0,
+            paid:0,
+            not_paid:0,
+            partial:0
+
+          }
+        );
+
+      }
+
+
+      const group =
+        grouped.get(
+          groupKey
+        );
+
+
+      group.total++;
+
+
+      const status =
+        classifyPayment(
+          row.ReReg
+        );
+
+
+      if(
+        status === 'paid'
+      ){
+
+        group.paid++;
+
+      }
+      else if(
+        status === 'partial'
+      ){
+
+        group.partial++;
+
+      }
+      else{
+
+        group.not_paid++;
+
+      }
+
+    }
+  );
+
+
+  const rowsOut =
+    Array.from(
+      grouped.values()
+    )
+    .sort(
+      (a,b) =>
+        a.mi-b.mi ||
+        a.pi-b.pi ||
+        a.pri-b.pri ||
+        a.si-b.si
+    )
+    .map(
+      group => [
+
+        group.mi,
+        group.pi,
+        group.pri,
+        group.total,
+        group.paid,
+        group.not_paid,
+        group.partial,
+        group.si
+
+      ]
+    );
+
+
+  return {
+
+    mentors,
+    programs,
+    priorities,
+    semesters,
+    rows:rowsOut,
+    normalized
+
+  };
+
+}
+
+
+/* =========================
+   BUILD IS DA
+========================= */
+
+function buildISDA(
+  sheet2Rows,
+  sheet1Normalized
+){
+
+  const result = [];
+
+
+  /*
+    PRIMARY SOURCE:
+    Sheet2.
+
+    Expected structure:
+
+    Mentor | Semester | IS % | DA %
+
+    We support several common
+    column-name variations.
+  */
+
+  if(
+    sheet2Rows &&
+    sheet2Rows.length
+  ){
+
+    const headers =
+      Object.keys(
+        sheet2Rows[0]
+      ).map(norm);
+
+
+    const mentorCol =
+      findColumn(
+        headers,
+        [
+          'Mentors',
+          'Mentor',
+          'Primary Mentor',
+          'Primary Mentor Name'
+        ]
+      );
+
+
+    const semCol =
+      findColumn(
+        headers,
+        [
+          'Semester',
+          'Sem',
+          'Current Semester',
+          'Current Sem',
+          'Term'
+        ]
+      );
+
+
+    const isCol =
+      findColumn(
+        headers,
+        [
+          'IS %',
+          'IS%',
+          'IS Completion %',
+          'IS Completion',
+          'IS Completion Percentage'
+        ]
+      );
+
+
+    const daCol =
+      findColumn(
+        headers,
+        [
+          'DA %',
+          'DA%',
+          'DA Completion %',
+          'DA Completion',
+          'DA Completion Percentage'
+        ]
+      );
+
+
+    /*
+      We require semester here.
+
+      Without a semester column,
+      the semester filter cannot
+      genuinely change the result.
+    */
+
+    if(
+      mentorCol &&
+      semCol &&
+      isCol &&
+      daCol
+    ){
+
+      const map =
+        new Map();
+
+
+      sheet2Rows.forEach(
+        row => {
+
+          const name =
+            norm(
+              row[mentorCol]
+            );
+
+
+          const semester =
+            norm(
+              row[semCol]
+            );
+
+
+          if(
+            !name ||
+            !semester
+          ){
+
+            return;
+
+          }
+
+
+          const isPct =
+            pct(
+              row[isCol]
+            );
+
+
+          const daPct =
+            pct(
+              row[daCol]
+            );
+
+
+          const groupKey =
+            key(name) +
+            '|' +
+            semesterKey(
+              semester
+            );
+
+
+          /*
+            Prevent duplicate mentor +
+            semester rows.
+          */
+
+          if(
+            !map.has(
+              groupKey
+            )
+          ){
+
+            map.set(
+              groupKey,
+              {
+
+                name,
+
+                semester,
+
+                is_pct:isPct,
+
+                da_pct:daPct,
+
+                diff:
+                  isPct-daPct
+
+              }
+            );
+
+          }
+          else{
+
+            /*
+              If duplicate rows exist,
+              retain the latest valid
+              values rather than rendering
+              duplicate bars.
+            */
+
+            const existing =
+              map.get(
+                groupKey
+              );
+
+
+            existing.is_pct =
+              isPct;
+
+
+            existing.da_pct =
+              daPct;
+
+
+            existing.diff =
+              isPct-daPct;
+
+          }
+
+        }
+      );
+
+
+      result.push(
+        ...Array.from(
+          map.values()
+        )
+      );
+
+
+      if(
+        result.length
+      ){
+
+        return result;
+
+      }
+
+    }
+
+  }
+
+
+  /*
+    FALLBACK:
+
+    If Sheet2 does not contain
+    semester-specific IS/DA data,
+    use Sheet1 only when IS/DA
+    data can be calculated.
+
+    This fallback is based on
+    re-registration payment status,
+    so it is only used when the
+    actual completion pivot is
+    unavailable.
+  */
+
+  const byMentorSemester =
+    new Map();
+
+
+  sheet1Normalized.forEach(
+    row => {
+
+      if(
+        !row.Mentors
+      ){
+
+        return;
+
+      }
+
+
+      const lead =
+        key(
+          row.LeadName
+        );
+
+
+      if(
+        lead !== 'is' &&
+        lead !== 'da'
+      ){
+
+        return;
+
+      }
 
 
       const semester =
-        norm(row[semesterCol]) ||
-        'Not Specified';
+        row.Semester ||
+        'Not specified';
 
 
-      const leadName =
-        norm(row[leadCol]);
+      const groupKey =
+        key(row.Mentors) +
+        '|' +
+        semesterKey(
+          semester
+        );
 
 
-      const mockStatus =
-        norm(row[mockCol]);
+      if(
+        !byMentorSemester.has(
+          groupKey
+        )
+      ){
+
+        byMentorSemester.set(
+          groupKey,
+          {
+
+            name:row.Mentors,
+
+            semester,
+
+            isPaid:0,
+            isTotal:0,
+
+            daPaid:0,
+            daTotal:0
+
+          }
+        );
+
+      }
 
 
-      const iaStatus =
-        norm(row[iaCol]);
+      const group =
+        byMentorSemester.get(
+          groupKey
+        );
 
 
-      const reRegRaw =
-        norm(row[reregCol]);
+      const paid =
+        classifyPayment(
+          row.ReReg
+        ) === 'paid';
 
 
-      return {
+      if(
+        lead === 'is'
+      ){
 
-        rollNo,
+        group.isTotal++;
 
-        name,
 
-        program,
+        if(paid)
+          group.isPaid++;
 
-        batch,
+      }
+      else{
 
-        semester,
+        group.daTotal++;
 
-        leadName,
 
-        salesType:
-          normalizeSalesType(leadName),
+        if(paid)
+          group.daPaid++;
 
-        mockStatus,
+      }
 
-        examAttendance:
-          normalizeExam(mockStatus),
+    }
+  );
 
-        iaStatus,
 
-        assignment:
-          normalizeAssignment(iaStatus),
+  byMentorSemester.forEach(
+    group => {
 
-        reRegRaw,
+      const isPct =
+        group.isTotal
+          ? group.isPaid /
+            group.isTotal *
+            100
+          : 0;
 
-        reReg:
-          normalizeReReg(reRegRaw)
 
-      };
+      const daPct =
+        group.daTotal
+          ? group.daPaid /
+            group.daTotal *
+            100
+          : 0;
 
-    })
 
-    .filter(row =>
-      row.rollNo ||
-      row.name ||
-      row.program
+      result.push({
+
+        name:group.name,
+
+        semester:group.semester,
+
+        is_pct:isPct,
+
+        da_pct:daPct,
+
+        diff:isPct-daPct
+
+      });
+
+    }
+  );
+
+
+  return result;
+
+}
+
+
+/* =========================
+   RENDER IS DA
+========================= */
+
+function renderISDA(){
+
+  let data =
+    ISDA.slice();
+
+
+  /*
+    IMPORTANT FIX:
+
+    Filter using normalized semester
+    values.
+
+    Example:
+
+    "Semester 1"
+    "Sem 1"
+    "1"
+    "Term 1"
+
+    all match correctly.
+  */
+
+  if(
+    state.semester !== null
+  ){
+
+    const selectedSemester =
+      RAW.semesters[
+        state.semester
+      ];
+
+
+    const semesterData =
+      data.filter(
+        item =>
+          item.semester &&
+          sameSemester(
+            item.semester,
+            selectedSemester
+          )
+      );
+
+
+    /*
+      If semester-specific
+      data exists, ONLY show
+      that semester.
+
+      Do not keep all rows.
+    */
+
+    data =
+      semesterData;
+
+  }
+
+
+  /*
+    Also respect mentor/program
+    filters where applicable.
+
+    ISDA is mentor-based, so
+    mentor filter is meaningful.
+  */
+
+  if(
+    state.mentor !== null
+  ){
+
+    const selectedMentor =
+      RAW.mentors[
+        state.mentor
+      ];
+
+
+    data =
+      data.filter(
+        item =>
+          key(item.name) ===
+          key(selectedMentor)
+      );
+
+  }
+
+
+  const maxAbs =
+    Math.max(
+      1,
+      ...data.map(
+        item =>
+          Math.abs(
+            Number(
+              item.diff
+            ) || 0
+          )
+      )
     );
+
+
+  const chart =
+    document.getElementById(
+      'isdaChart'
+    );
+
+
+  if(
+    !data.length
+  ){
+
+    chart.innerHTML =
+      `<div class="empty">
+        No semester-specific IS/DA data available for the selected semester.
+      </div>`;
+
+    return;
+
+  }
+
+
+  chart.innerHTML =
+    data
+      .map(
+        item => {
+
+          const cls =
+            item.diff < 0
+              ? 'neg'
+              : '';
+
+
+          const width =
+            (
+              Math.abs(
+                item.diff
+              ) /
+              maxAbs *
+              50
+            ).toFixed(1);
+
+
+          const left =
+            item.diff >= 0
+              ? '50%'
+              : (
+                  50 -
+                  parseFloat(
+                    width
+                  )
+                ) + '%';
+
+
+          const sign =
+            item.diff > 0
+              ? '+'
+              : '';
+
+
+          return `
+
+            <div class="div-row">
+
+              <div
+                class="name"
+                title="${item.name}"
+              >
+                ${item.name}
+              </div>
+
+
+              <div class="div-track">
+
+                <div class="div-mid"></div>
+
+
+                <div
+                  class="div-fill ${cls}"
+                  style="
+                    left:${left};
+                    width:${width}%;
+                  "
+                ></div>
+
+              </div>
+
+
+              <div class="meta">
+
+                IS
+                ${Number(
+                  item.is_pct
+                ).toFixed(1)}%
+
+                ·
+
+                DA
+                ${Number(
+                  item.da_pct
+                ).toFixed(1)}%
+
+                ·
+
+                <b class="${cls}">
+
+                  ${sign}
+                  ${Number(
+                    item.diff
+                  ).toFixed(1)}
+                  pts
+
+                </b>
+
+              </div>
+
+            </div>
+
+          `;
+
+        }
+      )
+      .join('');
+
+}
+
+
+/* =========================
+   NOTES
+========================= */
+
+function buildNotes(){
+
+  NOTES = {};
+
+
+  RAW.mentors.forEach(
+    (
+      mentorName,
+      mentorIdx
+    ) => {
+
+      const mentorRows =
+        RAW.rows.filter(
+          row =>
+            row[0] ===
+            mentorIdx
+        );
+
+
+      const programAgg =
+        new Map();
+
+
+      mentorRows.forEach(
+        row => {
+
+          if(
+            !programAgg.has(
+              row[1]
+            )
+          ){
+
+            programAgg.set(
+              row[1],
+              {
+
+                total:0,
+                paid:0,
+                not_paid:0,
+                partial:0
+
+              }
+            );
+
+          }
+
+
+          const item =
+            programAgg.get(
+              row[1]
+            );
+
+
+          item.total +=
+            row[3];
+
+
+          item.paid +=
+            row[4];
+
+
+          item.not_paid +=
+            row[5];
+
+
+          item.partial +=
+            row[6];
+
+        }
+      );
+
+
+      let weakest =
+        null;
+
+
+      programAgg.forEach(
+        (
+          item,
+          pi
+        ) => {
+
+          const paidPct =
+            item.total
+              ? item.paid /
+                item.total *
+                100
+              : 0;
+
+
+          if(
+            !weakest ||
+            paidPct <
+            weakest.paidPct
+          ){
+
+            weakest = {
+
+              pi,
+              paidPct,
+              ...item
+
+            };
+
+          }
+
+        }
+      );
+
+
+      if(!weakest)
+        return;
+
+
+      let note =
+        `${RAW.programs[weakest.pi]} is the weakest program (${fmt(weakest.paidPct)} paid, ${weakest.not_paid.toLocaleString()} unpaid).`;
+
+
+      NOTES[mentorName] =
+        note;
+
+    }
+  );
+
+}
+
+
+/* =========================
+   FILTERS
+========================= */
+
+function populateFilters(){
+
+  const progSel =
+    document.getElementById(
+      'progSel'
+    );
+
+
+  const priSel =
+    document.getElementById(
+      'priSel'
+    );
+
+
+  const semSel =
+    document.getElementById(
+      'semSel'
+    );
+
+
+  const oldProgram =
+    state.program !== null
+      ? RAW.programs[
+          state.program
+        ]
+      : '';
+
+
+  const oldPriority =
+    state.priority !== null
+      ? RAW.priorities[
+          state.priority
+        ]
+      : '';
+
+
+  const oldSemester =
+    state.semester !== null
+      ? RAW.semesters[
+          state.semester
+        ]
+      : '';
+
+
+  progSel.innerHTML =
+    '<option value="">All programs</option>';
+
+
+  RAW.programs.forEach(
+    (
+      program,
+      index
+    ) => {
+
+      progSel.insertAdjacentHTML(
+        'beforeend',
+        `<option value="${index}">
+          ${program}
+        </option>`
+      );
+
+    }
+  );
+
+
+  semSel.innerHTML =
+    '<option value="">All semesters</option>';
+
+
+  RAW.semesters.forEach(
+    (
+      semester,
+      index
+    ) => {
+
+      semSel.insertAdjacentHTML(
+        'beforeend',
+        `<option value="${index}">
+          ${semester}
+        </option>`
+      );
+
+    }
+  );
+
+
+  priSel.innerHTML =
+    '<option value="">All priority categories</option>';
+
+
+  RAW.priorities.forEach(
+    (
+      priority,
+      index
+    ) => {
+
+      priSel.insertAdjacentHTML(
+        'beforeend',
+        `<option value="${index}">
+          ${priority}
+        </option>`
+      );
+
+    }
+  );
+
+
+  const newProgramIndex =
+    RAW.programs.indexOf(
+      oldProgram
+    );
+
+
+  const newPriorityIndex =
+    RAW.priorities.indexOf(
+      oldPriority
+    );
+
+
+  const newSemesterIndex =
+    RAW.semesters.indexOf(
+      oldSemester
+    );
+
+
+  state.program =
+    newProgramIndex >= 0
+      ? newProgramIndex
+      : null;
+
+
+  state.priority =
+    newPriorityIndex >= 0
+      ? newPriorityIndex
+      : null;
+
+
+  state.semester =
+    newSemesterIndex >= 0
+      ? newSemesterIndex
+      : null;
+
+
+  progSel.value =
+    state.program === null
+      ? ''
+      : state.program;
+
+
+  priSel.value =
+    state.priority === null
+      ? ''
+      : state.priority;
+
+
+  semSel.value =
+    state.semester === null
+      ? ''
+      : state.semester;
+
+}
+
+
+/* =========================
+   FILTERED ROWS
+========================= */
+
+function filteredRows(
+  ignore
+){
+
+  return RAW.rows.filter(
+    row =>
+
+      (
+        ignore === 'mentor' ||
+        state.mentor === null ||
+        row[0] === state.mentor
+      )
+
+      &&
+
+      (
+        ignore === 'program' ||
+        state.program === null ||
+        row[1] === state.program
+      )
+
+      &&
+
+      (
+        ignore === 'priority' ||
+        state.priority === null ||
+        row[2] === state.priority
+      )
+
+      &&
+
+      (
+        ignore === 'semester' ||
+        state.semester === null ||
+        row[7] === state.semester
+      )
+
+  );
+
+}
+
+
+/* =========================
+   AGGREGATION
+========================= */
+
+function aggBy(
+  rows,
+  dimension
+){
+
+  const map =
+    new Map();
+
+
+  rows.forEach(
+    row => {
+
+      const k =
+        row[dimension];
+
+
+      if(
+        !map.has(k)
+      ){
+
+        map.set(
+          k,
+          {
+
+            total:0,
+            paid:0,
+            not_paid:0,
+            partial:0
+
+          }
+        );
+
+      }
+
+
+      const item =
+        map.get(k);
+
+
+      item.total +=
+        row[3];
+
+
+      item.paid +=
+        row[4];
+
+
+      item.not_paid +=
+        row[5];
+
+
+      item.partial +=
+        row[6];
+
+    }
+  );
+
+
+  return map;
+
+}
+
+
+/* =========================
+   CHIPS
+========================= */
+
+function renderChips(){
+
+  const chips = [];
+
+
+  if(
+    state.mentor !== null
+  ){
+
+    chips.push({
+
+      label:
+        RAW.mentors[
+          state.mentor
+        ],
+
+      key:'mentor'
+
+    });
+
+  }
+
+
+  if(
+    state.program !== null
+  ){
+
+    chips.push({
+
+      label:
+        RAW.programs[
+          state.program
+        ],
+
+      key:'program'
+
+    });
+
+  }
+
+
+  if(
+    state.priority !== null
+  ){
+
+    chips.push({
+
+      label:
+        short(
+          RAW.priorities[
+            state.priority
+          ]
+        ),
+
+      key:'priority'
+
+    });
+
+  }
+
+
+  if(
+    state.semester !== null
+  ){
+
+    chips.push({
+
+      label:
+        RAW.semesters[
+          state.semester
+        ],
+
+      key:'semester'
+
+    });
+
+  }
+
+
+  document.getElementById(
+    'chips'
+  ).innerHTML =
+    chips.map(
+      chip =>
+        `<button
+          class="chip"
+          data-k="${chip.key}"
+        >
+          ${chip.label}
+          <span class="x">✕</span>
+        </button>`
+    ).join('');
+
+
+  document.querySelectorAll(
+    '.chip'
+  ).forEach(
+    button =>
+      button.addEventListener(
+        'click',
+        () => {
+
+          const k =
+            button.dataset.k;
+
+
+          state[k] =
+            null;
+
+
+          if(
+            k === 'program'
+          ){
+
+            document.getElementById(
+              'progSel'
+            ).value = '';
+
+          }
+
+
+          if(
+            k === 'priority'
+          ){
+
+            document.getElementById(
+              'priSel'
+            ).value = '';
+
+          }
+
+
+          if(
+            k === 'semester'
+          ){
+
+            document.getElementById(
+              'semSel'
+            ).value = '';
+
+          }
+
+
+          render();
+
+        }
+      )
+  );
+
+
+  document.getElementById(
+    'clearAll'
+  ).style.display =
+    chips.length
+      ? 'inline-block'
+      : 'none';
+
+}
+
+
+/* =========================
+   MAIN RENDER
+========================= */
+
+function render(){
+
+  renderChips();
+
+
+  if(
+    !RAW.rows.length
+  ){
+
+    document.getElementById(
+      'topCard'
+    ).innerHTML =
+      `
+        <div class="tag">
+          No data
+        </div>
+
+        <h3>
+          No Google Sheet data loaded
+        </h3>
+
+        <p>
+          Please check the Google Sheet connection.
+        </p>
+      `;
+
+
+    document.getElementById(
+      'kpis'
+    ).innerHTML = '';
+
+
+    return;
+
+  }
+
+
+  const rows =
+    filteredRows(null);
+
+
+  const totals = {
+
+    total:0,
+    paid:0,
+    not_paid:0
+
+  };
+
+
+  rows.forEach(
+    row => {
+
+      totals.total +=
+        row[3];
+
+      totals.paid +=
+        row[4];
+
+      totals.not_paid +=
+        row[5];
+
+    }
+  );
+
+
+  const overallPct =
+    totals.total
+      ? totals.paid /
+        totals.total *
+        100
+      : 0;
+
+
+  const mentorRows =
+    filteredRows('mentor');
+
+
+  const mentorAgg =
+    aggBy(
+      mentorRows,
+      0
+    );
+
+
+  let mentorList =
+    [
+      ...mentorAgg.entries()
+    ]
+    .map(
+      (
+        [
+          index,
+          item
+        ]
+      ) => ({
+
+        idx:index,
+
+        name:
+          RAW.mentors[
+            index
+          ],
+
+        total:item.total,
+
+        paid:item.paid,
+
+        not_paid:item.not_paid,
+
+        paid_pct:
+          item.total
+            ? item.paid /
+              item.total *
+              100
+            : 0
+
+      })
+    )
+    .sort(
+      (a,b) =>
+        b.paid_pct -
+        a.paid_pct
+    );
+
+
+  const searchQ =
+    document.getElementById(
+      'mentorSearch'
+    ).value
+    .toLowerCase()
+    .trim();
+
+
+  if(searchQ){
+
+    mentorList =
+      mentorList.filter(
+        mentor =>
+          mentor.name
+            .toLowerCase()
+            .includes(searchQ)
+      );
+
+  }
+
+
+  const allMentorAgg =
+    [
+      ...aggBy(
+        filteredRows('mentor'),
+        0
+      ).entries()
+    ]
+    .map(
+      (
+        [
+          index,
+          item
+        ]
+      ) => ({
+
+        idx:index,
+
+        name:
+          RAW.mentors[
+            index
+          ],
+
+        total:item.total,
+
+        paid:item.paid,
+
+        not_paid:item.not_paid,
+
+        paid_pct:
+          item.total
+            ? item.paid /
+              item.total *
+              100
+            : 0
+
+      })
+    )
+    .sort(
+      (a,b) =>
+        b.paid_pct -
+        a.paid_pct
+    );
+
+
+  const kpis = [
+
+    {
+
+      label:'Students (filtered)',
+
+      value:
+        totals.total.toLocaleString(),
+
+      sub:
+        'current view'
+
+    },
+
+    {
+
+      label:'Paid',
+
+      value:
+        fmt(overallPct),
+
+      sub:
+        `${totals.paid.toLocaleString()} of ${totals.total.toLocaleString()}`
+
+    },
+
+    {
+
+      label:'Not paid',
+
+      value:
+        totals.not_paid.toLocaleString(),
+
+      sub:
+        're-registration pending'
+
+    },
+
+    {
+
+      label:
+        state.mentor !== null
+          ? 'Selected mentor'
+          : 'Mentor',
+
+      value:
+        state.mentor !== null
+          ? RAW.mentors[
+              state.mentor
+            ]
+          : (
+              allMentorAgg[0]
+                ? allMentorAgg[0].name
+                : '—'
+            ),
+
+      sub:
+        state.mentor !== null
+          ? fmt(
+              mentorList.find(
+                mentor =>
+                  mentor.idx ===
+                  state.mentor
+              )?.paid_pct || 0
+            ) +
+            ' paid'
+          : ''
+
+    }
+
+  ];
+
+
+  document.getElementById(
+    'kpis'
+  ).innerHTML =
+    kpis.map(
+      kpi =>
+        `
+          <div class="kpi">
+
+            <div class="label">
+              ${kpi.label}
+            </div>
+
+            <div class="value">
+              ${kpi.value}
+            </div>
+
+            <div class="sub">
+              ${kpi.sub}
+            </div>
+
+          </div>
+        `
+    ).join('');
+
+
+  const best =
+    allMentorAgg[0];
+
+
+  if(best){
+
+    document.getElementById(
+      'topCard'
+    ).innerHTML =
+      `
+        <div class="tag">
+          Mentor performance
+        </div>
+
+        <h3>
+          ${best.name} —
+          ${fmt(best.paid_pct)} paid
+        </h3>
+
+        <p>
+          ${best.paid.toLocaleString()}
+          of
+          ${best.total.toLocaleString()}
+          students paid.
+        </p>
+      `;
+
+  }
+
+
+  /* MENTOR */
+
+  document.getElementById(
+    'mentorHeading'
+  ).textContent =
+    state.mentor !== null
+      ? `${RAW.mentors[state.mentor]} — program breakdown`
+      : 'Mentor-wise re-registration status';
+
+
+  if(
+    !mentorList.length
+  ){
+
+    document.getElementById(
+      'mentorChart'
+    ).innerHTML =
+      `
+        <div class="empty">
+          No mentors match this filter.
+        </div>
+      `;
+
+  }
+  else{
+
+    document.getElementById(
+      'mentorChart'
+    ).innerHTML =
+      mentorList.map(
+        (
+          mentor,
+          index
+        ) => {
+
+          const active =
+            state.mentor ===
+            mentor.idx;
+
+
+          let pillsHtml =
+            '';
+
+
+          if(active){
+
+            const programAgg =
+              aggBy(
+                RAW.rows.filter(
+                  row =>
+                    row[0] ===
+                    mentor.idx &&
+
+                    (
+                      state.priority === null ||
+                      row[2] ===
+                      state.priority
+                    ) &&
+
+                    (
+                      state.semester === null ||
+                      row[7] ===
+                      state.semester
+                    )
+                ),
+                1
+              );
+
+
+            const pills =
+              [
+                ...programAgg.entries()
+              ]
+              .map(
+                (
+                  [
+                    idx,
+                    item
+                  ]
+                ) =>
+                  `
+                    <span class="pill">
+
+                      ${RAW.programs[idx]}
+
+                      <b>
+                        ${fmt(
+                          item.total
+                            ? item.paid /
+                              item.total *
+                              100
+                            : 0
+                        )}
+                      </b>
+
+                      (${item.total})
+
+                    </span>
+                  `
+              )
+              .join('');
+
+
+            pillsHtml =
+              `
+                <div class="pills">
+                  ${pills}
+                </div>
+              `;
+
+
+            if(
+              NOTES[mentor.name]
+            ){
+
+              pillsHtml +=
+                `
+                  <div class="focus-note">
+
+                    <span class="flabel">
+                      Focus for ${mentor.name}
+                    </span>
+
+                    ${NOTES[mentor.name]}
+
+                  </div>
+                `;
+
+            }
+
+          }
+
+
+          return `
+            <div
+              class="row ${active?'active':''}"
+              data-mentor="${mentor.idx}"
+            >
+
+              <div class="row-head">
+
+                <div class="rank">
+                  ${index + 1}
+                </div>
+
+                <div
+                  class="name"
+                  title="${mentor.name}"
+                >
+                  ${mentor.name}
+                </div>
+
+                <div class="bar-track">
+
+                  <div
+                    class="bar-fill"
+                    style="
+                      width:${mentor.paid_pct}%;
+                    "
+                  ></div>
+
+                </div>
+
+                <div class="meta">
+
+                  <b>
+                    ${fmt(
+                      mentor.paid_pct
+                    )}
+                  </b>
+
+                  ·
+
+                  ${mentor.not_paid}
+                  unpaid
+
+                </div>
+
+              </div>
+
+              ${pillsHtml}
+
+            </div>
+          `;
+
+        }
+      ).join('');
+
+
+    document.querySelectorAll(
+      '#mentorChart .row'
+    ).forEach(
+      element =>
+        element.addEventListener(
+          'click',
+          () => {
+
+            const index =
+              +element.dataset.mentor;
+
+
+            state.mentor =
+              state.mentor ===
+              index
+                ? null
+                : index;
+
+
+            render();
+
+          }
+        )
+    );
+
+  }
+
+
+  /* PROGRAM */
+
+  document.getElementById(
+    'programHeading'
+  ).textContent =
+    state.program !== null
+      ? `${RAW.programs[state.program]} — re-registration status`
+      : 'Program-wise re-registration status';
+
+
+  const programAgg =
+    [
+      ...aggBy(
+        filteredRows('program'),
+        1
+      ).entries()
+    ]
+    .map(
+      (
+        [
+          index,
+          item
+        ]
+      ) => ({
+
+        idx:index,
+
+        name:
+          RAW.programs[
+            index
+          ],
+
+        total:item.total,
+
+        paid:item.paid,
+
+        not_paid:item.not_paid,
+
+        paid_pct:
+          item.total
+            ? item.paid /
+              item.total *
+              100
+            : 0
+
+      })
+    )
+    .sort(
+      (a,b) =>
+        a.paid_pct -
+        b.paid_pct
+    );
+
+
+  document.getElementById(
+    'programChart'
+  ).innerHTML =
+    programAgg.map(
+      program =>
+        `
+          <div
+            class="row ${
+              state.program ===
+              program.idx
+                ? 'active'
+                : ''
+            }"
+            data-program="${program.idx}"
+          >
+
+            <div class="row-head">
+
+              <div class="rank"></div>
+
+              <div class="name">
+                ${program.name}
+              </div>
+
+              <div class="bar-track">
+
+                <div
+                  class="bar-fill"
+                  style="
+                    width:${program.paid_pct}%;
+                  "
+                ></div>
+
+              </div>
+
+              <div class="meta">
+
+                <b>
+                  ${fmt(
+                    program.paid_pct
+                  )}
+                </b>
+
+                ·
+
+                ${program.not_paid.toLocaleString()}
+                unpaid
+
+              </div>
+
+            </div>
+
+          </div>
+        `
+    ).join('');
+
+
+  document.querySelectorAll(
+    '#programChart .row'
+  ).forEach(
+    element =>
+      element.addEventListener(
+        'click',
+        () => {
+
+          const index =
+            +element.dataset.program;
+
+
+          state.program =
+            state.program ===
+            index
+              ? null
+              : index;
+
+
+          document.getElementById(
+            'progSel'
+          ).value =
+            state.program === null
+              ? ''
+              : state.program;
+
+
+          render();
+
+        }
+      )
+  );
+
+
+  /* PRIORITY */
+
+  document.getElementById(
+    'priorityHeading'
+  ).textContent =
+    state.priority !== null
+      ? `${RAW.priorities[state.priority]} — detail`
+      : 'Priority category breakdown';
+
+
+  const priorityAgg =
+    [
+      ...aggBy(
+        filteredRows('priority'),
+        2
+      ).entries()
+    ]
+    .map(
+      (
+        [
+          index,
+          item
+        ]
+      ) => ({
+
+        idx:index,
+
+        name:
+          RAW.priorities[
+            index
+          ],
+
+        total:item.total,
+
+        paid:item.paid,
+
+        not_paid:item.not_paid,
+
+        not_paid_pct:
+          item.total
+            ? item.not_paid /
+              item.total *
+              100
+            : 0
+
+      })
+    )
+    .sort(
+      (a,b) =>
+        b.not_paid -
+        a.not_paid
+    );
+
+
+  document.getElementById(
+    'priBody'
+  ).innerHTML =
+    priorityAgg.length
+      ? priorityAgg.map(
+          priority => {
+
+            const cls =
+              priority.not_paid_pct >= 60
+                ? 'neg'
+                : (
+                    priority.not_paid_pct >= 25
+                      ? 'warn'
+                      : 'pos'
+                  );
+
+
+            return `
+              <tr
+                class="${
+                  state.priority ===
+                  priority.idx
+                    ? 'active'
+                    : ''
+                }"
+                data-priority="${priority.idx}"
+              >
+
+                <td>
+                  ${priority.name}
+                </td>
+
+                <td>
+                  ${priority.total.toLocaleString()}
+                </td>
+
+                <td>
+                  ${priority.paid.toLocaleString()}
+                </td>
+
+                <td>
+                  ${priority.not_paid.toLocaleString()}
+                </td>
+
+                <td>
+
+                  <span
+                    class="badge ${cls}"
+                  >
+                    ${fmt(
+                      priority.not_paid_pct
+                    )}
+                  </span>
+
+                </td>
+
+              </tr>
+            `;
+
+          }
+        ).join('')
+      : `
+          <tr>
+
+            <td
+              colspan="5"
+              class="empty"
+            >
+              No data for this filter.
+            </td>
+
+          </tr>
+        `;
+
+
+  document.querySelectorAll(
+    '#priBody tr[data-priority]'
+  ).forEach(
+    element =>
+      element.addEventListener(
+        'click',
+        () => {
+
+          const index =
+            +element.dataset.priority;
+
+
+          state.priority =
+            state.priority ===
+            index
+              ? null
+              : index;
+
+
+          document.getElementById(
+            'priSel'
+          ).value =
+            state.priority === null
+              ? ''
+              : state.priority;
+
+
+          render();
+
+        }
+      )
+  );
+
+
+  /*
+    FINAL IMPORTANT STEP:
+
+    IS/DA is rendered every time
+    render() runs.
+
+    Therefore changing the
+    Semester dropdown immediately
+    rebuilds the chart.
+  */
+
+  renderISDA();
 
 }
 
@@ -1121,33 +4142,47 @@ function normalizeRows(rows) {
    GOOGLE SHEET
 ========================= */
 
-function googleSheetCsvUrl() {
+function googleSheetCsvUrl(
+  sheetName
+){
 
   return (
     'https://docs.google.com/spreadsheets/d/' +
-    encodeURIComponent(GOOGLE_SHEET_ID) +
+    encodeURIComponent(
+      GOOGLE_SHEET_ID
+    ) +
     '/gviz/tq?tqx=out:csv&sheet=' +
-    encodeURIComponent(SHEET_NAME)
+    encodeURIComponent(
+      sheetName
+    )
   );
 
 }
 
 
-async function fetchSheet() {
+async function fetchGoogleSheetRows(
+  sheetName
+){
 
   const response =
     await fetch(
-      googleSheetCsvUrl(),
+      googleSheetCsvUrl(
+        sheetName
+      ),
       {
         cache:'no-store'
       }
     );
 
 
-  if (!response.ok) {
+  if(
+    !response.ok
+  ){
 
     throw new Error(
-      'Could not read Google Sheet. HTTP ' +
+      'Could not read ' +
+      sheetName +
+      ' from Google Sheets. HTTP ' +
       response.status
     );
 
@@ -1158,10 +4193,13 @@ async function fetchSheet() {
     await response.text();
 
 
-  if (!csv.trim()) {
+  if(
+    !csv.trim()
+  ){
 
     throw new Error(
-      'Google Sheet is empty.'
+      sheetName +
+      ' is empty.'
     );
 
   }
@@ -1195,1006 +4233,212 @@ async function fetchSheet() {
 
 
 /* =========================
-   FILTER OPTIONS
+   LOAD
 ========================= */
 
-function uniqueSorted(field) {
+async function loadFromGoogleSheet(){
 
-  const values =
-    [...new Set(
-      RAW
-        .map(r => r[field])
-        .filter(Boolean)
-    )];
-
-  return values.sort(
-    (a,b) =>
-      String(a).localeCompare(
-        String(b),
-        undefined,
-        {
-          numeric:true,
-          sensitivity:'base'
-        }
-      )
-  );
-
-}
-
-
-function populateFilters() {
-
-  populateSelect(
-    'programFilter',
-    uniqueSorted('program'),
-    'All Programs'
-  );
-
-
-  populateSelect(
-    'batchFilter',
-    uniqueSorted('batch'),
-    'All Batches'
-  );
-
-
-  populateSelect(
-    'semesterFilter',
-    uniqueSorted('semester'),
-    'All Semesters'
-  );
-
-}
-
-
-function populateSelect(
-  id,
-  values,
-  firstText
-) {
-
-  const select =
-    document.getElementById(id);
-
-
-  const oldValue =
-    select.value;
-
-
-  select.innerHTML =
-    `<option value="">${firstText}</option>`;
-
-
-  values.forEach(value => {
-
-    const option =
-      document.createElement('option');
-
-    option.value = value;
-
-    option.textContent = value;
-
-    select.appendChild(option);
-
-  });
-
-
-  if (
-    values.includes(oldValue)
-  ) {
-
-    select.value = oldValue;
-
-  }
-
-}
-
-
-/* =========================
-   FILTER LOGIC
-========================= */
-
-function getFilters() {
-
-  return {
-
-    program:
-      document.getElementById(
-        'programFilter'
-      ).value,
-
-    batch:
-      document.getElementById(
-        'batchFilter'
-      ).value,
-
-    semester:
-      document.getElementById(
-        'semesterFilter'
-      ).value,
-
-    exam:
-      document.getElementById(
-        'examFilter'
-      ).value,
-
-    assignment:
-      document.getElementById(
-        'assignmentFilter'
-      ).value,
-
-    rereg:
-      document.getElementById(
-        'reregFilter'
-      ).value,
-
-    search:
-      document.getElementById(
-        'searchInput'
-      ).value
-      .toLowerCase()
-      .trim()
-
-  };
-
-}
-
-
-function rowMatches(
-  row,
-  filters,
-  ignoreSemester = false
-) {
-
-  if (
-    filters.program &&
-    row.program !== filters.program
-  ) {
-    return false;
-  }
-
-
-  if (
-    filters.batch &&
-    row.batch !== filters.batch
-  ) {
-    return false;
-  }
-
-
-  if (
-    !ignoreSemester &&
-    filters.semester &&
-    row.semester !== filters.semester
-  ) {
-    return false;
-  }
-
-
-  if (
-    filters.exam &&
-    row.examAttendance !== filters.exam
-  ) {
-    return false;
-  }
-
-
-  if (
-    filters.assignment &&
-    row.assignment !== filters.assignment
-  ) {
-    return false;
-  }
-
-
-  if (
-    filters.rereg &&
-    row.reReg !== filters.rereg
-  ) {
-    return false;
-  }
-
-
-  if (filters.search) {
-
-    const searchable =
-      (
-        row.rollNo +
-        ' ' +
-        row.name
-      ).toLowerCase();
-
-
-    if (
-      !searchable.includes(
-        filters.search
-      )
-    ) {
-
-      return false;
-
-    }
-
-  }
-
-
-  return true;
-
-}
-
-
-function getFilteredRows() {
-
-  const filters =
-    getFilters();
-
-
-  return RAW.filter(
-    row =>
-      rowMatches(
-        row,
-        filters,
-        false
-      )
-  );
-
-}
-
-
-/* =========================
-   KPI
-========================= */
-
-function renderKPIs() {
-
-  const rows =
-    getFilteredRows();
-
-
-  const total =
-    rows.length;
-
-
-  const exam =
-    rows.filter(
-      r => r.examAttendance === 'Present'
-    ).length;
-
-
-  const assignment =
-    rows.filter(
-      r => r.assignment === 'Submitted'
-    ).length;
-
-
-  const done =
-    rows.filter(
-      r => r.reReg === 'Done'
-    ).length;
-
-
-  const notDone =
-    total - done;
-
-
-  const percent =
-    total
-      ? ((done / total) * 100).toFixed(1)
-      : '0.0';
-
-
-  document.getElementById(
-    'kpiTotal'
-  ).textContent =
-    total.toLocaleString();
-
-
-  document.getElementById(
-    'kpiExam'
-  ).textContent =
-    exam.toLocaleString();
-
-
-  document.getElementById(
-    'kpiAssignment'
-  ).textContent =
-    assignment.toLocaleString();
-
-
-  document.getElementById(
-    'kpiDone'
-  ).textContent =
-    done.toLocaleString();
-
-
-  document.getElementById(
-    'kpiNotDone'
-  ).textContent =
-    notDone.toLocaleString();
-
-
-  document.getElementById(
-    'kpiPercent'
-  ).textContent =
-    percent + '%';
-
-}
-
-
-/* =========================
-   SEMESTER ANALYSIS
-========================= */
-
-function renderSemesterAnalysis() {
-
-  const filters =
-    getFilters();
-
-
-  /*
-    Ignore semester filter here so
-    the comparison remains semester-wise.
-  */
-
-  const rows =
-    RAW.filter(
-      row =>
-        rowMatches(
-          row,
-          filters,
-          true
-        )
-    );
-
-
-  const map =
-    new Map();
-
-
-  rows.forEach(row => {
-
-    const sem =
-      row.semester ||
-      'Not Specified';
-
-
-    if (!map.has(sem)) {
-
-      map.set(
-        sem,
-        {
-          total:0,
-          exam:0,
-          assignment:0,
-          rereg:0
-        }
-      );
-
-    }
-
-
-    const item =
-      map.get(sem);
-
-
-    item.total++;
-
-
-    if (
-      row.examAttendance === 'Present'
-    ) {
-      item.exam++;
-    }
-
-
-    if (
-      row.assignment === 'Submitted'
-    ) {
-      item.assignment++;
-    }
-
-
-    if (
-      row.reReg === 'Done'
-    ) {
-      item.rereg++;
-    }
-
-  });
-
-
-  const semesters =
-    [...map.keys()].sort(
-      (a,b) =>
-        String(a).localeCompare(
-          String(b),
-          undefined,
-          {
-            numeric:true
-          }
-        )
-    );
-
-
-  const tbody =
-    document.getElementById(
-      'semesterBody'
-    );
-
-
-  if (!semesters.length) {
-
-    tbody.innerHTML =
-      `<tr>
-        <td colspan="8" class="empty">
-          No data available.
-        </td>
-      </tr>`;
-
+  if(refreshBusy)
     return;
-
-  }
-
-
-  const selectedSemester =
-    filters.semester;
-
-
-  tbody.innerHTML =
-    semesters.map(
-      sem => {
-
-        const item =
-          map.get(sem);
-
-
-        const examPct =
-          item.total
-            ? item.exam / item.total * 100
-            : 0;
-
-
-        const assignmentPct =
-          item.total
-            ? item.assignment / item.total * 100
-            : 0;
-
-
-        const reregPct =
-          item.total
-            ? item.rereg / item.total * 100
-            : 0;
-
-
-        const selected =
-          selectedSemester === sem
-            ? 'selected'
-            : '';
-
-
-        return `
-          <tr class="semester-row ${selected}">
-
-            <td>
-              <span class="badge badge-blue">
-                ${sem}
-              </span>
-            </td>
-
-            <td>
-              ${item.total.toLocaleString()}
-            </td>
-
-            <td>
-              ${item.exam.toLocaleString()}
-            </td>
-
-            <td class="percent">
-              ${examPct.toFixed(1)}%
-            </td>
-
-            <td>
-              ${item.assignment.toLocaleString()}
-            </td>
-
-            <td class="percent">
-              ${assignmentPct.toFixed(1)}%
-            </td>
-
-            <td>
-              ${item.rereg.toLocaleString()}
-            </td>
-
-            <td class="percent">
-              ${reregPct.toFixed(1)}%
-            </td>
-
-          </tr>
-        `;
-
-      }
-    ).join('');
-
-}
-
-
-/* =========================
-   SALES TYPE
-========================= */
-
-function renderSalesType() {
-
-  const filters =
-    getFilters();
-
-
-  /*
-    Ignore semester filter so all
-    semesters are visible.
-  */
-
-  const rows =
-    RAW.filter(
-      row =>
-        rowMatches(
-          row,
-          filters,
-          true
-        )
-    );
-
-
-  const map =
-    new Map();
-
-
-  rows.forEach(row => {
-
-    const semester =
-      row.semester ||
-      'Not Specified';
-
-
-    if (!map.has(semester)) {
-
-      map.set(
-        semester,
-        {
-          inside:0,
-          channel:0,
-          other:0
-        }
-      );
-
-    }
-
-
-    const item =
-      map.get(semester);
-
-
-    if (
-      row.salesType === 'Inside Sales'
-    ) {
-
-      item.inside++;
-
-    }
-    else if (
-      row.salesType === 'Channel'
-    ) {
-
-      item.channel++;
-
-    }
-    else {
-
-      item.other++;
-
-    }
-
-  });
-
-
-  const semesters =
-    [...map.keys()].sort(
-      (a,b) =>
-        String(a).localeCompare(
-          String(b),
-          undefined,
-          {
-            numeric:true
-          }
-        )
-    );
-
-
-  const tbody =
-    document.getElementById(
-      'salesBody'
-    );
-
-
-  if (!semesters.length) {
-
-    tbody.innerHTML =
-      `<tr>
-        <td colspan="5" class="empty">
-          No data available.
-        </td>
-      </tr>`;
-
-    return;
-
-  }
-
-
-  tbody.innerHTML =
-    semesters.map(
-      semester => {
-
-        const item =
-          map.get(semester);
-
-
-        const total =
-          item.inside +
-          item.channel +
-          item.other;
-
-
-        return `
-          <tr>
-
-            <td>
-              <span class="badge badge-blue">
-                ${semester}
-              </span>
-            </td>
-
-            <td class="sales-inside">
-              ${item.inside.toLocaleString()}
-            </td>
-
-            <td class="sales-channel">
-              ${item.channel.toLocaleString()}
-            </td>
-
-            <td class="sales-other">
-              ${item.other.toLocaleString()}
-            </td>
-
-            <td>
-              <strong>
-                ${total.toLocaleString()}
-              </strong>
-            </td>
-
-          </tr>
-        `;
-
-      }
-    ).join('');
-
-}
-
-
-/* =========================
-   STATUS COMBINATION
-========================= */
-
-function renderCombinations() {
-
-  const rows =
-    getFilteredRows();
-
-
-  const combinations = {};
-
-
-  rows.forEach(row => {
-
-    const combination =
-      row.examAttendance +
-      ' + ' +
-      row.assignment +
-      ' + ' +
-      row.reReg;
-
-
-    if (!combinations[combination]) {
-      combinations[combination] = 0;
-    }
-
-
-    combinations[combination]++;
-
-  });
-
-
-  const ordered = [
-
-    'Present + Submitted + Done',
-
-    'Present + Submitted + Not Done',
-
-    'Present + Not Submitted + Done',
-
-    'Present + Not Submitted + Not Done',
-
-    'Absent + Submitted + Done',
-
-    'Absent + Submitted + Not Done',
-
-    'Absent + Not Submitted + Done',
-
-    'Absent + Not Submitted + Not Done'
-
-  ];
-
-
-  const total =
-    rows.length;
-
-
-  const tbody =
-    document.getElementById(
-      'combinationBody'
-    );
-
-
-  tbody.innerHTML =
-    ordered.map(
-      combination => {
-
-        const count =
-          combinations[combination] || 0;
-
-
-        const percentage =
-          total
-            ? count / total * 100
-            : 0;
-
-
-        return `
-          <tr>
-
-            <td>
-              ${combination}
-            </td>
-
-            <td>
-              ${count.toLocaleString()}
-            </td>
-
-            <td>
-              ${percentage.toFixed(1)}%
-            </td>
-
-            <td style="min-width:220px">
-
-              <div class="combination-bar">
-
-                <div
-                  class="combination-fill"
-                  style="width:${percentage}%"
-                ></div>
-
-              </div>
-
-            </td>
-
-          </tr>
-        `;
-
-      }
-    ).join('');
-
-}
-
-
-/* =========================
-   LEARNER TABLE
-========================= */
-
-function renderLearners() {
-
-  const rows =
-    getFilteredRows();
-
-
-  const tbody =
-    document.getElementById(
-      'learnerBody'
-    );
-
-
-  if (!rows.length) {
-
-    tbody.innerHTML =
-      `<tr>
-        <td colspan="9" class="empty">
-          No learners match the selected filters.
-        </td>
-      </tr>`;
-
-    return;
-
-  }
-
-
-  tbody.innerHTML =
-    rows.map(
-      row => {
-
-        const examClass =
-          row.examAttendance === 'Present'
-            ? 'badge-green'
-            : 'badge-red';
-
-
-        const assignmentClass =
-          row.assignment === 'Submitted'
-            ? 'badge-green'
-            : 'badge-red';
-
-
-        const reregClass =
-          row.reReg === 'Done'
-            ? 'badge-green'
-            : 'badge-red';
-
-
-        return `
-          <tr>
-
-            <td>
-              <strong>
-                ${escapeHtml(row.rollNo || '—')}
-              </strong>
-            </td>
-
-            <td>
-              ${escapeHtml(row.name || '—')}
-            </td>
-
-            <td>
-              ${escapeHtml(row.program || '—')}
-            </td>
-
-            <td>
-              ${escapeHtml(row.batch || '—')}
-            </td>
-
-            <td>
-              ${escapeHtml(row.salesType || 'Other')}
-            </td>
-
-            <td>
-              <span class="badge ${examClass}">
-                ${row.examAttendance}
-              </span>
-            </td>
-
-            <td>
-              <span class="badge ${assignmentClass}">
-                ${row.assignment}
-              </span>
-            </td>
-
-            <td>
-              ${escapeHtml(row.semester || '—')}
-            </td>
-
-            <td>
-              <span class="badge ${reregClass}">
-                ${row.reReg}
-              </span>
-            </td>
-
-          </tr>
-        `;
-
-      }
-    ).join('');
-
-}
-
-
-/* =========================
-   HTML ESCAPE
-========================= */
-
-function escapeHtml(value) {
-
-  return String(value ?? '')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#039;');
-
-}
-
-
-/* =========================
-   RENDER EVERYTHING
-========================= */
-
-function renderAll() {
-
-  renderKPIs();
-
-  renderSemesterAnalysis();
-
-  renderSalesType();
-
-  renderCombinations();
-
-  renderLearners();
-
-}
-
-
-/* =========================
-   LOAD DATA
-========================= */
-
-async function loadData() {
-
-  if (refreshBusy) {
-    return;
-  }
 
 
   refreshBusy = true;
 
 
-  try {
+  try{
 
     document.getElementById(
-      'connectionStatus'
+      'excelStatus'
     ).textContent =
       'Loading Google Sheet…';
 
 
-    const rows =
-      await fetchSheet();
+    const [
+      rows1,
+      rows2
+    ] =
+      await Promise.all([
+
+        fetchGoogleSheetRows(
+          GOOGLE_SHEET1_NAME
+        ),
+
+        fetchGoogleSheetRows(
+          GOOGLE_SHEET2_NAME
+        )
+
+      ]);
 
 
-    RAW =
-      normalizeRows(rows);
+    const built =
+      buildRawFromSheet1(
+        rows1
+      );
+
+
+    RAW.mentors =
+      built.mentors;
+
+
+    RAW.programs =
+      built.programs;
+
+
+    RAW.priorities =
+      built.priorities;
+
+
+    RAW.semesters =
+      built.semesters;
+
+
+    RAW.rows =
+      built.rows;
+
+
+    const mentorName =
+      state._mentorName;
+
+
+    const programName =
+      state._programName;
+
+
+    const priorityName =
+      state._priorityName;
+
+
+    const semesterName =
+      state._semesterName;
+
+
+    state.mentor =
+      mentorName
+        ? RAW.mentors.indexOf(
+            mentorName
+          )
+        : null;
+
+
+    state.program =
+      programName
+        ? RAW.programs.indexOf(
+            programName
+          )
+        : null;
+
+
+    state.priority =
+      priorityName
+        ? RAW.priorities.indexOf(
+            priorityName
+          )
+        : null;
+
+
+    state.semester =
+      semesterName
+        ? RAW.semesters.indexOf(
+            semesterName
+          )
+        : null;
+
+
+    if(
+      state.mentor < 0
+    )
+      state.mentor = null;
+
+
+    if(
+      state.program < 0
+    )
+      state.program = null;
+
+
+    if(
+      state.priority < 0
+    )
+      state.priority = null;
+
+
+    if(
+      state.semester < 0
+    )
+      state.semester = null;
+
+
+    state._mentorName =
+      state.mentor === null
+        ? null
+        : RAW.mentors[
+            state.mentor
+          ];
+
+
+    state._programName =
+      state.program === null
+        ? null
+        : RAW.programs[
+            state.program
+          ];
+
+
+    state._priorityName =
+      state.priority === null
+        ? null
+        : RAW.priorities[
+            state.priority
+          ];
+
+
+    state._semesterName =
+      state.semester === null
+        ? null
+        : RAW.semesters[
+            state.semester
+          ];
+
+
+    ISDA =
+      buildISDA(
+        rows2,
+        built.normalized
+      );
+
+
+    buildNotes();
 
 
     populateFilters();
 
-    renderAll();
+
+    render();
 
 
     document.getElementById(
-      'connectionStatus'
+      'excelStatus'
     ).textContent =
       'Google Sheet connected · ' +
-      RAW.length.toLocaleString() +
+      built.normalized.length.toLocaleString() +
       ' students · Last refreshed ' +
       new Date().toLocaleTimeString();
 
 
   }
-  catch(error) {
+  catch(error){
 
     console.error(error);
 
 
     document.getElementById(
-      'connectionStatus'
+      'excelStatus'
     ).textContent =
       'Google Sheet error: ' +
       error.message;
 
   }
-  finally {
+  finally{
 
     refreshBusy = false;
 
@@ -2204,77 +4448,188 @@ async function loadData() {
 
 
 /* =========================
-   RESET
+   AUTO REFRESH
 ========================= */
 
-document.getElementById(
-  'resetBtn'
-).addEventListener(
-  'click',
-  () => {
+function startGoogleRefresh(){
 
-    document.getElementById(
-      'programFilter'
-    ).value = '';
+  if(refreshTimer){
 
-    document.getElementById(
-      'batchFilter'
-    ).value = '';
-
-    document.getElementById(
-      'semesterFilter'
-    ).value = '';
-
-    document.getElementById(
-      'examFilter'
-    ).value = '';
-
-    document.getElementById(
-      'assignmentFilter'
-    ).value = '';
-
-    document.getElementById(
-      'reregFilter'
-    ).value = '';
-
-    document.getElementById(
-      'searchInput'
-    ).value = '';
-
-
-    renderAll();
+    clearInterval(
+      refreshTimer
+    );
 
   }
-);
+
+
+  refreshTimer =
+    setInterval(
+      loadFromGoogleSheet,
+      GOOGLE_REFRESH_MS
+    );
+
+}
 
 
 /* =========================
    FILTER EVENTS
 ========================= */
 
-[
-  'programFilter',
-  'batchFilter',
-  'semesterFilter',
-  'examFilter',
-  'assignmentFilter',
-  'reregFilter'
-].forEach(id => {
+document.getElementById(
+  'progSel'
+).addEventListener(
+  'change',
+  () => {
 
-  document.getElementById(id)
-    .addEventListener(
-      'change',
-      renderAll
-    );
+    const value =
+      document.getElementById(
+        'progSel'
+      ).value;
 
-});
+
+    state.program =
+      value === ''
+        ? null
+        : +value;
+
+
+    state._programName =
+      state.program === null
+        ? null
+        : RAW.programs[
+            state.program
+          ];
+
+
+    render();
+
+  }
+);
 
 
 document.getElementById(
-  'searchInput'
+  'priSel'
+).addEventListener(
+  'change',
+  () => {
+
+    const value =
+      document.getElementById(
+        'priSel'
+      ).value;
+
+
+    state.priority =
+      value === ''
+        ? null
+        : +value;
+
+
+    state._priorityName =
+      state.priority === null
+        ? null
+        : RAW.priorities[
+            state.priority
+          ];
+
+
+    render();
+
+  }
+);
+
+
+document.getElementById(
+  'semSel'
+).addEventListener(
+  'change',
+  () => {
+
+    const value =
+      document.getElementById(
+        'semSel'
+      ).value;
+
+
+    state.semester =
+      value === ''
+        ? null
+        : +value;
+
+
+    state._semesterName =
+      state.semester === null
+        ? null
+        : RAW.semesters[
+            state.semester
+          ];
+
+
+    /*
+      This immediately calls render(),
+      which calls renderISDA().
+    */
+
+    render();
+
+  }
+);
+
+
+document.getElementById(
+  'mentorSearch'
 ).addEventListener(
   'input',
-  renderAll
+  render
+);
+
+
+document.getElementById(
+  'clearAll'
+).addEventListener(
+  'click',
+  () => {
+
+    state.mentor = null;
+
+    state.program = null;
+
+    state.priority = null;
+
+    state.semester = null;
+
+    state._mentorName = null;
+
+    state._programName = null;
+
+    state._priorityName = null;
+
+    state._semesterName = null;
+
+
+    document.getElementById(
+      'progSel'
+    ).value = '';
+
+
+    document.getElementById(
+      'priSel'
+    ).value = '';
+
+
+    document.getElementById(
+      'semSel'
+    ).value = '';
+
+
+    document.getElementById(
+      'mentorSearch'
+    ).value = '';
+
+
+    render();
+
+  }
 );
 
 
@@ -2282,14 +4637,11 @@ document.getElementById(
    START
 ========================= */
 
-loadData();
+loadFromGoogleSheet();
 
+startGoogleRefresh();
 
-refreshTimer =
-  setInterval(
-    loadData,
-    REFRESH_MS
-  );
+render();
 
 
 </script>
