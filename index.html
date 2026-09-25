@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,62 +15,76 @@
 }
 
 :root {
-  --bg:#f5f6fa;
+  --bg:#f6f7f9;
   --card:#ffffff;
-  --ink:#222;
-  --ink-soft:#666;
+  --ink:#1b2430;
+  --ink-soft:#5b6674;
   --line:#e2e6ea;
+
   --navy:#26415e;
   --navy-deep:#182b40;
   --navy-light:#e7edf3;
   --gold:#c9962c;
+
   --green:#2f7d5c;
   --green-bg:#e7f3ed;
+
   --red:#b1483f;
   --red-bg:#fbebe9;
+
   --track:#eef1f4;
+}
+
+html {
+  scroll-behavior:smooth;
 }
 
 body {
   margin:0;
-  font-family:Arial,sans-serif;
+  min-height:100vh;
   background:var(--bg);
   color:var(--ink);
+  font-family:'Source Serif Pro', Georgia, 'Times New Roman', serif;
 }
 
-.container {
-  width:95%;
-  max-width:1500px;
-  margin:auto;
-  padding:30px 0;
-}
-
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
 header {
   background:linear-gradient(160deg,var(--navy-deep),var(--navy));
-  color:white;
-  padding:24px 2.5%;
+  color:#f2f4f7;
+  padding:24px 20px 18px;
+}
+
+header .wrap {
+  max-width:1180px;
+  margin:0 auto;
 }
 
 header h1 {
-  margin:0;
-  font-size:30px;
+  font-size:24px;
+  margin:0 0 4px;
+  font-weight:600;
 }
 
 header p {
-  margin-top:8px;
-  color:#d9e3ed;
-  font-size:14px;
+  margin:0;
+  color:#c7d2de;
+  font-size:13.5px;
+  max-width:64ch;
 }
 
-.connection-status {
-  margin-top:12px;
+#connectionStatus {
+  font-family:Arial,sans-serif;
   font-size:12px;
   color:#d9e3ed;
+  margin-top:10px;
 }
 
-/* NAV */
+/* =========================
+   PAGE NAVIGATION
+========================= */
 
 .page-nav {
   background:var(--navy-deep);
@@ -77,13 +92,13 @@ header p {
 }
 
 .page-nav-wrap {
-  width:95%;
-  max-width:1500px;
-  margin:auto;
-  padding:8px 0;
+  max-width:1180px;
+  margin:0 auto;
+  padding:8px 20px;
   display:flex;
   gap:8px;
   flex-wrap:wrap;
+  font-family:Arial,sans-serif;
 }
 
 .page-link {
@@ -91,7 +106,7 @@ header p {
   text-decoration:none;
   color:#d9e3ed;
   border:1px solid rgba(255,255,255,.18);
-  padding:7px 12px;
+  padding:6px 11px;
   border-radius:6px;
   font-size:12px;
 }
@@ -103,151 +118,209 @@ header p {
   border-color:var(--gold);
 }
 
-/* KPI */
+/* =========================
+   FILTER BAR
+========================= */
 
-.kpi-grid {
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:15px;
-  margin-bottom:25px;
-}
-
-.card {
+.filterbar {
+  position:sticky;
+  top:0;
+  z-index:10;
   background:var(--card);
-  padding:20px;
-  border-radius:10px;
-  border:1px solid var(--line);
-  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+  border-bottom:1px solid var(--line);
+  padding:10px 20px;
 }
 
-.card h3 {
-  font-size:14px;
-  margin:0 0 10px;
-  color:var(--ink-soft);
-}
-
-.number {
-  font-size:28px;
-  font-weight:bold;
-}
-
-/* FILTERS */
-
-.filters {
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
+.filterbar .wrap {
+  max-width:1180px;
+  margin:0 auto;
+  display:flex;
   gap:10px;
-  margin-bottom:15px;
-}
-
-.filters select,
-.search input {
-  width:100%;
-  padding:12px;
-  border:1px solid #ddd;
-  border-radius:7px;
-  background:white;
+  flex-wrap:wrap;
+  align-items:center;
   font-family:Arial,sans-serif;
-  color:#222;
 }
 
-.filters select:focus,
-.search input:focus {
+.filterbar select,
+.filterbar input {
+  font-family:Arial,sans-serif;
+  font-size:13px;
+  padding:7px 10px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--card);
+  color:var(--ink);
   outline:none;
+}
+
+.filterbar select:focus,
+.filterbar input:focus {
   border-color:var(--navy);
 }
 
-/* SEARCH */
-
-.search {
-  margin-bottom:20px;
-  display:flex;
-  gap:10px;
-}
-
-.search input {
-  flex:1;
+.filterbar input {
+  min-width:230px;
 }
 
 .reset-btn {
-  padding:12px 18px;
-  border:none;
-  border-radius:7px;
-  background:var(--navy);
-  color:white;
-  cursor:pointer;
   font-family:Arial,sans-serif;
+  font-size:12px;
+  padding:7px 12px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  background:var(--card);
+  color:var(--ink-soft);
+  cursor:pointer;
 }
 
 .reset-btn:hover {
-  background:var(--navy-deep);
+  background:var(--navy-light);
+  color:var(--navy);
 }
 
-/* SECTION */
+/* =========================
+   MAIN
+========================= */
 
-.section {
-  margin-bottom:25px;
+main {
+  max-width:1180px;
+  margin:0 auto;
+  padding:20px 20px 60px;
 }
 
-.section-title {
-  font-size:20px;
-  font-weight:bold;
-  margin-bottom:5px;
+/* =========================
+   KPI CARDS
+========================= */
+
+.kpis {
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:12px;
+  margin-bottom:28px;
+}
+
+.kpi {
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:14px 16px;
+  box-shadow:0 4px 14px rgba(20,30,45,.06);
+}
+
+.kpi .label {
+  font-size:11.5px;
+  color:var(--ink-soft);
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  font-family:Arial,sans-serif;
+}
+
+.kpi .value {
+  font-size:23px;
+  margin-top:5px;
+  font-weight:700;
+}
+
+.kpi .sub {
+  font-size:12px;
+  color:var(--ink-soft);
+  margin-top:3px;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+section {
+  margin-bottom:30px;
+}
+
+h2 {
+  font-size:17px;
+  font-weight:700;
+  margin:0 0 4px;
 }
 
 .section-note {
+  font-size:12.5px;
   color:var(--ink-soft);
-  font-size:13px;
-  margin-bottom:12px;
+  margin:0 0 14px;
+  font-family:Arial,sans-serif;
+  line-height:1.5;
 }
 
-/* TABLE */
+/* =========================
+   TABLE
+========================= */
 
-.table-section {
-  background:var(--card);
-  border-radius:10px;
+.table-wrap {
   overflow-x:auto;
   border:1px solid var(--line);
+  border-radius:8px;
+  background:var(--card);
 }
 
 table {
-  width:100%;
   border-collapse:collapse;
+  width:100%;
+  min-width:700px;
+  font-size:13px;
 }
 
 th,
 td {
-  padding:12px;
-  text-align:left;
-  border-bottom:1px solid #eee;
+  padding:9px 12px;
+  text-align:right;
+  border-bottom:1px solid var(--line);
   white-space:nowrap;
 }
 
+th:first-child,
+td:first-child {
+  text-align:left;
+}
+
 th {
-  background:#f7f7f7;
+  font-family:Arial,sans-serif;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  color:var(--ink-soft);
+  background:var(--card);
+}
+
+tbody tr:hover td {
+  background:var(--track);
+}
+
+tbody tr:last-child td {
+  border-bottom:none;
+}
+
+.empty {
+  padding:20px !important;
+  text-align:center !important;
+  color:var(--ink-soft);
+  font-family:Arial,sans-serif;
   font-size:13px;
-  color:#555;
-  position:sticky;
-  top:0;
-  z-index:1;
 }
 
-td {
-  font-size:13px;
-}
-
-tbody tr:hover {
-  background:#f8fafc;
-}
-
-/* BADGES */
+/* =========================
+   BADGES
+========================= */
 
 .badge {
   display:inline-block;
-  padding:4px 9px;
+  padding:3px 8px;
   border-radius:20px;
-  font-size:11px;
-  font-weight:bold;
+  font-size:11.5px;
+  font-family:Arial,sans-serif;
+  white-space:nowrap;
+}
+
+.badge-blue {
+  background:var(--navy-light);
+  color:var(--navy);
 }
 
 .badge-green {
@@ -260,128 +333,111 @@ tbody tr:hover {
   color:var(--red);
 }
 
-.badge-blue {
-  background:var(--navy-light);
-  color:var(--navy);
-}
-
-/* SEMESTER */
-
-.semester-row {
-  cursor:pointer;
-}
-
-.semester-row.selected {
-  background:var(--navy-light);
-}
+/* =========================
+   PERCENT
+========================= */
 
 .percent {
-  font-weight:bold;
+  font-family:'IBM Plex Mono','Courier New',monospace;
+  font-variant-numeric:tabular-nums;
 }
 
-/* SALES */
-
-.sales-table th,
-.sales-table td {
-  text-align:center;
-}
-
-.sales-table th:first-child,
-.sales-table td:first-child {
-  text-align:left;
-}
+/* =========================
+   SALES TYPE
+========================= */
 
 .sales-inside {
-  color:#26415e;
-  font-weight:bold;
+  color:var(--navy);
+  font-weight:600;
 }
 
 .sales-channel {
-  color:#2f7d5c;
-  font-weight:bold;
+  color:var(--green);
+  font-weight:600;
 }
 
 .sales-other {
-  color:#b17a1f;
-  font-weight:bold;
+  color:var(--ink-soft);
 }
 
-/* COMBINATION */
+.sales-total {
+  font-weight:700;
+}
+
+/* =========================
+   COMBINATION BAR
+========================= */
 
 .combination-bar {
-  height:8px;
+  width:100%;
+  height:10px;
   background:var(--track);
-  border-radius:5px;
+  border-radius:4px;
   overflow:hidden;
-  margin-top:6px;
 }
 
 .combination-fill {
   height:100%;
   background:var(--navy);
+  border-radius:4px;
 }
 
-/* EMPTY */
-
-.empty {
-  text-align:center;
-  padding:25px;
-  color:var(--ink-soft);
-}
-
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 
 footer {
-  text-align:center;
-  padding:20px;
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 20px 30px;
+  font-size:11.5px;
   color:var(--ink-soft);
-  font-size:12px;
+  font-family:Arial,sans-serif;
 }
 
-/* MOBILE */
+/* =========================
+   RESPONSIVE
+========================= */
 
-@media(max-width:1200px) {
-
-  .kpi-grid {
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .filters {
+@media (max-width:1000px) {
+  .kpis {
     grid-template-columns:repeat(3,1fr);
   }
 }
 
-@media(max-width:800px) {
+@media (max-width:720px) {
 
-  .kpi-grid {
+  .kpis {
     grid-template-columns:repeat(2,1fr);
   }
 
-  .filters {
-    grid-template-columns:repeat(2,1fr);
+  main {
+    padding-left:12px;
+    padding-right:12px;
   }
 
-  .search {
-    flex-direction:column;
+  .filterbar {
+    padding-left:12px;
+    padding-right:12px;
   }
-}
 
-@media(max-width:600px) {
+  .filterbar input {
+    min-width:180px;
+    width:100%;
+  }
 
-  .container {
-    width:94%;
+  .page-nav-wrap {
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  header {
+    padding-left:12px;
+    padding-right:12px;
   }
 
   header h1 {
-    font-size:24px;
-  }
-
-  .kpi-grid {
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .filters {
-    grid-template-columns:1fr;
+    font-size:21px;
   }
 }
 </style>
@@ -389,36 +445,42 @@ footer {
 
 <body>
 
+<!-- =========================
+     HEADER
+========================= -->
+
 <header>
+  <div class="wrap">
 
-  <h1>MUJ Re-Registration Dashboard</h1>
+    <h1>MUJ Re-Registration Dashboard</h1>
 
-  <p>Aug - Sep 2026</p>
+    <p>Aug - Sep 2026</p>
 
-  <div
-    id="connectionStatus"
-    class="connection-status"
-  >
-    Connecting to Google Sheet…
+    <div id="connectionStatus">
+      Connecting to Google Sheet…
+    </div>
+
   </div>
-
 </header>
 
+<!-- =========================
+     PAGE NAVIGATION
+========================= -->
 
 <div class="page-nav">
 
   <div class="page-nav-wrap">
 
     <a
-      href="index.html"
       class="page-link active"
+      href="index.html"
     >
       Page 1 · Learner Dashboard
     </a>
 
     <a
-      href="page2.html"
       class="page-link"
+      href="page2.html"
     >
       Page 2 · Re-Registration Analysis
     </a>
@@ -427,232 +489,134 @@ footer {
 
 </div>
 
+<!-- =========================
+     FILTER BAR
+========================= -->
 
-<div class="container">
+<div class="filterbar">
 
-
-  <!-- KPI -->
-
-  <div class="kpi-grid">
-
-    <div class="card">
-      <h3>Total Learners</h3>
-      <div
-        class="number"
-        id="kpiTotal"
-      >
-        0
-      </div>
-    </div>
-
-
-    <div class="card">
-      <h3>Exam Attended</h3>
-      <div
-        class="number"
-        id="kpiExam"
-      >
-        0
-      </div>
-    </div>
-
-
-    <div class="card">
-      <h3>Assignment Submitted</h3>
-      <div
-        class="number"
-        id="kpiAssignment"
-      >
-        0
-      </div>
-    </div>
-
-
-    <div class="card">
-      <h3>Re-Reg Done</h3>
-      <div
-        class="number"
-        id="kpiDone"
-      >
-        0
-      </div>
-    </div>
-
-
-    <div class="card">
-      <h3>Re-Reg Not Done</h3>
-      <div
-        class="number"
-        id="kpiNotDone"
-      >
-        0
-      </div>
-    </div>
-
-
-    <div class="card">
-      <h3>Re-Reg %</h3>
-      <div
-        class="number"
-        id="kpiPercent"
-      >
-        0%
-      </div>
-    </div>
-
-  </div>
-
-
-  <!-- FILTERS -->
-
-  <div class="filters">
+  <div class="wrap">
 
     <select id="programFilter">
-
-      <option value="">
-        All Programs
-      </option>
-
+      <option value="">All Programs</option>
     </select>
-
 
     <select id="semesterFilter">
-
-      <option value="">
-        All Semesters
-      </option>
-
+      <option value="">All Semesters</option>
     </select>
-
 
     <select id="examFilter">
-
-      <option value="">
-        All Exam Attendance
-      </option>
-
-      <option value="Present">
-        Present
-      </option>
-
-      <option value="Absent">
-        Absent
-      </option>
-
+      <option value="">All Exam Attendance</option>
+      <option value="Present">Exam Attended</option>
+      <option value="Absent">Exam Not Attended</option>
     </select>
-
 
     <select id="assignmentFilter">
-
-      <option value="">
-        All Assignment Status
-      </option>
-
-      <option value="Submitted">
-        Submitted
-      </option>
-
-      <option value="Not Submitted">
-        Not Submitted
-      </option>
-
+      <option value="">All Assignment Status</option>
+      <option value="Submitted">Submitted</option>
+      <option value="Not Submitted">Not Submitted</option>
     </select>
-
 
     <select id="reregFilter">
-
-      <option value="">
-        All Re-Reg Status
-      </option>
-
-      <option value="Done">
-        Done
-      </option>
-
-      <option value="Not Done">
-        Not Done
-      </option>
-
+      <option value="">All Re-Reg Status</option>
+      <option value="Done">Done</option>
+      <option value="Not Done">Not Done</option>
     </select>
-
-  </div>
-
-
-  <!-- SEARCH -->
-
-  <div class="search">
 
     <input
       type="text"
       id="searchInput"
-      placeholder="Search by Roll No or Learner Name..."
+      placeholder="Search Roll No or Learner Name…"
     >
 
     <button
-      class="reset-btn"
       id="resetBtn"
+      class="reset-btn"
     >
       Reset Filters
     </button>
 
   </div>
 
+</div>
 
-  <!-- SEMESTER PERFORMANCE -->
+<!-- =========================
+     MAIN
+========================= -->
 
-  <div class="section">
+<main>
 
-    <div class="section-title">
-      Semester-wise Performance
+  <!-- =========================
+       KPI SECTION
+  ========================= -->
+
+  <div class="kpis">
+
+    <div class="kpi">
+      <div class="label">Total Learners</div>
+      <div class="value" id="kpiTotal">0</div>
+      <div class="sub">Filtered learners</div>
     </div>
 
-    <div class="section-note">
-      Semester-wise learner, exam attendance, assignment and re-registration performance.
+    <div class="kpi">
+      <div class="label">Exam Attended</div>
+      <div class="value" id="kpiExam">0</div>
+      <div class="sub">Full / partial attended</div>
     </div>
 
+    <div class="kpi">
+      <div class="label">Assignment Submitted</div>
+      <div class="value" id="kpiAssignment">0</div>
+      <div class="sub">IA submitted</div>
+    </div>
 
-    <div class="table-section">
+    <div class="kpi">
+      <div class="label">Re-Reg Done</div>
+      <div class="value" id="kpiDone">0</div>
+      <div class="sub">Completed</div>
+    </div>
+
+    <div class="kpi">
+      <div class="label">Re-Reg Not Done</div>
+      <div class="value" id="kpiNotDone">0</div>
+      <div class="sub">Pending</div>
+    </div>
+
+    <div class="kpi">
+      <div class="label">Re-Reg %</div>
+      <div class="value" id="kpiPercent">0.0%</div>
+      <div class="sub">Done / total</div>
+    </div>
+
+  </div>
+
+  <!-- =========================
+       SEMESTER-WISE PERFORMANCE
+  ========================= -->
+
+  <section>
+
+    <h2>Semester-wise Performance</h2>
+
+    <p class="section-note">
+      Semester-wise learner count with exam attendance, assignment submission and re-registration status.
+    </p>
+
+    <div class="table-wrap">
 
       <table>
 
         <thead>
-
           <tr>
-
-            <th>
-              Semester
-            </th>
-
-            <th>
-              Total Learners
-            </th>
-
-            <th>
-              Exam Attended
-            </th>
-
-            <th>
-              Exam %
-            </th>
-
-            <th>
-              Assignment Submitted
-            </th>
-
-            <th>
-              Assignment %
-            </th>
-
-            <th>
-              Re-Reg Done
-            </th>
-
-            <th>
-              Re-Reg %
-            </th>
-
+            <th>Semester</th>
+            <th>Total Learners</th>
+            <th>Exam Attended</th>
+            <th>Exam %</th>
+            <th>Assignment Submitted</th>
+            <th>Assignment %</th>
+            <th>Re-Reg Done</th>
+            <th>Re-Reg %</th>
           </tr>
-
         </thead>
 
         <tbody id="semesterBody"></tbody>
@@ -661,52 +625,36 @@ footer {
 
     </div>
 
-  </div>
+  </section>
 
+  <!-- =========================
+       SALES TYPE BIFURCATION
+  ========================= -->
 
-  <!-- SALES TYPE -->
+  <section>
 
-  <div class="section">
+    <h2>Sales Type Bifurcation — Semester-wise</h2>
 
-    <div class="section-title">
-      Sales Type Bifurcation — Semester-wise
-    </div>
+    <p class="section-note">
+      Semester-wise bifurcation of Inside Sales and Channel learners, including exam attendance, assignment status and re-registration status.
+    </p>
 
-    <div class="section-note">
-      Sales Type is derived from Lead Name: IS = Inside Sales, DA = Channel.
-    </div>
+    <div class="table-wrap">
 
-
-    <div class="table-section">
-
-      <table class="sales-table">
+      <table>
 
         <thead>
-
           <tr>
-
-            <th>
-              Semester
-            </th>
-
-            <th>
-              Inside Sales
-            </th>
-
-            <th>
-              Channel
-            </th>
-
-            <th>
-              Other
-            </th>
-
-            <th>
-              Total
-            </th>
-
+            <th>Semester</th>
+            <th>Sales Type</th>
+            <th>Total</th>
+            <th>Exam Attended</th>
+            <th>Exam Not Attended</th>
+            <th>Assignment Submitted</th>
+            <th>Assignment Not Submitted</th>
+            <th>Re-Reg Done</th>
+            <th>Re-Reg Not Done</th>
           </tr>
-
         </thead>
 
         <tbody id="salesBody"></tbody>
@@ -715,48 +663,31 @@ footer {
 
     </div>
 
-  </div>
+  </section>
 
+  <!-- =========================
+       STATUS COMBINATION
+  ========================= -->
 
-  <!-- STATUS COMBINATION -->
+  <section>
 
-  <div class="section">
+    <h2>Learner Status Combination</h2>
 
-    <div class="section-title">
-      Learner Status Combination
-    </div>
+    <p class="section-note">
+      Combination of exam attendance, assignment submission and re-registration status for the currently filtered learners.
+    </p>
 
-    <div class="section-note">
-      Combination of exam attendance, assignment submission and re-registration status.
-    </div>
-
-
-    <div class="table-section">
+    <div class="table-wrap">
 
       <table>
 
         <thead>
-
           <tr>
-
-            <th>
-              Status Combination
-            </th>
-
-            <th>
-              Learners
-            </th>
-
-            <th>
-              Percentage
-            </th>
-
-            <th>
-              Distribution
-            </th>
-
+            <th>Status Combination</th>
+            <th>Count</th>
+            <th>%</th>
+            <th>Distribution</th>
           </tr>
-
         </thead>
 
         <tbody id="combinationBody"></tbody>
@@ -765,64 +696,35 @@ footer {
 
     </div>
 
-  </div>
+  </section>
 
+  <!-- =========================
+       LEARNER DETAILS
+  ========================= -->
 
-  <!-- LEARNER DETAILS -->
+  <section>
 
-  <div class="section">
+    <h2>Learner Details</h2>
 
-    <div class="section-title">
-      Learner Details
-    </div>
+    <p class="section-note">
+      Learner-level details based on the selected filters.
+    </p>
 
-    <div class="section-note">
-      Showing learners based on the selected filters.
-    </div>
-
-
-    <div class="table-section">
+    <div class="table-wrap">
 
       <table>
 
         <thead>
-
           <tr>
-
-            <th>
-              Roll No
-            </th>
-
-            <th>
-              Name
-            </th>
-
-            <th>
-              Program
-            </th>
-
-            <th>
-              Sales Type
-            </th>
-
-            <th>
-              Exam Attendance
-            </th>
-
-            <th>
-              Assignment
-            </th>
-
-            <th>
-              Current Sem
-            </th>
-
-            <th>
-              Re-Reg
-            </th>
-
+            <th>Roll No</th>
+            <th>Name</th>
+            <th>Program</th>
+            <th>Sales Type</th>
+            <th>Exam Attendance</th>
+            <th>Assignment</th>
+            <th>Current Sem</th>
+            <th>Re-Reg</th>
           </tr>
-
         </thead>
 
         <tbody id="learnerBody"></tbody>
@@ -831,35 +733,33 @@ footer {
 
     </div>
 
-  </div>
+  </section>
 
-</div>
-
+</main>
 
 <footer>
-
-  Data Source: Google Sheets ·
-  Automatically refreshed every 60 seconds
-
+  Data source: Google Sheets · Sheet1 · Auto-refresh every 60 seconds.
+  Exam Attended = Full Attended / Partially Attended from Mock Status.
+  Sales Type = IS → Inside Sales, DA → Channel.
 </footer>
-
 
 <script>
 
-
-/* ========================================
-   GOOGLE SHEET
-======================================== */
+/* =========================================================
+   GOOGLE SHEET CONFIGURATION
+========================================================= */
 
 const GOOGLE_SHEET_ID =
   '1iwtwKK5JAG-qDRnjcMf5GGL5CMBMW9X3QFYtaawvCqg';
 
-const SHEET_NAME =
-  'Sheet1';
+const SHEET_NAME = 'Sheet1';
 
-const REFRESH_MS =
-  60000;
+const REFRESH_MS = 60000;
 
+
+/* =========================================================
+   GLOBAL DATA
+========================================================= */
 
 let RAW = [];
 
@@ -868,22 +768,14 @@ let refreshTimer = null;
 let refreshBusy = false;
 
 
-/* ========================================
-   HELPERS
-======================================== */
+/* =========================================================
+   BASIC HELPERS
+========================================================= */
 
 function norm(value) {
 
-  if (
-    value === null ||
-    value === undefined
-  ) {
-
-    return '';
-
-  }
-
-  return String(value).trim();
+  return String(value ?? '')
+    .trim();
 
 }
 
@@ -898,60 +790,41 @@ function key(value) {
 }
 
 
-/* ========================================
+/* =========================================================
    FIND COLUMN
-======================================== */
+========================================================= */
 
-function findColumn(
-  headers,
-  aliases
-) {
+function findColumn(headers, aliases) {
 
   const normalizedHeaders =
-    headers.map(
-      header => ({
+    headers.map(header => ({
+      original:header,
+      normalized:key(header)
+    }));
 
-        original:header,
+  for (const alias of aliases) {
 
-        normalized:key(header)
-
-      })
-    );
-
-
-  for (
-    const alias of aliases
-  ) {
-
-    const aliasKey =
-      key(alias);
-
+    const aliasKey = key(alias);
 
     const found =
       normalizedHeaders.find(
-        header =>
-          header.normalized ===
-          aliasKey
+        header => header.normalized === aliasKey
       );
 
-
     if (found) {
-
       return found.original;
-
     }
 
   }
-
 
   return null;
 
 }
 
 
-/* ========================================
-   ROLL NUMBER
-======================================== */
+/* =========================================================
+   CLEAN ROLL NUMBER
+========================================================= */
 
 function cleanRollNo(value) {
 
@@ -959,89 +832,56 @@ function cleanRollNo(value) {
     value === null ||
     value === undefined
   ) {
-
     return '';
-
   }
 
+  let result = String(value).trim();
 
-  let result =
-    String(value).trim();
-
-
-  /*
-    Prevent values such as:
-
-    251450507462.0
-
-    from displaying with .0
-  */
-
-  if (
-    /^\d+\.0$/.test(result)
-  ) {
-
-    result =
-      result.replace(
-        /\.0$/,
-        ''
-      );
-
+  if (/^\d+\.0$/.test(result)) {
+    result = result.replace(/\.0$/,'');
   }
-
 
   return result;
 
 }
 
 
-/* ========================================
+/* =========================================================
    EXAM ATTENDANCE
-======================================== */
+=========================================================
+
+   Present ONLY when Mock Status contains:
+
+   Full Attended
+   OR
+   Partially Attended
+
+   Everything else = Absent
+========================================================= */
 
 function normalizeExam(value) {
 
-  const s =
-    norm(value)
-      .toLowerCase();
-
-
-  /*
-    ONLY:
-
-    Full Attended
-    Partially Attended
-
-    are Present.
-
-    Everything else = Absent.
-  */
+  const s = norm(value).toLowerCase();
 
   if (
     s.includes('full attended') ||
     s.includes('partially attended')
   ) {
-
     return 'Present';
-
   }
-
 
   return 'Absent';
 
 }
 
 
-/* ========================================
-   ASSIGNMENT
-======================================== */
+/* =========================================================
+   ASSIGNMENT STATUS
+========================================================= */
 
 function normalizeAssignment(value) {
 
-  const s =
-    norm(value)
-      .toLowerCase();
-
+  const s = norm(value).toLowerCase();
 
   if (
     s.includes('submitted') ||
@@ -1052,27 +892,21 @@ function normalizeAssignment(value) {
     s === 'true' ||
     s === '1'
   ) {
-
     return 'Submitted';
-
   }
-
 
   return 'Not Submitted';
 
 }
 
 
-/* ========================================
-   RE-REG
-======================================== */
+/* =========================================================
+   RE-REGISTRATION STATUS
+========================================================= */
 
 function normalizeReReg(value) {
 
-  const s =
-    norm(value)
-      .toLowerCase();
-
+  const s = norm(value).toLowerCase();
 
   if (
     s === 'paid' ||
@@ -1081,63 +915,50 @@ function normalizeReReg(value) {
     s === 'completed' ||
     s === 'registered'
   ) {
-
     return 'Done';
-
   }
-
 
   return 'Not Done';
 
 }
 
 
-/* ========================================
+/* =========================================================
    SALES TYPE
-======================================== */
+=========================================================
+
+   IS = Inside Sales
+   DA = Channel
+========================================================= */
 
 function normalizeSalesType(value) {
 
-  const s =
-    key(value);
-
+  const s = key(value);
 
   if (s === 'is') {
-
     return 'Inside Sales';
-
   }
-
 
   if (s === 'da') {
-
     return 'Channel';
-
   }
-
 
   if (!s) {
-
     return 'Other';
-
   }
-
 
   return norm(value);
 
 }
 
 
-/* ========================================
-   NORMALIZE SHEET DATA
-======================================== */
+/* =========================================================
+   NORMALIZE GOOGLE SHEET DATA
+========================================================= */
 
 function normalizeRows(rows) {
 
-  if (
-    !rows ||
-    !rows.length
-  ) {
+  if (!rows || !rows.length) {
 
     throw new Error(
       'Sheet1 is empty.'
@@ -1145,20 +966,13 @@ function normalizeRows(rows) {
 
   }
 
-
   const headers =
-    Object.keys(
-      rows[0]
-    ).map(norm);
+    Object.keys(rows[0]).map(norm);
 
 
-  /*
-    IMPORTANT:
-
-    Batch has been COMPLETELY
-    removed from the required
-    columns.
-  */
+  /* -------------------------
+     COLUMN MAPPING
+  ------------------------- */
 
   const programCol =
     findColumn(
@@ -1181,7 +995,11 @@ function normalizeRows(rows) {
         'Roll No.',
         'Contact Roll No',
         'Contact Roll No.',
-        'Contact_Roll_No'
+        'Contact_Roll_No',
+        'Contact.Roll No',
+        'Contact Roll Number',
+        'Roll_No__c',
+        'Contact__r.Roll_No__c'
       ]
     );
 
@@ -1252,70 +1070,44 @@ function normalizeRows(rows) {
     );
 
 
-  /*
-    Batch is intentionally NOT checked here.
-  */
+  /* -------------------------
+     REQUIRED COLUMNS
+  ------------------------- */
 
   const required = [];
 
 
   if (!programCol) {
-
-    required.push(
-      'Program'
-    );
-
+    required.push('Program');
   }
 
 
   if (!semesterCol) {
-
-    required.push(
-      'Semester'
-    );
-
+    required.push('Semester');
   }
 
 
   if (!mockCol) {
-
-    required.push(
-      'Mock Status'
-    );
-
+    required.push('Mock Status');
   }
 
 
   if (!iaCol) {
-
-    required.push(
-      'IA Status'
-    );
-
+    required.push('IA Status');
   }
 
 
   if (!reregCol) {
-
-    required.push(
-      'Re reg status'
-    );
-
+    required.push('Re reg status');
   }
 
 
   if (!leadCol) {
-
-    required.push(
-      'Lead Name'
-    );
-
+    required.push('Lead Name');
   }
 
 
-  if (
-    required.length
-  ) {
+  if (required.length) {
 
     throw new Error(
       'Missing required column(s): ' +
@@ -1325,138 +1117,114 @@ function normalizeRows(rows) {
   }
 
 
+  /* -------------------------
+     CREATE NORMALIZED ROWS
+  ------------------------- */
+
   return rows
-    .map(
-      row => {
 
-        const rollNo =
-          rollCol
-            ? cleanRollNo(
-                row[rollCol]
-              )
-            : '';
+    .map(row => {
 
+      const rollNo =
+        rollCol
+          ? cleanRollNo(row[rollCol])
+          : '';
 
-        const name =
-          nameCol
-            ? norm(
-                row[nameCol]
-              )
-            : '';
+      const name =
+        nameCol
+          ? norm(row[nameCol])
+          : '';
 
+      const program =
+        norm(row[programCol]);
 
-        const program =
-          norm(
-            row[programCol]
-          );
+      const semester =
+        norm(row[semesterCol]) ||
+        'Not Specified';
 
+      const leadName =
+        norm(row[leadCol]);
 
-        const semester =
-          norm(
-            row[semesterCol]
-          ) ||
-          'Not Specified';
+      const mockStatus =
+        norm(row[mockCol]);
 
+      const iaStatus =
+        norm(row[iaCol]);
 
-        const leadName =
-          norm(
-            row[leadCol]
-          );
+      const reRegRaw =
+        norm(row[reregCol]);
 
 
-        const mockStatus =
-          norm(
-            row[mockCol]
-          );
+      return {
 
+        rollNo,
 
-        const iaStatus =
-          norm(
-            row[iaCol]
-          );
+        name,
 
+        program,
 
-        const reRegRaw =
-          norm(
-            row[reregCol]
-          );
+        semester,
 
+        leadName,
 
-        return {
+        salesType:
+          normalizeSalesType(
+            leadName
+          ),
 
-          rollNo,
+        mockStatus,
 
-          name,
+        examAttendance:
+          normalizeExam(
+            mockStatus
+          ),
 
-          program,
+        iaStatus,
 
-          semester,
+        assignment:
+          normalizeAssignment(
+            iaStatus
+          ),
 
-          leadName,
+        reRegRaw,
 
-          salesType:
-            normalizeSalesType(
-              leadName
-            ),
+        reReg:
+          normalizeReReg(
+            reRegRaw
+          )
 
-          mockStatus,
+      };
 
-          examAttendance:
-            normalizeExam(
-              mockStatus
-            ),
+    })
 
-          iaStatus,
-
-          assignment:
-            normalizeAssignment(
-              iaStatus
-            ),
-
-          reRegRaw,
-
-          reReg:
-            normalizeReReg(
-              reRegRaw
-            )
-
-        };
-
-      }
-    )
-    .filter(
-      row =>
-        row.rollNo ||
-        row.name ||
-        row.program
+    .filter(row =>
+      row.rollNo ||
+      row.name ||
+      row.program
     );
 
 }
 
 
-/* ========================================
+/* =========================================================
    GOOGLE SHEET URL
-======================================== */
+========================================================= */
 
 function googleSheetCsvUrl() {
 
   return (
     'https://docs.google.com/spreadsheets/d/' +
-    encodeURIComponent(
-      GOOGLE_SHEET_ID
-    ) +
+    encodeURIComponent(GOOGLE_SHEET_ID) +
     '/gviz/tq?tqx=out:csv&sheet=' +
-    encodeURIComponent(
-      SHEET_NAME
-    )
+    encodeURIComponent(SHEET_NAME)
   );
 
 }
 
 
-/* ========================================
-   FETCH SHEET
-======================================== */
+/* =========================================================
+   FETCH GOOGLE SHEET
+========================================================= */
 
 async function fetchSheet() {
 
@@ -1469,9 +1237,7 @@ async function fetchSheet() {
     );
 
 
-  if (
-    !response.ok
-  ) {
+  if (!response.ok) {
 
     throw new Error(
       'Could not read Google Sheet. HTTP ' +
@@ -1485,9 +1251,7 @@ async function fetchSheet() {
     await response.text();
 
 
-  if (
-    !csv.trim()
-  ) {
+  if (!csv.trim()) {
 
     throw new Error(
       'Google Sheet is empty.'
@@ -1523,9 +1287,9 @@ async function fetchSheet() {
 }
 
 
-/* ========================================
-   FILTER OPTIONS
-======================================== */
+/* =========================================================
+   UNIQUE FILTER VALUES
+========================================================= */
 
 function uniqueSorted(field) {
 
@@ -1533,9 +1297,7 @@ function uniqueSorted(field) {
     [
       ...new Set(
         RAW
-          .map(
-            row => row[field]
-          )
+          .map(row => row[field])
           .filter(Boolean)
       )
     ];
@@ -1556,6 +1318,10 @@ function uniqueSorted(field) {
 }
 
 
+/* =========================================================
+   POPULATE FILTERS
+========================================================= */
+
 function populateFilters() {
 
   populateSelect(
@@ -1574,6 +1340,10 @@ function populateFilters() {
 }
 
 
+/* =========================================================
+   POPULATE SELECT
+========================================================= */
+
 function populateSelect(
   id,
   values,
@@ -1583,59 +1353,40 @@ function populateSelect(
   const select =
     document.getElementById(id);
 
-
   const oldValue =
     select.value;
 
 
   select.innerHTML =
-    `<option value="">
-      ${firstText}
-    </option>`;
+    `<option value="">${firstText}</option>`;
 
 
-  values.forEach(
-    value => {
+  values.forEach(value => {
 
-      const option =
-        document.createElement(
-          'option'
-        );
+    const option =
+      document.createElement('option');
 
+    option.value = value;
 
-      option.value =
-        value;
+    option.textContent = value;
 
+    select.appendChild(option);
 
-      option.textContent =
-        value;
+  });
 
 
-      select.appendChild(
-        option
-      );
+  if (values.includes(oldValue)) {
 
-    }
-  );
-
-
-  if (
-    values.includes(
-      oldValue
-    )
-  ) {
-
-    select.value =
-      oldValue;
+    select.value = oldValue;
 
   }
 
 }
 
 
-/* ========================================
-   FILTERS
-======================================== */
+/* =========================================================
+   GET CURRENT FILTERS
+========================================================= */
 
 function getFilters() {
 
@@ -1670,13 +1421,17 @@ function getFilters() {
       document.getElementById(
         'searchInput'
       ).value
-        .toLowerCase()
-        .trim()
+      .toLowerCase()
+      .trim()
 
   };
 
 }
 
+
+/* =========================================================
+   ROW FILTER
+========================================================= */
 
 function rowMatches(
   row,
@@ -1686,63 +1441,46 @@ function rowMatches(
 
   if (
     filters.program &&
-    row.program !==
-      filters.program
+    row.program !== filters.program
   ) {
-
     return false;
-
   }
 
 
   if (
     !ignoreSemester &&
     filters.semester &&
-    row.semester !==
-      filters.semester
+    row.semester !== filters.semester
   ) {
-
     return false;
-
   }
 
 
   if (
     filters.exam &&
-    row.examAttendance !==
-      filters.exam
+    row.examAttendance !== filters.exam
   ) {
-
     return false;
-
   }
 
 
   if (
     filters.assignment &&
-    row.assignment !==
-      filters.assignment
+    row.assignment !== filters.assignment
   ) {
-
     return false;
-
   }
 
 
   if (
     filters.rereg &&
-    row.reReg !==
-      filters.rereg
+    row.reReg !== filters.rereg
   ) {
-
     return false;
-
   }
 
 
-  if (
-    filters.search
-  ) {
+  if (filters.search) {
 
     const searchable =
       (
@@ -1757,9 +1495,7 @@ function rowMatches(
         filters.search
       )
     ) {
-
       return false;
-
     }
 
   }
@@ -1769,6 +1505,10 @@ function rowMatches(
 
 }
 
+
+/* =========================================================
+   GET FILTERED ROWS
+========================================================= */
 
 function getFilteredRows() {
 
@@ -1788,9 +1528,9 @@ function getFilteredRows() {
 }
 
 
-/* ========================================
-   KPI
-======================================== */
+/* =========================================================
+   KPI RENDER
+========================================================= */
 
 function renderKPIs() {
 
@@ -1805,24 +1545,21 @@ function renderKPIs() {
   const exam =
     rows.filter(
       row =>
-        row.examAttendance ===
-        'Present'
+        row.examAttendance === 'Present'
     ).length;
 
 
   const assignment =
     rows.filter(
       row =>
-        row.assignment ===
-        'Submitted'
+        row.assignment === 'Submitted'
     ).length;
 
 
   const done =
     rows.filter(
       row =>
-        row.reReg ===
-        'Done'
+        row.reReg === 'Done'
     ).length;
 
 
@@ -1832,9 +1569,7 @@ function renderKPIs() {
 
   const percentage =
     total
-      ? done /
-        total *
-        100
+      ? done / total * 100
       : 0;
 
 
@@ -1871,15 +1606,14 @@ function renderKPIs() {
   document.getElementById(
     'kpiPercent'
   ).textContent =
-    percentage.toFixed(1) +
-    '%';
+    percentage.toFixed(1) + '%';
 
 }
 
 
-/* ========================================
-   SEMESTER ANALYSIS
-======================================== */
+/* =========================================================
+   SEMESTER-WISE PERFORMANCE
+========================================================= */
 
 function renderSemesterAnalysis() {
 
@@ -1888,8 +1622,10 @@ function renderSemesterAnalysis() {
 
 
   /*
-    Ignore selected semester so
-    all semesters remain visible.
+    Important:
+    Semester filter is ignored here
+    so all semester rows remain visible
+    while other filters continue to apply.
   */
 
   const rows =
@@ -1907,75 +1643,56 @@ function renderSemesterAnalysis() {
     new Map();
 
 
-  rows.forEach(
-    row => {
+  rows.forEach(row => {
 
-      const semester =
-        row.semester ||
-        'Not Specified';
-
-
-      if (
-        !map.has(
-          semester
-        )
-      ) {
-
-        map.set(
-          semester,
-          {
-
-            total:0,
-            exam:0,
-            assignment:0,
-            rereg:0
-
-          }
-        );
-
-      }
+    const semester =
+      row.semester ||
+      'Not Specified';
 
 
-      const item =
-        map.get(
-          semester
-        );
+    if (!map.has(semester)) {
 
-
-      item.total++;
-
-
-      if (
-        row.examAttendance ===
-        'Present'
-      ) {
-
-        item.exam++;
-
-      }
-
-
-      if (
-        row.assignment ===
-        'Submitted'
-      ) {
-
-        item.assignment++;
-
-      }
-
-
-      if (
-        row.reReg ===
-        'Done'
-      ) {
-
-        item.rereg++;
-
-      }
+      map.set(
+        semester,
+        {
+          total:0,
+          exam:0,
+          assignment:0,
+          rereg:0
+        }
+      );
 
     }
-  );
+
+
+    const item =
+      map.get(semester);
+
+
+    item.total++;
+
+
+    if (
+      row.examAttendance === 'Present'
+    ) {
+      item.exam++;
+    }
+
+
+    if (
+      row.assignment === 'Submitted'
+    ) {
+      item.assignment++;
+    }
+
+
+    if (
+      row.reReg === 'Done'
+    ) {
+      item.rereg++;
+    }
+
+  });
 
 
   const semesters =
@@ -1997,21 +1714,14 @@ function renderSemesterAnalysis() {
     );
 
 
-  if (
-    !semesters.length
-  ) {
+  if (!semesters.length) {
 
     tbody.innerHTML =
-      `
-        <tr>
-          <td
-            colspan="8"
-            class="empty"
-          >
-            No data available.
-          </td>
-        </tr>
-      `;
+      `<tr>
+        <td colspan="8" class="empty">
+          No data available.
+        </td>
+      </tr>`;
 
     return;
 
@@ -2027,9 +1737,7 @@ function renderSemesterAnalysis() {
       semester => {
 
         const item =
-          map.get(
-            semester
-          );
+          map.get(semester);
 
 
         const examPct =
@@ -2057,27 +1765,17 @@ function renderSemesterAnalysis() {
 
 
         const selected =
-          selectedSemester ===
-          semester
-            ? 'selected'
-            : '';
+          selectedSemester === semester;
 
 
         return `
-          <tr
-            class="semester-row ${selected}"
-          >
+
+          <tr>
 
             <td>
-
-              <span
-                class="badge badge-blue"
-              >
-                ${escapeHtml(
-                  semester
-                )}
+              <span class="badge badge-blue">
+                ${escapeHtml(semester)}
               </span>
-
             </td>
 
             <td>
@@ -2109,6 +1807,7 @@ function renderSemesterAnalysis() {
             </td>
 
           </tr>
+
         `;
 
       }
@@ -2117,9 +1816,28 @@ function renderSemesterAnalysis() {
 }
 
 
-/* ========================================
-   SALES TYPE
-======================================== */
+/* =========================================================
+   SALES TYPE BIFURCATION — SEMESTER WISE
+=========================================================
+
+   For every semester:
+
+   Inside Sales:
+     Total
+     Exam Attended
+     Exam Not Attended
+     Assignment Submitted
+     Assignment Not Submitted
+     Re-Reg Done
+     Re-Reg Not Done
+
+   Channel:
+     Same breakdown
+
+   Other:
+     Same breakdown
+
+========================================================= */
 
 function renderSalesType() {
 
@@ -2128,9 +1846,10 @@ function renderSalesType() {
 
 
   /*
-    Ignore semester filter so
-    semester-wise bifurcation
-    remains visible.
+    Ignore semester filter here so
+    the table remains semester-wise.
+
+    All other filters continue to apply.
   */
 
   const rows =
@@ -2148,64 +1867,115 @@ function renderSalesType() {
     new Map();
 
 
-  rows.forEach(
-    row => {
+  rows.forEach(row => {
 
-      const semester =
-        row.semester ||
-        'Not Specified';
-
-
-      if (
-        !map.has(
-          semester
-        )
-      ) {
-
-        map.set(
-          semester,
-          {
-
-            inside:0,
-            channel:0,
-            other:0
-
-          }
-        );
-
-      }
+    const semester =
+      row.semester ||
+      'Not Specified';
 
 
-      const item =
-        map.get(
-          semester
-        );
+    const salesType =
+      row.salesType ||
+      'Other';
 
 
-      if (
-        row.salesType ===
-        'Inside Sales'
-      ) {
+    if (!map.has(semester)) {
 
-        item.inside++;
-
-      }
-      else if (
-        row.salesType ===
-        'Channel'
-      ) {
-
-        item.channel++;
-
-      }
-      else {
-
-        item.other++;
-
-      }
+      map.set(
+        semester,
+        new Map()
+      );
 
     }
-  );
+
+
+    const semesterMap =
+      map.get(semester);
+
+
+    if (!semesterMap.has(salesType)) {
+
+      semesterMap.set(
+        salesType,
+        {
+          total:0,
+
+          examAttended:0,
+          examNotAttended:0,
+
+          assignmentSubmitted:0,
+          assignmentNotSubmitted:0,
+
+          reRegDone:0,
+          reRegNotDone:0
+        }
+      );
+
+    }
+
+
+    const item =
+      semesterMap.get(salesType);
+
+
+    /* -------------------------
+       TOTAL
+    ------------------------- */
+
+    item.total++;
+
+
+    /* -------------------------
+       EXAM
+    ------------------------- */
+
+    if (
+      row.examAttendance === 'Present'
+    ) {
+
+      item.examAttended++;
+
+    } else {
+
+      item.examNotAttended++;
+
+    }
+
+
+    /* -------------------------
+       ASSIGNMENT
+    ------------------------- */
+
+    if (
+      row.assignment === 'Submitted'
+    ) {
+
+      item.assignmentSubmitted++;
+
+    } else {
+
+      item.assignmentNotSubmitted++;
+
+    }
+
+
+    /* -------------------------
+       RE-REG
+    ------------------------- */
+
+    if (
+      row.reReg === 'Done'
+    ) {
+
+      item.reRegDone++;
+
+    } else {
+
+      item.reRegNotDone++;
+
+    }
+
+  });
 
 
   const semesters =
@@ -2215,7 +1985,8 @@ function renderSalesType() {
           String(b),
           undefined,
           {
-            numeric:true
+            numeric:true,
+            sensitivity:'base'
           }
         )
     );
@@ -2227,88 +1998,141 @@ function renderSalesType() {
     );
 
 
-  if (
-    !semesters.length
-  ) {
+  if (!semesters.length) {
 
     tbody.innerHTML =
-      `
-        <tr>
-          <td
-            colspan="5"
-            class="empty"
-          >
-            No data available.
-          </td>
-        </tr>
-      `;
+      `<tr>
+        <td colspan="9" class="empty">
+          No data available.
+        </td>
+      </tr>`;
 
     return;
 
   }
 
 
-  tbody.innerHTML =
-    semesters.map(
-      semester => {
+  /*
+    Fixed display order.
+  */
 
-        const item =
-          map.get(
-            semester
-          );
-
-
-        const total =
-          item.inside +
-          item.channel +
-          item.other;
+  const salesOrder = [
+    'Inside Sales',
+    'Channel',
+    'Other'
+  ];
 
 
-        return `
-          <tr>
+  let html = '';
 
-            <td>
 
-              <span
-                class="badge badge-blue"
-              >
-                ${escapeHtml(
-                  semester
-                )}
-              </span>
+  semesters.forEach(semester => {
 
-            </td>
+    const semesterMap =
+      map.get(semester);
 
-            <td class="sales-inside">
-              ${item.inside.toLocaleString()}
-            </td>
 
-            <td class="sales-channel">
-              ${item.channel.toLocaleString()}
-            </td>
+    salesOrder.forEach(salesType => {
 
-            <td class="sales-other">
-              ${item.other.toLocaleString()}
-            </td>
+      if (!semesterMap.has(salesType)) {
+        return;
+      }
 
-            <td>
-              <strong>
-                ${total.toLocaleString()}
-              </strong>
-            </td>
 
-          </tr>
-        `;
+      const item =
+        semesterMap.get(salesType);
+
+
+      let salesClass =
+        'sales-other';
+
+
+      if (
+        salesType === 'Inside Sales'
+      ) {
+
+        salesClass =
+          'sales-inside';
+
+      } else if (
+        salesType === 'Channel'
+      ) {
+
+        salesClass =
+          'sales-channel';
 
       }
-    ).join('');
+
+
+      html += `
+
+        <tr>
+
+          <td>
+            <span class="badge badge-blue">
+              ${escapeHtml(semester)}
+            </span>
+          </td>
+
+          <td class="${salesClass}">
+            ${escapeHtml(salesType)}
+          </td>
+
+          <td class="sales-total">
+            ${item.total.toLocaleString()}
+          </td>
+
+          <td>
+            ${item.examAttended.toLocaleString()}
+          </td>
+
+          <td>
+            ${item.examNotAttended.toLocaleString()}
+          </td>
+
+          <td>
+            ${item.assignmentSubmitted.toLocaleString()}
+          </td>
+
+          <td>
+            ${item.assignmentNotSubmitted.toLocaleString()}
+          </td>
+
+          <td>
+            ${item.reRegDone.toLocaleString()}
+          </td>
+
+          <td>
+            ${item.reRegNotDone.toLocaleString()}
+          </td>
+
+        </tr>
+
+      `;
+
+    });
+
+  });
+
+
+  tbody.innerHTML = html || `
+
+    <tr>
+
+      <td colspan="9" class="empty">
+        No data available.
+      </td>
+
+    </tr>
+
+  `;
 
 }
 
 
-/* ========================================
+/* =========================================================
    STATUS COMBINATIONS
-======================================== */
+========================================================= */
 
 function renderCombinations() {
 
@@ -2319,36 +2143,28 @@ function renderCombinations() {
   const combinations = {};
 
 
-  rows.forEach(
-    row => {
+  rows.forEach(row => {
 
-      const combination =
-        row.examAttendance +
-        ' + ' +
-        row.assignment +
-        ' + ' +
-        row.reReg;
-
-
-      if (
-        !combinations[
-          combination
-        ]
-      ) {
-
-        combinations[
-          combination
-        ] = 0;
-
-      }
+    const combination =
+      row.examAttendance +
+      ' + ' +
+      row.assignment +
+      ' + ' +
+      row.reReg;
 
 
-      combinations[
-        combination
-      ]++;
+    if (
+      !combinations[combination]
+    ) {
+
+      combinations[combination] = 0;
 
     }
-  );
+
+
+    combinations[combination]++;
+
+  });
 
 
   const ordered = [
@@ -2382,14 +2198,27 @@ function renderCombinations() {
     );
 
 
+  if (!total) {
+
+    tbody.innerHTML =
+      `<tr>
+        <td colspan="4" class="empty">
+          No data available.
+        </td>
+      </tr>`;
+
+    return;
+
+  }
+
+
   tbody.innerHTML =
     ordered.map(
       combination => {
 
         const count =
-          combinations[
-            combination
-          ] || 0;
+          combinations[combination] ||
+          0;
 
 
         const percentage =
@@ -2401,10 +2230,11 @@ function renderCombinations() {
 
 
         return `
+
           <tr>
 
             <td>
-              ${combination}
+              ${escapeHtml(combination)}
             </td>
 
             <td>
@@ -2415,19 +2245,13 @@ function renderCombinations() {
               ${percentage.toFixed(1)}%
             </td>
 
-            <td
-              style="min-width:220px"
-            >
+            <td style="min-width:220px">
 
-              <div
-                class="combination-bar"
-              >
+              <div class="combination-bar">
 
                 <div
                   class="combination-fill"
-                  style="
-                    width:${percentage}%;
-                  "
+                  style="width:${percentage}%"
                 ></div>
 
               </div>
@@ -2435,6 +2259,7 @@ function renderCombinations() {
             </td>
 
           </tr>
+
         `;
 
       }
@@ -2443,9 +2268,9 @@ function renderCombinations() {
 }
 
 
-/* ========================================
+/* =========================================================
    LEARNER DETAILS
-======================================== */
+========================================================= */
 
 function renderLearners() {
 
@@ -2459,24 +2284,14 @@ function renderLearners() {
     );
 
 
-  if (
-    !rows.length
-  ) {
+  if (!rows.length) {
 
     tbody.innerHTML =
-      `
-        <tr>
-
-          <td
-            colspan="8"
-            class="empty"
-          >
-            No learners match the
-            selected filters.
-          </td>
-
-        </tr>
-      `;
+      `<tr>
+        <td colspan="8" class="empty">
+          No learners match the selected filters.
+        </td>
+      </tr>`;
 
     return;
 
@@ -2484,143 +2299,117 @@ function renderLearners() {
 
 
   tbody.innerHTML =
-    rows.map(
-      row => {
+    rows.map(row => {
 
-        const examClass =
-          row.examAttendance ===
-          'Present'
-            ? 'badge-green'
-            : 'badge-red';
+      const examClass =
+        row.examAttendance === 'Present'
+          ? 'badge-green'
+          : 'badge-red';
 
 
-        const assignmentClass =
-          row.assignment ===
-          'Submitted'
-            ? 'badge-green'
-            : 'badge-red';
+      const assignmentClass =
+        row.assignment === 'Submitted'
+          ? 'badge-green'
+          : 'badge-red';
 
 
-        const reregClass =
-          row.reReg ===
-          'Done'
-            ? 'badge-green'
-            : 'badge-red';
+      const reregClass =
+        row.reReg === 'Done'
+          ? 'badge-green'
+          : 'badge-red';
 
 
-        return `
-          <tr>
+      return `
 
-            <td>
+        <tr>
 
-              <strong>
-                ${escapeHtml(
-                  row.rollNo ||
-                  '—'
-                )}
-              </strong>
-
-            </td>
-
-
-            <td>
+          <td>
+            <strong>
               ${escapeHtml(
-                row.name ||
-                '—'
+                row.rollNo || '—'
               )}
-            </td>
+            </strong>
+          </td>
 
+          <td>
+            ${escapeHtml(
+              row.name || '—'
+            )}
+          </td>
 
-            <td>
-              ${escapeHtml(
-                row.program ||
-                '—'
-              )}
-            </td>
+          <td>
+            ${escapeHtml(
+              row.program || '—'
+            )}
+          </td>
 
+          <td>
+            ${escapeHtml(
+              row.salesType || 'Other'
+            )}
+          </td>
 
-            <td>
-              ${escapeHtml(
-                row.salesType ||
-                'Other'
-              )}
-            </td>
+          <td>
+            <span class="badge ${examClass}">
+              ${row.examAttendance}
+            </span>
+          </td>
 
+          <td>
+            <span class="badge ${assignmentClass}">
+              ${row.assignment}
+            </span>
+          </td>
 
-            <td>
+          <td>
+            ${escapeHtml(
+              row.semester || '—'
+            )}
+          </td>
 
-              <span
-                class="badge ${examClass}"
-              >
-                ${row.examAttendance}
-              </span>
+          <td>
+            <span class="badge ${reregClass}">
+              ${row.reReg}
+            </span>
+          </td>
 
-            </td>
+        </tr>
 
+      `;
 
-            <td>
-
-              <span
-                class="badge ${assignmentClass}"
-              >
-                ${row.assignment}
-              </span>
-
-            </td>
-
-
-            <td>
-              ${escapeHtml(
-                row.semester ||
-                '—'
-              )}
-            </td>
-
-
-            <td>
-
-              <span
-                class="badge ${reregClass}"
-              >
-                ${row.reReg}
-              </span>
-
-            </td>
-
-          </tr>
-        `;
-
-      }
-    ).join('');
+    }).join('');
 
 }
 
 
-/* ========================================
-   ESCAPE HTML
-======================================== */
+/* =========================================================
+   HTML ESCAPE
+========================================================= */
 
 function escapeHtml(value) {
 
-  return String(
-    value ?? ''
-  )
+  return String(value ?? '')
+
     .replace(
       /&/g,
       '&amp;'
     )
+
     .replace(
       /</g,
       '&lt;'
     )
+
     .replace(
       />/g,
       '&gt;'
     )
+
     .replace(
       /"/g,
       '&quot;'
     )
+
     .replace(
       /'/g,
       '&#039;'
@@ -2629,9 +2418,9 @@ function escapeHtml(value) {
 }
 
 
-/* ========================================
-   RENDER
-======================================== */
+/* =========================================================
+   RENDER EVERYTHING
+========================================================= */
 
 function renderAll() {
 
@@ -2648,18 +2437,14 @@ function renderAll() {
 }
 
 
-/* ========================================
+/* =========================================================
    LOAD DATA
-======================================== */
+========================================================= */
 
 async function loadData() {
 
-  if (
-    refreshBusy
-  ) {
-
+  if (refreshBusy) {
     return;
-
   }
 
 
@@ -2679,13 +2464,10 @@ async function loadData() {
 
 
     RAW =
-      normalizeRows(
-        rows
-      );
+      normalizeRows(rows);
 
 
     populateFilters();
-
 
     renderAll();
 
@@ -2693,14 +2475,17 @@ async function loadData() {
     document.getElementById(
       'connectionStatus'
     ).textContent =
+
       'Google Sheet connected · ' +
+
       RAW.length.toLocaleString() +
+
       ' students · Last refreshed ' +
+
       new Date().toLocaleTimeString();
 
 
-  }
-  catch(error) {
+  } catch (error) {
 
     console.error(error);
 
@@ -2708,11 +2493,11 @@ async function loadData() {
     document.getElementById(
       'connectionStatus'
     ).textContent =
+
       'Google Sheet error: ' +
       error.message;
 
-  }
-  finally {
+  } finally {
 
     refreshBusy = false;
 
@@ -2721,9 +2506,9 @@ async function loadData() {
 }
 
 
-/* ========================================
-   RESET
-======================================== */
+/* =========================================================
+   RESET FILTERS
+========================================================= */
 
 document.getElementById(
   'resetBtn'
@@ -2767,9 +2552,9 @@ document.getElementById(
 );
 
 
-/* ========================================
+/* =========================================================
    FILTER EVENTS
-======================================== */
+========================================================= */
 
 [
   'programFilter',
@@ -2777,19 +2562,21 @@ document.getElementById(
   'examFilter',
   'assignmentFilter',
   'reregFilter'
-].forEach(
-  id => {
+].forEach(id => {
 
-    document.getElementById(
-      id
-    ).addEventListener(
-      'change',
-      renderAll
-    );
+  document.getElementById(
+    id
+  ).addEventListener(
+    'change',
+    renderAll
+  );
 
-  }
-);
+});
 
+
+/* =========================================================
+   SEARCH EVENT
+========================================================= */
 
 document.getElementById(
   'searchInput'
@@ -2799,12 +2586,16 @@ document.getElementById(
 );
 
 
-/* ========================================
-   START
-======================================== */
+/* =========================================================
+   INITIAL LOAD
+========================================================= */
 
 loadData();
 
+
+/* =========================================================
+   AUTO REFRESH
+========================================================= */
 
 refreshTimer =
   setInterval(
@@ -2813,9 +2604,11 @@ refreshTimer =
   );
 
 
+/* Initial empty render */
 renderAll();
 
 </script>
 
 </body>
 </html>
+```
