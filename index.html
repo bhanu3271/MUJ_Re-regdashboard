@@ -50,7 +50,6 @@ header {
   background:linear-gradient(160deg,var(--navy-deep),var(--navy));
   color:white;
   padding:24px 2.5%;
-  margin-bottom:0;
 }
 
 header h1 {
@@ -62,6 +61,12 @@ header p {
   margin-top:8px;
   color:#d9e3ed;
   font-size:14px;
+}
+
+.connection-status {
+  margin-top:12px;
+  font-size:12px;
+  color:#d9e3ed;
 }
 
 /* NAV */
@@ -96,14 +101,6 @@ header p {
   background:var(--gold);
   color:#182b40;
   border-color:var(--gold);
-}
-
-/* STATUS */
-
-.connection-status {
-  margin-top:12px;
-  font-size:12px;
-  color:#d9e3ed;
 }
 
 /* KPI */
@@ -268,7 +265,7 @@ tbody tr:hover {
   color:var(--navy);
 }
 
-/* SEMESTER TABLE */
+/* SEMESTER */
 
 .semester-row {
   cursor:pointer;
@@ -282,7 +279,7 @@ tbody tr:hover {
   font-weight:bold;
 }
 
-/* SALES MATRIX */
+/* SALES */
 
 .sales-table th,
 .sales-table td {
@@ -398,21 +395,31 @@ footer {
 
   <p>Aug - Sep 2026</p>
 
-  <div id="connectionStatus" class="connection-status">
+  <div
+    id="connectionStatus"
+    class="connection-status"
+  >
     Connecting to Google Sheet…
   </div>
 
 </header>
 
+
 <div class="page-nav">
 
   <div class="page-nav-wrap">
 
-    <a href="index.html" class="page-link active">
+    <a
+      href="index.html"
+      class="page-link active"
+    >
       Page 1 · Learner Dashboard
     </a>
 
-    <a href="page2.html" class="page-link">
+    <a
+      href="page2.html"
+      class="page-link"
+    >
       Page 2 · Re-Registration Analysis
     </a>
 
@@ -420,7 +427,9 @@ footer {
 
 </div>
 
+
 <div class="container">
+
 
   <!-- KPI -->
 
@@ -428,32 +437,67 @@ footer {
 
     <div class="card">
       <h3>Total Learners</h3>
-      <div class="number" id="kpiTotal">0</div>
+      <div
+        class="number"
+        id="kpiTotal"
+      >
+        0
+      </div>
     </div>
+
 
     <div class="card">
       <h3>Exam Attended</h3>
-      <div class="number" id="kpiExam">0</div>
+      <div
+        class="number"
+        id="kpiExam"
+      >
+        0
+      </div>
     </div>
+
 
     <div class="card">
       <h3>Assignment Submitted</h3>
-      <div class="number" id="kpiAssignment">0</div>
+      <div
+        class="number"
+        id="kpiAssignment"
+      >
+        0
+      </div>
     </div>
+
 
     <div class="card">
       <h3>Re-Reg Done</h3>
-      <div class="number" id="kpiDone">0</div>
+      <div
+        class="number"
+        id="kpiDone"
+      >
+        0
+      </div>
     </div>
+
 
     <div class="card">
       <h3>Re-Reg Not Done</h3>
-      <div class="number" id="kpiNotDone">0</div>
+      <div
+        class="number"
+        id="kpiNotDone"
+      >
+        0
+      </div>
     </div>
+
 
     <div class="card">
       <h3>Re-Reg %</h3>
-      <div class="number" id="kpiPercent">0%</div>
+      <div
+        class="number"
+        id="kpiPercent"
+      >
+        0%
+      </div>
     </div>
 
   </div>
@@ -464,37 +508,71 @@ footer {
   <div class="filters">
 
     <select id="programFilter">
-      <option value="">All Programs</option>
+
+      <option value="">
+        All Programs
+      </option>
+
     </select>
 
-    <select id="batchFilter">
-      <option value="">All Batches</option>
-    </select>
 
     <select id="semesterFilter">
-      <option value="">All Semesters</option>
+
+      <option value="">
+        All Semesters
+      </option>
+
     </select>
+
 
     <select id="examFilter">
-      <option value="">All Exam Attendance</option>
-      <option value="Present">Present</option>
-      <option value="Absent">Absent</option>
+
+      <option value="">
+        All Exam Attendance
+      </option>
+
+      <option value="Present">
+        Present
+      </option>
+
+      <option value="Absent">
+        Absent
+      </option>
+
     </select>
+
 
     <select id="assignmentFilter">
-      <option value="">All Assignment Status</option>
-      <option value="Submitted">Submitted</option>
-      <option value="Not Submitted">Not Submitted</option>
+
+      <option value="">
+        All Assignment Status
+      </option>
+
+      <option value="Submitted">
+        Submitted
+      </option>
+
+      <option value="Not Submitted">
+        Not Submitted
+      </option>
+
     </select>
 
-  </div>
-
-  <div class="filters">
 
     <select id="reregFilter">
-      <option value="">All Re-Reg Status</option>
-      <option value="Done">Done</option>
-      <option value="Not Done">Not Done</option>
+
+      <option value="">
+        All Re-Reg Status
+      </option>
+
+      <option value="Done">
+        Done
+      </option>
+
+      <option value="Not Done">
+        Not Done
+      </option>
+
     </select>
 
   </div>
@@ -532,6 +610,7 @@ footer {
       Semester-wise learner, exam attendance, assignment and re-registration performance.
     </div>
 
+
     <div class="table-section">
 
       <table>
@@ -539,14 +618,39 @@ footer {
         <thead>
 
           <tr>
-            <th>Semester</th>
-            <th>Total Learners</th>
-            <th>Exam Attended</th>
-            <th>Exam %</th>
-            <th>Assignment Submitted</th>
-            <th>Assignment %</th>
-            <th>Re-Reg Done</th>
-            <th>Re-Reg %</th>
+
+            <th>
+              Semester
+            </th>
+
+            <th>
+              Total Learners
+            </th>
+
+            <th>
+              Exam Attended
+            </th>
+
+            <th>
+              Exam %
+            </th>
+
+            <th>
+              Assignment Submitted
+            </th>
+
+            <th>
+              Assignment %
+            </th>
+
+            <th>
+              Re-Reg Done
+            </th>
+
+            <th>
+              Re-Reg %
+            </th>
+
           </tr>
 
         </thead>
@@ -572,6 +676,7 @@ footer {
       Sales Type is derived from Lead Name: IS = Inside Sales, DA = Channel.
     </div>
 
+
     <div class="table-section">
 
       <table class="sales-table">
@@ -579,11 +684,27 @@ footer {
         <thead>
 
           <tr>
-            <th>Semester</th>
-            <th>Inside Sales</th>
-            <th>Channel</th>
-            <th>Other</th>
-            <th>Total</th>
+
+            <th>
+              Semester
+            </th>
+
+            <th>
+              Inside Sales
+            </th>
+
+            <th>
+              Channel
+            </th>
+
+            <th>
+              Other
+            </th>
+
+            <th>
+              Total
+            </th>
+
           </tr>
 
         </thead>
@@ -609,6 +730,7 @@ footer {
       Combination of exam attendance, assignment submission and re-registration status.
     </div>
 
+
     <div class="table-section">
 
       <table>
@@ -616,10 +738,23 @@ footer {
         <thead>
 
           <tr>
-            <th>Status Combination</th>
-            <th>Learners</th>
-            <th>Percentage</th>
-            <th>Distribution</th>
+
+            <th>
+              Status Combination
+            </th>
+
+            <th>
+              Learners
+            </th>
+
+            <th>
+              Percentage
+            </th>
+
+            <th>
+              Distribution
+            </th>
+
           </tr>
 
         </thead>
@@ -645,6 +780,7 @@ footer {
       Showing learners based on the selected filters.
     </div>
 
+
     <div class="table-section">
 
       <table>
@@ -652,15 +788,39 @@ footer {
         <thead>
 
           <tr>
-            <th>Roll No</th>
-            <th>Name</th>
-            <th>Program</th>
-            <th>Batch</th>
-            <th>Sales Type</th>
-            <th>Exam Attendance</th>
-            <th>Assignment</th>
-            <th>Current Sem</th>
-            <th>Re-Reg</th>
+
+            <th>
+              Roll No
+            </th>
+
+            <th>
+              Name
+            </th>
+
+            <th>
+              Program
+            </th>
+
+            <th>
+              Sales Type
+            </th>
+
+            <th>
+              Exam Attendance
+            </th>
+
+            <th>
+              Assignment
+            </th>
+
+            <th>
+              Current Sem
+            </th>
+
+            <th>
+              Re-Reg
+            </th>
+
           </tr>
 
         </thead>
@@ -675,19 +835,31 @@ footer {
 
 </div>
 
+
 <footer>
-  Data Source: Google Sheets · Automatically refreshed every 60 seconds
+
+  Data Source: Google Sheets ·
+  Automatically refreshed every 60 seconds
+
 </footer>
 
 
 <script>
 
+
+/* ========================================
+   GOOGLE SHEET
+======================================== */
+
 const GOOGLE_SHEET_ID =
   '1iwtwKK5JAG-qDRnjcMf5GGL5CMBMW9X3QFYtaawvCqg';
 
-const SHEET_NAME = 'Sheet1';
+const SHEET_NAME =
+  'Sheet1';
 
-const REFRESH_MS = 60000;
+const REFRESH_MS =
+  60000;
+
 
 let RAW = [];
 
@@ -696,14 +868,19 @@ let refreshTimer = null;
 let refreshBusy = false;
 
 
-/* =========================
-   BASIC HELPERS
-========================= */
+/* ========================================
+   HELPERS
+======================================== */
 
 function norm(value) {
 
-  if (value === null || value === undefined) {
+  if (
+    value === null ||
+    value === undefined
+  ) {
+
     return '';
+
   }
 
   return String(value).trim();
@@ -715,84 +892,127 @@ function key(value) {
 
   return norm(value)
     .toLowerCase()
-    .replace(/[\s._-]+/g, ' ')
+    .replace(/[\s._-]+/g,' ')
     .trim();
 
 }
 
 
-/* =========================
-   HEADER FINDER
-========================= */
+/* ========================================
+   FIND COLUMN
+======================================== */
 
-function findColumn(headers, aliases) {
+function findColumn(
+  headers,
+  aliases
+) {
 
   const normalizedHeaders =
-    headers.map(h => ({
-      original:h,
-      normalized:key(h)
-    }));
+    headers.map(
+      header => ({
 
-  for (const alias of aliases) {
+        original:header,
 
-    const aliasKey = key(alias);
+        normalized:key(header)
 
-    const found = normalizedHeaders.find(
-      h => h.normalized === aliasKey
+      })
     );
 
+
+  for (
+    const alias of aliases
+  ) {
+
+    const aliasKey =
+      key(alias);
+
+
+    const found =
+      normalizedHeaders.find(
+        header =>
+          header.normalized ===
+          aliasKey
+      );
+
+
     if (found) {
+
       return found.original;
+
     }
 
   }
 
+
   return null;
+
 }
 
 
-/* =========================
+/* ========================================
    ROLL NUMBER
-========================= */
+======================================== */
 
 function cleanRollNo(value) {
 
-  if (value === null || value === undefined) {
+  if (
+    value === null ||
+    value === undefined
+  ) {
+
     return '';
+
   }
+
+
+  let result =
+    String(value).trim();
+
 
   /*
-    Google Sheets sometimes returns numeric
-    roll numbers as numbers.
+    Prevent values such as:
 
-    Convert to string and remove unnecessary
-    decimal .0 if present.
+    251450507462.0
+
+    from displaying with .0
   */
 
-  let valueString = String(value).trim();
+  if (
+    /^\d+\.0$/.test(result)
+  ) {
 
-  if (/^\d+\.0$/.test(valueString)) {
-    valueString = valueString.replace(/\.0$/, '');
+    result =
+      result.replace(
+        /\.0$/,
+        ''
+      );
+
   }
 
-  return valueString;
+
+  return result;
 
 }
 
 
-/* =========================
-   EXAM STATUS
-========================= */
+/* ========================================
+   EXAM ATTENDANCE
+======================================== */
 
 function normalizeExam(value) {
 
-  const s = norm(value).toLowerCase();
+  const s =
+    norm(value)
+      .toLowerCase();
+
 
   /*
-    ONLY these two values are Present.
+    ONLY:
 
     Full Attended
     Partially Attended
+
+    are Present.
 
     Everything else = Absent.
   */
@@ -801,21 +1021,27 @@ function normalizeExam(value) {
     s.includes('full attended') ||
     s.includes('partially attended')
   ) {
+
     return 'Present';
+
   }
+
 
   return 'Absent';
 
 }
 
 
-/* =========================
+/* ========================================
    ASSIGNMENT
-========================= */
+======================================== */
 
 function normalizeAssignment(value) {
 
-  const s = norm(value).toLowerCase();
+  const s =
+    norm(value)
+      .toLowerCase();
+
 
   if (
     s.includes('submitted') ||
@@ -831,25 +1057,22 @@ function normalizeAssignment(value) {
 
   }
 
+
   return 'Not Submitted';
 
 }
 
 
-/* =========================
+/* ========================================
    RE-REG
-========================= */
+======================================== */
 
 function normalizeReReg(value) {
 
-  const s = norm(value).toLowerCase();
+  const s =
+    norm(value)
+      .toLowerCase();
 
-  /*
-    Re-registration is considered DONE
-    only when it is paid / completed.
-
-    Partially Paid is NOT treated as Done.
-  */
 
   if (
     s === 'paid' ||
@@ -863,162 +1086,236 @@ function normalizeReReg(value) {
 
   }
 
+
   return 'Not Done';
 
 }
 
 
-/* =========================
+/* ========================================
    SALES TYPE
-========================= */
+======================================== */
 
 function normalizeSalesType(value) {
 
-  const s = key(value);
+  const s =
+    key(value);
+
 
   if (s === 'is') {
+
     return 'Inside Sales';
+
   }
+
 
   if (s === 'da') {
+
     return 'Channel';
+
   }
 
+
   if (!s) {
+
     return 'Other';
+
   }
+
 
   return norm(value);
 
 }
 
 
-/* =========================
-   NORMALIZE DATA
-========================= */
+/* ========================================
+   NORMALIZE SHEET DATA
+======================================== */
 
 function normalizeRows(rows) {
 
-  if (!rows || !rows.length) {
-    throw new Error('Sheet1 is empty.');
+  if (
+    !rows ||
+    !rows.length
+  ) {
+
+    throw new Error(
+      'Sheet1 is empty.'
+    );
+
   }
 
+
   const headers =
-    Object.keys(rows[0]).map(norm);
+    Object.keys(
+      rows[0]
+    ).map(norm);
 
 
-  const rollCol = findColumn(
-    headers,
-    [
-      'Roll No',
-      'Roll Number',
-      'Roll_No',
-      'Roll',
-      'Roll No.',
-      'Contact Roll No',
-      'Contact Roll No.',
-      'Contact_Roll_No'
-    ]
-  );
+  /*
+    IMPORTANT:
+
+    Batch has been COMPLETELY
+    removed from the required
+    columns.
+  */
+
+  const programCol =
+    findColumn(
+      headers,
+      [
+        'Program',
+        'Program Name'
+      ]
+    );
 
 
-  const nameCol = findColumn(
-    headers,
-    [
-      'Learner Name',
-      'Name',
-      'Student Name',
-      'Full Name'
-    ]
-  );
+  const rollCol =
+    findColumn(
+      headers,
+      [
+        'Roll No',
+        'Roll Number',
+        'Roll_No',
+        'Roll',
+        'Roll No.',
+        'Contact Roll No',
+        'Contact Roll No.',
+        'Contact_Roll_No'
+      ]
+    );
 
 
-  const programCol = findColumn(
-    headers,
-    [
-      'Program',
-      'Program Name'
-    ]
-  );
+  const nameCol =
+    findColumn(
+      headers,
+      [
+        'Learner Name',
+        'Name',
+        'Student Name',
+        'Full Name'
+      ]
+    );
 
 
-  const batchCol = findColumn(
-    headers,
-    [
-      'Batch',
-      'Current Batch',
-      'Original Batch'
-    ]
-  );
+  const leadCol =
+    findColumn(
+      headers,
+      [
+        'Lead Name'
+      ]
+    );
 
 
-  const leadCol = findColumn(
-    headers,
-    [
-      'Lead Name'
-    ]
-  );
+  const semesterCol =
+    findColumn(
+      headers,
+      [
+        'Current Semester',
+        'Semester',
+        'Current Sem',
+        'Sem'
+      ]
+    );
 
 
-  const semesterCol = findColumn(
-    headers,
-    [
-      'Current Semester',
-      'Semester',
-      'Current Sem',
-      'Sem'
-    ]
-  );
+  const mockCol =
+    findColumn(
+      headers,
+      [
+        'Mock Status'
+      ]
+    );
 
 
-  const mockCol = findColumn(
-    headers,
-    [
-      'Mock Status'
-    ]
-  );
+  const iaCol =
+    findColumn(
+      headers,
+      [
+        'IA Status'
+      ]
+    );
 
 
-  const iaCol = findColumn(
-    headers,
-    [
-      'IA Status'
-    ]
-  );
+  const reregCol =
+    findColumn(
+      headers,
+      [
+        'Re reg status',
+        'Re-Reg',
+        'Re Reg',
+        'Re-reg',
+        'Re Registration',
+        'Re-Registration',
+        'Rereg'
+      ]
+    );
 
 
-  const reregCol = findColumn(
-    headers,
-    [
-      'Re reg status',
-      'Re-Reg',
-      'Re Reg',
-      'Re-reg',
-      'Re Registration',
-      'Re-Registration',
-      'Rereg'
-    ]
-  );
-
+  /*
+    Batch is intentionally NOT checked here.
+  */
 
   const required = [];
 
-  if (!programCol) required.push('Program');
 
-  if (!batchCol) required.push('Batch');
+  if (!programCol) {
 
-  if (!semesterCol) required.push('Semester');
+    required.push(
+      'Program'
+    );
 
-  if (!mockCol) required.push('Mock Status');
-
-  if (!iaCol) required.push('IA Status');
-
-  if (!reregCol) required.push('Re reg status');
-
-  if (!leadCol) required.push('Lead Name');
+  }
 
 
-  if (required.length) {
+  if (!semesterCol) {
+
+    required.push(
+      'Semester'
+    );
+
+  }
+
+
+  if (!mockCol) {
+
+    required.push(
+      'Mock Status'
+    );
+
+  }
+
+
+  if (!iaCol) {
+
+    required.push(
+      'IA Status'
+    );
+
+  }
+
+
+  if (!reregCol) {
+
+    required.push(
+      'Re reg status'
+    );
+
+  }
+
+
+  if (!leadCol) {
+
+    required.push(
+      'Lead Name'
+    );
+
+  }
+
+
+  if (
+    required.length
+  ) {
 
     throw new Error(
       'Missing required column(s): ' +
@@ -1029,109 +1326,137 @@ function normalizeRows(rows) {
 
 
   return rows
-    .map(row => {
+    .map(
+      row => {
 
-      const rollNo =
-        rollCol
-          ? cleanRollNo(row[rollCol])
-          : '';
-
-
-      const name =
-        nameCol
-          ? norm(row[nameCol])
-          : '';
+        const rollNo =
+          rollCol
+            ? cleanRollNo(
+                row[rollCol]
+              )
+            : '';
 
 
-      const program =
-        norm(row[programCol]);
+        const name =
+          nameCol
+            ? norm(
+                row[nameCol]
+              )
+            : '';
 
 
-      const batch =
-        norm(row[batchCol]);
+        const program =
+          norm(
+            row[programCol]
+          );
 
 
-      const semester =
-        norm(row[semesterCol]) ||
-        'Not Specified';
+        const semester =
+          norm(
+            row[semesterCol]
+          ) ||
+          'Not Specified';
 
 
-      const leadName =
-        norm(row[leadCol]);
+        const leadName =
+          norm(
+            row[leadCol]
+          );
 
 
-      const mockStatus =
-        norm(row[mockCol]);
+        const mockStatus =
+          norm(
+            row[mockCol]
+          );
 
 
-      const iaStatus =
-        norm(row[iaCol]);
+        const iaStatus =
+          norm(
+            row[iaCol]
+          );
 
 
-      const reRegRaw =
-        norm(row[reregCol]);
+        const reRegRaw =
+          norm(
+            row[reregCol]
+          );
 
 
-      return {
+        return {
 
-        rollNo,
+          rollNo,
 
-        name,
+          name,
 
-        program,
+          program,
 
-        batch,
+          semester,
 
-        semester,
+          leadName,
 
-        leadName,
+          salesType:
+            normalizeSalesType(
+              leadName
+            ),
 
-        salesType:
-          normalizeSalesType(leadName),
+          mockStatus,
 
-        mockStatus,
+          examAttendance:
+            normalizeExam(
+              mockStatus
+            ),
 
-        examAttendance:
-          normalizeExam(mockStatus),
+          iaStatus,
 
-        iaStatus,
+          assignment:
+            normalizeAssignment(
+              iaStatus
+            ),
 
-        assignment:
-          normalizeAssignment(iaStatus),
+          reRegRaw,
 
-        reRegRaw,
+          reReg:
+            normalizeReReg(
+              reRegRaw
+            )
 
-        reReg:
-          normalizeReReg(reRegRaw)
+        };
 
-      };
-
-    })
-
-    .filter(row =>
-      row.rollNo ||
-      row.name ||
-      row.program
+      }
+    )
+    .filter(
+      row =>
+        row.rollNo ||
+        row.name ||
+        row.program
     );
 
 }
 
 
-/* =========================
-   GOOGLE SHEET
-========================= */
+/* ========================================
+   GOOGLE SHEET URL
+======================================== */
 
 function googleSheetCsvUrl() {
 
   return (
     'https://docs.google.com/spreadsheets/d/' +
-    encodeURIComponent(GOOGLE_SHEET_ID) +
+    encodeURIComponent(
+      GOOGLE_SHEET_ID
+    ) +
     '/gviz/tq?tqx=out:csv&sheet=' +
-    encodeURIComponent(SHEET_NAME)
+    encodeURIComponent(
+      SHEET_NAME
+    )
   );
 
 }
 
+
+/* ========================================
+   FETCH SHEET
+======================================== */
 
 async function fetchSheet() {
 
@@ -1144,7 +1469,9 @@ async function fetchSheet() {
     );
 
 
-  if (!response.ok) {
+  if (
+    !response.ok
+  ) {
 
     throw new Error(
       'Could not read Google Sheet. HTTP ' +
@@ -1158,7 +1485,9 @@ async function fetchSheet() {
     await response.text();
 
 
-  if (!csv.trim()) {
+  if (
+    !csv.trim()
+  ) {
 
     throw new Error(
       'Google Sheet is empty.'
@@ -1194,18 +1523,23 @@ async function fetchSheet() {
 }
 
 
-/* =========================
+/* ========================================
    FILTER OPTIONS
-========================= */
+======================================== */
 
 function uniqueSorted(field) {
 
   const values =
-    [...new Set(
-      RAW
-        .map(r => r[field])
-        .filter(Boolean)
-    )];
+    [
+      ...new Set(
+        RAW
+          .map(
+            row => row[field]
+          )
+          .filter(Boolean)
+      )
+    ];
+
 
   return values.sort(
     (a,b) =>
@@ -1228,13 +1562,6 @@ function populateFilters() {
     'programFilter',
     uniqueSorted('program'),
     'All Programs'
-  );
-
-
-  populateSelect(
-    'batchFilter',
-    uniqueSorted('batch'),
-    'All Batches'
   );
 
 
@@ -1262,37 +1589,53 @@ function populateSelect(
 
 
   select.innerHTML =
-    `<option value="">${firstText}</option>`;
+    `<option value="">
+      ${firstText}
+    </option>`;
 
 
-  values.forEach(value => {
+  values.forEach(
+    value => {
 
-    const option =
-      document.createElement('option');
+      const option =
+        document.createElement(
+          'option'
+        );
 
-    option.value = value;
 
-    option.textContent = value;
+      option.value =
+        value;
 
-    select.appendChild(option);
 
-  });
+      option.textContent =
+        value;
+
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
 
 
   if (
-    values.includes(oldValue)
+    values.includes(
+      oldValue
+    )
   ) {
 
-    select.value = oldValue;
+    select.value =
+      oldValue;
 
   }
 
 }
 
 
-/* =========================
-   FILTER LOGIC
-========================= */
+/* ========================================
+   FILTERS
+======================================== */
 
 function getFilters() {
 
@@ -1301,11 +1644,6 @@ function getFilters() {
     program:
       document.getElementById(
         'programFilter'
-      ).value,
-
-    batch:
-      document.getElementById(
-        'batchFilter'
       ).value,
 
     semester:
@@ -1332,8 +1670,8 @@ function getFilters() {
       document.getElementById(
         'searchInput'
       ).value
-      .toLowerCase()
-      .trim()
+        .toLowerCase()
+        .trim()
 
   };
 
@@ -1348,54 +1686,63 @@ function rowMatches(
 
   if (
     filters.program &&
-    row.program !== filters.program
+    row.program !==
+      filters.program
   ) {
-    return false;
-  }
 
-
-  if (
-    filters.batch &&
-    row.batch !== filters.batch
-  ) {
     return false;
+
   }
 
 
   if (
     !ignoreSemester &&
     filters.semester &&
-    row.semester !== filters.semester
+    row.semester !==
+      filters.semester
   ) {
+
     return false;
+
   }
 
 
   if (
     filters.exam &&
-    row.examAttendance !== filters.exam
+    row.examAttendance !==
+      filters.exam
   ) {
+
     return false;
+
   }
 
 
   if (
     filters.assignment &&
-    row.assignment !== filters.assignment
+    row.assignment !==
+      filters.assignment
   ) {
+
     return false;
+
   }
 
 
   if (
     filters.rereg &&
-    row.reReg !== filters.rereg
+    row.reReg !==
+      filters.rereg
   ) {
+
     return false;
+
   }
 
 
-  if (filters.search) {
+  if (
+    filters.search
+  ) {
 
     const searchable =
       (
@@ -1441,9 +1788,9 @@ function getFilteredRows() {
 }
 
 
-/* =========================
+/* ========================================
    KPI
-========================= */
+======================================== */
 
 function renderKPIs() {
 
@@ -1457,19 +1804,25 @@ function renderKPIs() {
 
   const exam =
     rows.filter(
-      r => r.examAttendance === 'Present'
+      row =>
+        row.examAttendance ===
+        'Present'
     ).length;
 
 
   const assignment =
     rows.filter(
-      r => r.assignment === 'Submitted'
+      row =>
+        row.assignment ===
+        'Submitted'
     ).length;
 
 
   const done =
     rows.filter(
-      r => r.reReg === 'Done'
+      row =>
+        row.reReg ===
+        'Done'
     ).length;
 
 
@@ -1477,10 +1830,12 @@ function renderKPIs() {
     total - done;
 
 
-  const percent =
+  const percentage =
     total
-      ? ((done / total) * 100).toFixed(1)
-      : '0.0';
+      ? done /
+        total *
+        100
+      : 0;
 
 
   document.getElementById(
@@ -1516,14 +1871,15 @@ function renderKPIs() {
   document.getElementById(
     'kpiPercent'
   ).textContent =
-    percent + '%';
+    percentage.toFixed(1) +
+    '%';
 
 }
 
 
-/* =========================
+/* ========================================
    SEMESTER ANALYSIS
-========================= */
+======================================== */
 
 function renderSemesterAnalysis() {
 
@@ -1532,8 +1888,8 @@ function renderSemesterAnalysis() {
 
 
   /*
-    Ignore semester filter here so
-    the comparison remains semester-wise.
+    Ignore selected semester so
+    all semesters remain visible.
   */
 
   const rows =
@@ -1551,56 +1907,75 @@ function renderSemesterAnalysis() {
     new Map();
 
 
-  rows.forEach(row => {
+  rows.forEach(
+    row => {
 
-    const sem =
-      row.semester ||
-      'Not Specified';
+      const semester =
+        row.semester ||
+        'Not Specified';
 
 
-    if (!map.has(sem)) {
+      if (
+        !map.has(
+          semester
+        )
+      ) {
 
-      map.set(
-        sem,
-        {
-          total:0,
-          exam:0,
-          assignment:0,
-          rereg:0
-        }
-      );
+        map.set(
+          semester,
+          {
+
+            total:0,
+            exam:0,
+            assignment:0,
+            rereg:0
+
+          }
+        );
+
+      }
+
+
+      const item =
+        map.get(
+          semester
+        );
+
+
+      item.total++;
+
+
+      if (
+        row.examAttendance ===
+        'Present'
+      ) {
+
+        item.exam++;
+
+      }
+
+
+      if (
+        row.assignment ===
+        'Submitted'
+      ) {
+
+        item.assignment++;
+
+      }
+
+
+      if (
+        row.reReg ===
+        'Done'
+      ) {
+
+        item.rereg++;
+
+      }
 
     }
-
-
-    const item =
-      map.get(sem);
-
-
-    item.total++;
-
-
-    if (
-      row.examAttendance === 'Present'
-    ) {
-      item.exam++;
-    }
-
-
-    if (
-      row.assignment === 'Submitted'
-    ) {
-      item.assignment++;
-    }
-
-
-    if (
-      row.reReg === 'Done'
-    ) {
-      item.rereg++;
-    }
-
-  });
+  );
 
 
   const semesters =
@@ -1622,14 +1997,21 @@ function renderSemesterAnalysis() {
     );
 
 
-  if (!semesters.length) {
+  if (
+    !semesters.length
+  ) {
 
     tbody.innerHTML =
-      `<tr>
-        <td colspan="8" class="empty">
-          No data available.
-        </td>
-      </tr>`;
+      `
+        <tr>
+          <td
+            colspan="8"
+            class="empty"
+          >
+            No data available.
+          </td>
+        </tr>
+      `;
 
     return;
 
@@ -1642,43 +2024,60 @@ function renderSemesterAnalysis() {
 
   tbody.innerHTML =
     semesters.map(
-      sem => {
+      semester => {
 
         const item =
-          map.get(sem);
+          map.get(
+            semester
+          );
 
 
         const examPct =
           item.total
-            ? item.exam / item.total * 100
+            ? item.exam /
+              item.total *
+              100
             : 0;
 
 
         const assignmentPct =
           item.total
-            ? item.assignment / item.total * 100
+            ? item.assignment /
+              item.total *
+              100
             : 0;
 
 
         const reregPct =
           item.total
-            ? item.rereg / item.total * 100
+            ? item.rereg /
+              item.total *
+              100
             : 0;
 
 
         const selected =
-          selectedSemester === sem
+          selectedSemester ===
+          semester
             ? 'selected'
             : '';
 
 
         return `
-          <tr class="semester-row ${selected}">
+          <tr
+            class="semester-row ${selected}"
+          >
 
             <td>
-              <span class="badge badge-blue">
-                ${sem}
+
+              <span
+                class="badge badge-blue"
+              >
+                ${escapeHtml(
+                  semester
+                )}
               </span>
+
             </td>
 
             <td>
@@ -1718,9 +2117,9 @@ function renderSemesterAnalysis() {
 }
 
 
-/* =========================
+/* ========================================
    SALES TYPE
-========================= */
+======================================== */
 
 function renderSalesType() {
 
@@ -1729,8 +2128,9 @@ function renderSalesType() {
 
 
   /*
-    Ignore semester filter so all
-    semesters are visible.
+    Ignore semester filter so
+    semester-wise bifurcation
+    remains visible.
   */
 
   const rows =
@@ -1748,52 +2148,64 @@ function renderSalesType() {
     new Map();
 
 
-  rows.forEach(row => {
+  rows.forEach(
+    row => {
 
-    const semester =
-      row.semester ||
-      'Not Specified';
+      const semester =
+        row.semester ||
+        'Not Specified';
 
 
-    if (!map.has(semester)) {
+      if (
+        !map.has(
+          semester
+        )
+      ) {
 
-      map.set(
-        semester,
-        {
-          inside:0,
-          channel:0,
-          other:0
-        }
-      );
+        map.set(
+          semester,
+          {
+
+            inside:0,
+            channel:0,
+            other:0
+
+          }
+        );
+
+      }
+
+
+      const item =
+        map.get(
+          semester
+        );
+
+
+      if (
+        row.salesType ===
+        'Inside Sales'
+      ) {
+
+        item.inside++;
+
+      }
+      else if (
+        row.salesType ===
+        'Channel'
+      ) {
+
+        item.channel++;
+
+      }
+      else {
+
+        item.other++;
+
+      }
 
     }
-
-
-    const item =
-      map.get(semester);
-
-
-    if (
-      row.salesType === 'Inside Sales'
-    ) {
-
-      item.inside++;
-
-    }
-    else if (
-      row.salesType === 'Channel'
-    ) {
-
-      item.channel++;
-
-    }
-    else {
-
-      item.other++;
-
-    }
-
-  });
+  );
 
 
   const semesters =
@@ -1815,14 +2227,21 @@ function renderSalesType() {
     );
 
 
-  if (!semesters.length) {
+  if (
+    !semesters.length
+  ) {
 
     tbody.innerHTML =
-      `<tr>
-        <td colspan="5" class="empty">
-          No data available.
-        </td>
-      </tr>`;
+      `
+        <tr>
+          <td
+            colspan="5"
+            class="empty"
+          >
+            No data available.
+          </td>
+        </tr>
+      `;
 
     return;
 
@@ -1834,7 +2253,9 @@ function renderSalesType() {
       semester => {
 
         const item =
-          map.get(semester);
+          map.get(
+            semester
+          );
 
 
         const total =
@@ -1847,9 +2268,15 @@ function renderSalesType() {
           <tr>
 
             <td>
-              <span class="badge badge-blue">
-                ${semester}
+
+              <span
+                class="badge badge-blue"
+              >
+                ${escapeHtml(
+                  semester
+                )}
               </span>
+
             </td>
 
             <td class="sales-inside">
@@ -1879,9 +2306,9 @@ function renderSalesType() {
 }
 
 
-/* =========================
-   STATUS COMBINATION
-========================= */
+/* ========================================
+   STATUS COMBINATIONS
+======================================== */
 
 function renderCombinations() {
 
@@ -1892,24 +2319,36 @@ function renderCombinations() {
   const combinations = {};
 
 
-  rows.forEach(row => {
+  rows.forEach(
+    row => {
 
-    const combination =
-      row.examAttendance +
-      ' + ' +
-      row.assignment +
-      ' + ' +
-      row.reReg;
+      const combination =
+        row.examAttendance +
+        ' + ' +
+        row.assignment +
+        ' + ' +
+        row.reReg;
 
 
-    if (!combinations[combination]) {
-      combinations[combination] = 0;
+      if (
+        !combinations[
+          combination
+        ]
+      ) {
+
+        combinations[
+          combination
+        ] = 0;
+
+      }
+
+
+      combinations[
+        combination
+      ]++;
+
     }
-
-
-    combinations[combination]++;
-
-  });
+  );
 
 
   const ordered = [
@@ -1948,12 +2387,16 @@ function renderCombinations() {
       combination => {
 
         const count =
-          combinations[combination] || 0;
+          combinations[
+            combination
+          ] || 0;
 
 
         const percentage =
           total
-            ? count / total * 100
+            ? count /
+              total *
+              100
             : 0;
 
 
@@ -1972,13 +2415,19 @@ function renderCombinations() {
               ${percentage.toFixed(1)}%
             </td>
 
-            <td style="min-width:220px">
+            <td
+              style="min-width:220px"
+            >
 
-              <div class="combination-bar">
+              <div
+                class="combination-bar"
+              >
 
                 <div
                   class="combination-fill"
-                  style="width:${percentage}%"
+                  style="
+                    width:${percentage}%;
+                  "
                 ></div>
 
               </div>
@@ -1994,9 +2443,9 @@ function renderCombinations() {
 }
 
 
-/* =========================
-   LEARNER TABLE
-========================= */
+/* ========================================
+   LEARNER DETAILS
+======================================== */
 
 function renderLearners() {
 
@@ -2010,14 +2459,24 @@ function renderLearners() {
     );
 
 
-  if (!rows.length) {
+  if (
+    !rows.length
+  ) {
 
     tbody.innerHTML =
-      `<tr>
-        <td colspan="9" class="empty">
-          No learners match the selected filters.
-        </td>
-      </tr>`;
+      `
+        <tr>
+
+          <td
+            colspan="8"
+            class="empty"
+          >
+            No learners match the
+            selected filters.
+          </td>
+
+        </tr>
+      `;
 
     return;
 
@@ -2029,19 +2488,22 @@ function renderLearners() {
       row => {
 
         const examClass =
-          row.examAttendance === 'Present'
+          row.examAttendance ===
+          'Present'
             ? 'badge-green'
             : 'badge-red';
 
 
         const assignmentClass =
-          row.assignment === 'Submitted'
+          row.assignment ===
+          'Submitted'
             ? 'badge-green'
             : 'badge-red';
 
 
         const reregClass =
-          row.reReg === 'Done'
+          row.reReg ===
+          'Done'
             ? 'badge-green'
             : 'badge-red';
 
@@ -2050,47 +2512,79 @@ function renderLearners() {
           <tr>
 
             <td>
+
               <strong>
-                ${escapeHtml(row.rollNo || '—')}
+                ${escapeHtml(
+                  row.rollNo ||
+                  '—'
+                )}
               </strong>
+
             </td>
 
-            <td>
-              ${escapeHtml(row.name || '—')}
-            </td>
 
             <td>
-              ${escapeHtml(row.program || '—')}
+              ${escapeHtml(
+                row.name ||
+                '—'
+              )}
             </td>
 
-            <td>
-              ${escapeHtml(row.batch || '—')}
-            </td>
 
             <td>
-              ${escapeHtml(row.salesType || 'Other')}
+              ${escapeHtml(
+                row.program ||
+                '—'
+              )}
             </td>
 
+
             <td>
-              <span class="badge ${examClass}">
+              ${escapeHtml(
+                row.salesType ||
+                'Other'
+              )}
+            </td>
+
+
+            <td>
+
+              <span
+                class="badge ${examClass}"
+              >
                 ${row.examAttendance}
               </span>
+
             </td>
 
+
             <td>
-              <span class="badge ${assignmentClass}">
+
+              <span
+                class="badge ${assignmentClass}"
+              >
                 ${row.assignment}
               </span>
+
             </td>
 
-            <td>
-              ${escapeHtml(row.semester || '—')}
-            </td>
 
             <td>
-              <span class="badge ${reregClass}">
+              ${escapeHtml(
+                row.semester ||
+                '—'
+              )}
+            </td>
+
+
+            <td>
+
+              <span
+                class="badge ${reregClass}"
+              >
                 ${row.reReg}
               </span>
+
             </td>
 
           </tr>
@@ -2102,25 +2596,42 @@ function renderLearners() {
 }
 
 
-/* =========================
-   HTML ESCAPE
-========================= */
+/* ========================================
+   ESCAPE HTML
+======================================== */
 
 function escapeHtml(value) {
 
-  return String(value ?? '')
-    .replace(/&/g,'&amp;')
-    .replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;')
-    .replace(/"/g,'&quot;')
-    .replace(/'/g,'&#039;');
+  return String(
+    value ?? ''
+  )
+    .replace(
+      /&/g,
+      '&amp;'
+    )
+    .replace(
+      /</g,
+      '&lt;'
+    )
+    .replace(
+      />/g,
+      '&gt;'
+    )
+    .replace(
+      /"/g,
+      '&quot;'
+    )
+    .replace(
+      /'/g,
+      '&#039;'
+    );
 
 }
 
 
-/* =========================
-   RENDER EVERYTHING
-========================= */
+/* ========================================
+   RENDER
+======================================== */
 
 function renderAll() {
 
@@ -2137,14 +2648,18 @@ function renderAll() {
 }
 
 
-/* =========================
+/* ========================================
    LOAD DATA
-========================= */
+======================================== */
 
 async function loadData() {
 
-  if (refreshBusy) {
+  if (
+    refreshBusy
+  ) {
+
     return;
+
   }
 
 
@@ -2164,10 +2679,13 @@ async function loadData() {
 
 
     RAW =
-      normalizeRows(rows);
+      normalizeRows(
+        rows
+      );
 
 
     populateFilters();
+
 
     renderAll();
 
@@ -2203,9 +2721,9 @@ async function loadData() {
 }
 
 
-/* =========================
+/* ========================================
    RESET
-========================= */
+======================================== */
 
 document.getElementById(
   'resetBtn'
@@ -2217,25 +2735,26 @@ document.getElementById(
       'programFilter'
     ).value = '';
 
-    document.getElementById(
-      'batchFilter'
-    ).value = '';
 
     document.getElementById(
       'semesterFilter'
     ).value = '';
 
+
     document.getElementById(
       'examFilter'
     ).value = '';
+
 
     document.getElementById(
       'assignmentFilter'
     ).value = '';
 
+
     document.getElementById(
       'reregFilter'
     ).value = '';
+
 
     document.getElementById(
       'searchInput'
@@ -2248,26 +2767,28 @@ document.getElementById(
 );
 
 
-/* =========================
+/* ========================================
    FILTER EVENTS
-========================= */
+======================================== */
 
 [
   'programFilter',
-  'batchFilter',
   'semesterFilter',
   'examFilter',
   'assignmentFilter',
   'reregFilter'
-].forEach(id => {
+].forEach(
+  id => {
 
-  document.getElementById(id)
-    .addEventListener(
+    document.getElementById(
+      id
+    ).addEventListener(
       'change',
       renderAll
     );
 
-});
+  }
+);
 
 
 document.getElementById(
@@ -2278,9 +2799,9 @@ document.getElementById(
 );
 
 
-/* =========================
+/* ========================================
    START
-========================= */
+======================================== */
 
 loadData();
 
@@ -2291,6 +2812,8 @@ refreshTimer =
     REFRESH_MS
   );
 
+
+renderAll();
 
 </script>
 
