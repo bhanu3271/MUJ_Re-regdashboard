@@ -11,6 +11,8 @@
 
 <title>Re-Registration Dashboard</title>
 
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+
 <style>
 
 :root{
@@ -34,11 +36,6 @@
   --warn-bg:#fbf1e0;
 
   --track:#eef1f4;
-
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
-
-  box-sizing:border-box;
 }
 
 *{
@@ -54,35 +51,24 @@ body{
   min-height:100%;
   background:var(--bg);
   color:var(--ink);
-  font-family:
-    'Source Serif Pro',
-    Georgia,
-    'Times New Roman',
-    serif;
+  font-family:'Source Serif Pro',Georgia,'Times New Roman',serif;
 }
 
 .num{
-  font-family:
-    'IBM Plex Mono',
-    'Courier New',
-    monospace;
-
-  font-variant-numeric:
-    tabular-nums;
+  font-family:'IBM Plex Mono','Courier New',monospace;
+  font-variant-numeric:tabular-nums;
 }
 
 header{
-  background:
-    linear-gradient(
-      160deg,
-      var(--navy-deep),
-      var(--navy)
-    );
+  background:linear-gradient(
+    160deg,
+    var(--navy-deep),
+    var(--navy)
+  );
 
   color:#f2f4f7;
 
-  padding:
-    24px 20px 18px;
+  padding:24px 20px 18px;
 
   padding-top:
     calc(
@@ -109,7 +95,6 @@ header p{
   margin:0;
   color:#c7d2de;
   font-size:13.5px;
-  max-width:64ch;
 }
 
 
@@ -117,9 +102,7 @@ header p{
 
 .page-nav{
   background:var(--navy-deep);
-  border-bottom:
-    1px solid
-    rgba(255,255,255,.12);
+  border-bottom:1px solid rgba(255,255,255,.12);
 }
 
 .page-nav-wrap{
@@ -136,9 +119,7 @@ header p{
   display:inline-block;
   text-decoration:none;
   color:#d9e3ed;
-  border:
-    1px solid
-    rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.18);
   padding:6px 11px;
   border-radius:6px;
   font-size:12px;
@@ -152,54 +133,35 @@ header p{
 }
 
 
-/* FILTER BAR */
+/* FILTER */
 
 .filterbar{
   position:sticky;
   top:0;
   z-index:5;
-
   background:var(--card);
-
-  border-bottom:
-    1px solid
-    var(--line);
-
+  border-bottom:1px solid var(--line);
   padding:10px 20px;
-
-  font-family:Arial,sans-serif;
 }
 
 .filterbar .wrap{
   max-width:1180px;
   margin:0 auto;
-
   display:flex;
-
   gap:10px;
-
   flex-wrap:wrap;
-
   align-items:center;
+  font-family:Arial,sans-serif;
 }
 
 .filterbar select,
 .filterbar input{
-
   font-family:Arial,sans-serif;
-
   font-size:13px;
-
   padding:6px 10px;
-
-  border:
-    1px solid
-    var(--line);
-
+  border:1px solid var(--line);
   border-radius:6px;
-
   background:var(--card);
-
   color:var(--ink);
 }
 
@@ -209,25 +171,15 @@ header p{
 }
 
 .chip{
-
   display:inline-flex;
-
   align-items:center;
-
   gap:6px;
-
   font-size:12px;
-
   background:var(--navy-light);
-
   color:var(--navy);
-
   padding:4px 10px;
-
   border-radius:20px;
-
   cursor:pointer;
-
   border:none;
 }
 
@@ -236,25 +188,14 @@ header p{
 }
 
 #clearAll{
-
   display:none;
-
   font-size:12px;
-
   color:var(--ink-soft);
-
   background:none;
-
-  border:
-    1px solid
-    var(--line);
-
+  border:1px solid var(--line);
   border-radius:6px;
-
   padding:6px 10px;
-
   cursor:pointer;
-
   font-family:Arial,sans-serif;
 }
 
@@ -268,10 +209,9 @@ main{
 }
 
 
-/* TOP CARD */
+/* TOP */
 
 .top-card{
-
   background:
     linear-gradient(
       135deg,
@@ -279,9 +219,7 @@ main{
       var(--card)
     );
 
-  border:
-    1px solid
-    var(--pos);
+  border:1px solid var(--pos);
 
   border-radius:8px;
 
@@ -291,17 +229,11 @@ main{
 }
 
 .top-card .tag{
-
   font-family:Arial,sans-serif;
-
   font-size:11px;
-
   text-transform:uppercase;
-
   letter-spacing:.06em;
-
   color:var(--pos);
-
   font-weight:700;
 }
 
@@ -311,15 +243,10 @@ main{
 }
 
 .top-card p{
-
   margin:0;
-
   font-size:13.5px;
-
   color:var(--ink);
-
   font-family:Arial,sans-serif;
-
   line-height:1.5;
 }
 
@@ -327,62 +254,37 @@ main{
 /* KPI */
 
 .kpis{
-
   display:grid;
-
-  grid-template-columns:
-    repeat(4,1fr);
-
+  grid-template-columns:repeat(4,1fr);
   gap:12px;
-
   margin-bottom:22px;
 }
 
 .kpi{
-
   background:var(--card);
-
-  border:
-    1px solid
-    var(--line);
-
+  border:1px solid var(--line);
   border-radius:8px;
-
   padding:14px 16px;
-
-  box-shadow:
-    0 4px 14px
-    rgba(20,30,45,.06);
+  box-shadow:0 4px 14px rgba(20,30,45,.06);
 }
 
 .kpi .label{
-
   font-size:11.5px;
-
   color:var(--ink-soft);
-
   text-transform:uppercase;
-
   letter-spacing:.06em;
-
   font-family:Arial,sans-serif;
 }
 
 .kpi .value{
-
   font-size:23px;
-
   margin-top:4px;
-
   font-weight:700;
 }
 
 .kpi .sub{
-
   font-size:12px;
-
   color:var(--ink-soft);
-
   margin-top:2px;
 }
 
@@ -400,26 +302,16 @@ h2{
 }
 
 .section-note{
-
   font-size:12.5px;
-
   color:var(--ink-soft);
-
   margin:0 0 14px;
-
   font-family:Arial,sans-serif;
 }
 
 .chart-card{
-
   background:var(--card);
-
-  border:
-    1px solid
-    var(--line);
-
+  border:1px solid var(--line);
   border-radius:8px;
-
   padding:14px 18px 6px;
 }
 
@@ -427,15 +319,9 @@ h2{
 /* ROW */
 
 .row{
-
   padding:8px 0;
-
-  border-bottom:
-    1px solid
-    var(--line);
-
+  border-bottom:1px solid var(--line);
   cursor:pointer;
-
   border-radius:6px;
 }
 
@@ -452,173 +338,98 @@ h2{
 }
 
 .row-head{
-
   display:grid;
-
-  grid-template-columns:
-    22px
-    180px
-    1fr
-    128px;
-
+  grid-template-columns:22px 180px 1fr 128px;
   align-items:center;
-
   gap:10px;
 }
 
 .row-head .rank{
-
-  font-family:
-    'IBM Plex Mono',
-    monospace;
-
+  font-family:'IBM Plex Mono',monospace;
   font-size:12px;
-
   color:var(--ink-soft);
 }
 
 .row-head .name{
-
   font-size:13.5px;
-
   font-weight:600;
-
   overflow:hidden;
-
   text-overflow:ellipsis;
-
   white-space:nowrap;
 }
 
 .bar-track{
-
   position:relative;
-
   height:15px;
-
   background:var(--track);
-
   border-radius:3px;
-
   overflow:hidden;
 }
 
 .bar-fill{
-
   position:absolute;
-
   left:0;
-
   top:0;
-
   height:100%;
-
   background:var(--navy);
 }
 
 .meta{
-
   font-size:12px;
-
   text-align:right;
-
   color:var(--ink-soft);
-
   font-family:Arial,sans-serif;
-
   white-space:nowrap;
 }
 
 .meta b{
-
   color:var(--ink);
-
-  font-family:
-    'IBM Plex Mono',
-    'Courier New',
-    monospace;
+  font-family:'IBM Plex Mono','Courier New',monospace;
 }
 
 .pills{
-
-  grid-column:
-    2/-1;
-
+  grid-column:2/-1;
   display:flex;
-
   flex-wrap:wrap;
-
   gap:6px;
-
   margin-top:6px;
 }
 
 .pill{
-
   font-family:Arial,sans-serif;
-
   font-size:11px;
-
   padding:2px 8px;
-
   border-radius:20px;
-
   background:var(--track);
-
   color:var(--ink-soft);
-
   white-space:nowrap;
 }
 
 .pill b{
-
   color:var(--ink);
-
-  font-family:
-    'IBM Plex Mono',
-    monospace;
+  font-family:'IBM Plex Mono',monospace;
 }
 
 .focus-note{
-
-  grid-column:
-    2/-1;
-
+  grid-column:2/-1;
   margin-top:8px;
-
   padding:10px 12px;
-
   background:var(--warn-bg);
-
-  border:
-    1px solid
-    var(--warn);
-
+  border:1px solid var(--warn);
   border-radius:6px;
-
   font-family:Arial,sans-serif;
-
   font-size:12.5px;
-
   color:var(--ink);
-
   line-height:1.5;
 }
 
 .focus-note .flabel{
-
   font-size:10.5px;
-
   text-transform:uppercase;
-
   letter-spacing:.05em;
-
   color:var(--warn);
-
   font-weight:700;
-
   display:block;
-
   margin-bottom:3px;
 }
 
@@ -626,67 +437,41 @@ h2{
 /* TABLE */
 
 .table-wrap{
-
   overflow-x:auto;
-
-  border:
-    1px solid
-    var(--line);
-
+  border:1px solid var(--line);
   border-radius:8px;
-
   background:var(--card);
 }
 
 table{
-
   border-collapse:collapse;
-
   width:100%;
-
   min-width:560px;
-
   font-size:13px;
 }
 
 th,
 td{
-
   padding:9px 12px;
-
   text-align:right;
-
-  border-bottom:
-    1px solid
-    var(--line);
-
+  border-bottom:1px solid var(--line);
   white-space:nowrap;
 }
 
 th:first-child,
 td:first-child{
-
   text-align:left;
-
   position:sticky;
-
   left:0;
-
   background:var(--card);
 }
 
 th{
-
   font-family:Arial,sans-serif;
-
   font-size:11px;
-
   text-transform:uppercase;
-
   letter-spacing:.04em;
-
   color:var(--ink-soft);
-
   background:var(--card);
 }
 
@@ -702,53 +487,34 @@ tbody tr.active td{
   background:var(--navy-light);
 }
 
-
-/* BADGES */
-
 .badge{
-
   display:inline-block;
-
   padding:2px 8px;
-
   border-radius:20px;
-
   font-size:12px;
-
   font-family:Arial,sans-serif;
 }
 
 .badge.pos{
-
   background:var(--pos-bg);
-
   color:var(--pos);
 }
 
 .badge.neg{
-
   background:var(--neg-bg);
-
   color:var(--neg);
 }
 
 .badge.warn{
-
   background:var(--warn-bg);
-
   color:var(--warn);
 }
 
 .empty{
-
   padding:20px;
-
   text-align:center;
-
   color:var(--ink-soft);
-
   font-family:Arial,sans-serif;
-
   font-size:13px;
 }
 
@@ -756,23 +522,12 @@ tbody tr.active td{
 /* IS DA */
 
 .div-row{
-
   display:grid;
-
-  grid-template-columns:
-    180px
-    1fr
-    180px;
-
+  grid-template-columns:180px 1fr 180px;
   align-items:center;
-
   gap:10px;
-
   padding:6px 0;
-
-  border-bottom:
-    1px solid
-    var(--line);
+  border-bottom:1px solid var(--line);
 }
 
 .div-row:last-child{
@@ -780,54 +535,34 @@ tbody tr.active td{
 }
 
 .div-row .name{
-
   font-size:13px;
-
   overflow:hidden;
-
   text-overflow:ellipsis;
-
   white-space:nowrap;
 }
 
 .div-track{
-
   position:relative;
-
   height:15px;
-
   background:var(--track);
-
   border-radius:3px;
 }
 
 .div-mid{
-
   position:absolute;
-
   left:50%;
-
   top:-2px;
-
   width:1px;
-
   height:19px;
-
   background:var(--ink-soft);
-
   opacity:.4;
 }
 
 .div-fill{
-
   position:absolute;
-
   top:0;
-
   height:100%;
-
   border-radius:2px;
-
   background:var(--navy);
 }
 
@@ -836,26 +571,16 @@ tbody tr.active td{
 }
 
 .div-row .meta{
-
   font-size:12px;
-
   text-align:right;
-
   font-family:Arial,sans-serif;
-
   color:var(--ink-soft);
-
   white-space:nowrap;
 }
 
 .div-row .meta b{
-
   color:var(--ink);
-
-  font-family:
-    'IBM Plex Mono',
-    'Courier New',
-    monospace;
+  font-family:'IBM Plex Mono','Courier New',monospace;
 }
 
 .div-row .meta b.neg{
@@ -866,18 +591,11 @@ tbody tr.active td{
 /* FOOTER */
 
 footer{
-
   max-width:1180px;
-
   margin:0 auto;
-
-  padding:
-    0 20px 30px;
-
+  padding:0 20px 30px;
   font-size:11.5px;
-
   color:var(--ink-soft);
-
   font-family:Arial,sans-serif;
 }
 
@@ -887,17 +605,11 @@ footer{
 @media(max-width:720px){
 
   .kpis{
-    grid-template-columns:
-      repeat(2,1fr);
+    grid-template-columns:repeat(2,1fr);
   }
 
   .row-head{
-
-    grid-template-columns:
-      18px
-      1fr
-      80px;
-
+    grid-template-columns:18px 1fr 80px;
     gap:6px;
   }
 
@@ -906,18 +618,12 @@ footer{
   }
 
   .div-row{
-    grid-template-columns:
-      120px
-      1fr
-      150px;
+    grid-template-columns:120px 1fr 150px;
   }
 
 }
 
 </style>
-
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
-
 </head>
 
 <body>
@@ -1042,13 +748,11 @@ footer{
     </h2>
 
     <p class="section-note">
-      Click a mentor to see their program breakdown and focus note.
+      Click a mentor to see their program breakdown and a focus note.
     </p>
 
     <div class="chart-card">
-
       <div id="mentorChart"></div>
-
     </div>
 
   </section>
@@ -1065,9 +769,7 @@ footer{
     </p>
 
     <div class="chart-card">
-
       <div id="programChart"></div>
-
     </div>
 
   </section>
@@ -1090,27 +792,11 @@ footer{
         <thead>
 
           <tr>
-
-            <th>
-              Priority category
-            </th>
-
-            <th>
-              Total
-            </th>
-
-            <th>
-              Paid
-            </th>
-
-            <th>
-              Not paid
-            </th>
-
-            <th>
-              Not paid %
-            </th>
-
+            <th>Priority category</th>
+            <th>Total</th>
+            <th>Paid</th>
+            <th>Not paid</th>
+            <th>Not paid %</th>
           </tr>
 
         </thead>
@@ -1124,8 +810,6 @@ footer{
   </section>
 
 
-  <!-- IMPORTANT IS / DA SECTION -->
-
   <section>
 
     <h2>
@@ -1135,8 +819,8 @@ footer{
     <p class="section-note">
 
       IS = Inside Sales and DA = Channel.
-      The comparison is calculated/displayed for the selected semester
-      when semester-specific IS/DA data is available.
+      Select a semester above to see the IS vs DA
+      comparison for that semester.
 
     </p>
 
@@ -1156,11 +840,11 @@ footer{
   Re-reg status:
   Paid / Partially Paid / Not Paid.
 
-  Page 1 uses Mock Status, IA Status,
-  Re reg status and Lead Name from Sheet1.
+  Page 1 uses:
+  Mock Status, IA Status,
+  Re reg status and Lead Name.
 
-  Data source:
-  Google Sheets.
+  Data source: Google Sheets.
 
 </footer>
 
@@ -1169,7 +853,7 @@ footer{
 
 
 /* =====================================================
-   GOOGLE SHEET CONFIGURATION
+   CONFIG
 ===================================================== */
 
 const GOOGLE_SHEET_ID =
@@ -1192,13 +876,9 @@ const GOOGLE_REFRESH_MS =
 let RAW = {
 
   mentors:[],
-
   programs:[],
-
   priorities:[],
-
   semesters:[],
-
   rows:[]
 
 };
@@ -1213,26 +893,16 @@ let refreshTimer = null;
 let refreshBusy = false;
 
 
-/* =====================================================
-   FILTER STATE
-===================================================== */
-
 const state = {
 
   mentor:null,
-
   program:null,
-
   priority:null,
-
   semester:null,
 
   _mentorName:null,
-
   _programName:null,
-
   _priorityName:null,
-
   _semesterName:null
 
 };
@@ -1294,37 +964,46 @@ function pct(value){
 }
 
 
-/*
- IMPORTANT:
-
- Makes these values equivalent:
-
- 1
- Sem 1
- Semester 1
- SEMESTER-1
- Term 1
-
- This is the main fix for the semester IS/DA filter.
-*/
+/* =====================================================
+   SEMESTER NORMALIZATION
+===================================================== */
 
 function semesterKey(value){
 
   const s =
     key(value);
 
+
   const match =
-    s.match(/\d+/);
+    s.match(
+      /\d+/
+    );
+
 
   if(match){
+
     return match[0];
+
   }
 
+
   return s
-    .replace(/semester/g,'')
-    .replace(/sem/g,'')
-    .replace(/term/g,'')
-    .replace(/[-_]/g,' ')
+    .replace(
+      /semester/g,
+      ''
+    )
+    .replace(
+      /sem/g,
+      ''
+    )
+    .replace(
+      /term/g,
+      ''
+    )
+    .replace(
+      /[-_]/g,
+      ' '
+    )
     .trim();
 
 }
@@ -1336,23 +1015,33 @@ function sameSemester(a,b){
     return false;
   }
 
-  return semesterKey(a) ===
-         semesterKey(b);
+  return (
+    semesterKey(a) ===
+    semesterKey(b)
+  );
 
 }
 
 
-function setStatus(message,ok=false){
+function setStatus(
+  message,
+  ok=false
+){
 
   const el =
     document.getElementById(
       'excelStatus'
     );
 
-  if(!el) return;
+
+  if(!el){
+    return;
+  }
+
 
   el.textContent =
     message;
+
 
   el.style.color =
     ok
@@ -1363,17 +1052,25 @@ function setStatus(message,ok=false){
 
 
 /* =====================================================
-   FIND COLUMN
+   COLUMN FINDER
 ===================================================== */
 
-function findColumn(headers,names){
+function findColumn(
+  headers,
+  names
+){
 
-  for(const wanted of names){
+  for(
+    const wanted of names
+  ){
 
     const found =
       headers.find(
-        h => key(h) === key(wanted)
+        h =>
+          key(h) ===
+          key(wanted)
       );
+
 
     if(found){
       return found;
@@ -1381,16 +1078,19 @@ function findColumn(headers,names){
 
   }
 
+
   return null;
 
 }
 
 
 /* =====================================================
-   SHEET 1 NORMALIZATION
+   SHEET 1
 ===================================================== */
 
-function normalizeWorkbookRows(rows){
+function normalizeWorkbookRows(
+  rows
+){
 
   if(
     !rows ||
@@ -1408,107 +1108,6 @@ function normalizeWorkbookRows(rows){
     Object.keys(
       rows[0]
     ).map(norm);
-
-
-  const required = [
-
-    [
-      'Program',
-      findColumn(
-        headers,
-        [
-          'Program',
-          'Program Name'
-        ]
-      )
-    ],
-
-    [
-      'Mentors',
-      findColumn(
-        headers,
-        [
-          'Mentors',
-          'Mentor',
-          'Primary Mentor',
-          'Primary Mentor Name'
-        ]
-      )
-    ],
-
-    [
-      'Re reg status',
-      findColumn(
-        headers,
-        [
-          'Re reg status',
-          'Re-Reg',
-          'Re Reg',
-          'Re-reg'
-        ]
-      )
-    ],
-
-    [
-      'Priority Category updated',
-      findColumn(
-        headers,
-        [
-          'Priority Category updated',
-          'Priority Category',
-          'Priority'
-        ]
-      )
-    ],
-
-    [
-      'Semester',
-      findColumn(
-        headers,
-        [
-          'Semester',
-          'Current Semester',
-          'Current Sem',
-          'Sem'
-        ]
-      )
-
-    ]
-
-  ];
-
-
-  const missing =
-    required
-      .filter(
-        x => !x[1]
-      )
-      .map(
-        x => x[0]
-      );
-
-
-  if(missing.length){
-
-    throw new Error(
-      'Sheet1 is missing required column(s): ' +
-      missing.join(', ')
-    );
-
-  }
-
-
-  const actual =
-    wanted => {
-
-      const found =
-        headers.find(
-          h => key(h) === key(wanted)
-        );
-
-      return found || wanted;
-
-    };
 
 
   const mentorCol =
@@ -1577,6 +1176,36 @@ function normalizeWorkbookRows(rows){
     );
 
 
+  if(!programCol)
+    throw new Error(
+      'Sheet1 is missing Program.'
+    );
+
+
+  if(!mentorCol)
+    throw new Error(
+      'Sheet1 is missing Mentors.'
+    );
+
+
+  if(!reregCol)
+    throw new Error(
+      'Sheet1 is missing Re reg status.'
+    );
+
+
+  if(!priorityCol)
+    throw new Error(
+      'Sheet1 is missing Priority Category updated.'
+    );
+
+
+  if(!semesterCol)
+    throw new Error(
+      'Sheet1 is missing Semester.'
+    );
+
+
   return rows.map(
     r => ({
 
@@ -1607,7 +1236,9 @@ function normalizeWorkbookRows(rows){
 
       LeadName:
         leadNameCol
-          ? norm(r[leadNameCol])
+          ? norm(
+              r[leadNameCol]
+            )
           : ''
 
     })
@@ -1624,10 +1255,12 @@ function normalizeWorkbookRows(rows){
 
 
 /* =====================================================
-   PAYMENT CLASSIFICATION
+   PAYMENT
 ===================================================== */
 
-function classifyPayment(status){
+function classifyPayment(
+  status
+){
 
   const s =
     key(status);
@@ -1662,10 +1295,12 @@ function classifyPayment(status){
 
 
 /* =====================================================
-   BUILD PAGE 2 RAW DATA
+   RAW BUILD
 ===================================================== */
 
-function buildRawFromSheet1(rows){
+function buildRawFromSheet1(
+  rows
+){
 
   const normalized =
     normalizeWorkbookRows(
@@ -1673,118 +1308,51 @@ function buildRawFromSheet1(rows){
     );
 
 
-  const preferredPrograms = [
-
-    'B.Com',
-    'BBA',
-    'BCA',
-    'M.Com',
-    'MA in Economics',
-    'MA.JMC',
-    'MBA',
-    'MCA'
-
-  ];
-
-
-  const preferredPriorities = [
-
-    'P1 - Full / Annual Payment',
-    'P2 - All IA_All Exams',
-    'P3 - Full Exam_Part/Nil IA',
-    'P4 - Full IA_Part/Nil Exam',
-    'P5 - Partial IA_Partial Exams',
-    'P6 - Partial IA_Nil Exams/Nil IA_Partial Exams',
-    'P7 - Nil IA_Nil Exams'
-
-  ];
-
-
-  const mentorSet =
-    new Set();
-
-  const programSet =
-    new Set();
-
-  const prioritySet =
-    new Set();
-
-  const semesterSet =
-    new Set();
-
-
-  normalized.forEach(
-    r => {
-
-      if(r.Mentors)
-        mentorSet.add(
-          r.Mentors
-        );
-
-      if(r.Program)
-        programSet.add(
-          r.Program
-        );
-
-      if(r.Priority)
-        prioritySet.add(
-          r.Priority
-        );
-
-      if(r.Semester)
-        semesterSet.add(
-          r.Semester
-        );
-
-    }
-  );
+  const programs =
+    Array.from(
+      new Set(
+        normalized
+          .map(
+            r => r.Program
+          )
+          .filter(Boolean)
+      )
+    ).sort();
 
 
   const mentors =
     Array.from(
-      mentorSet
+      new Set(
+        normalized
+          .map(
+            r => r.Mentors
+          )
+          .filter(Boolean)
+      )
     ).sort();
 
 
-  const programs = [
-
-    ...preferredPrograms
-      .filter(
-        p =>
-          programSet.has(p)
-      ),
-
-    ...Array.from(
-      programSet
-    ).filter(
-      p =>
-        !preferredPrograms.includes(p)
-    )
-
-  ];
-
-
-  const priorities = [
-
-    ...preferredPriorities
-      .filter(
-        p =>
-          prioritySet.has(p)
-      ),
-
-    ...Array.from(
-      prioritySet
-    ).filter(
-      p =>
-        !preferredPriorities.includes(p)
-    )
-
-  ];
+  const priorities =
+    Array.from(
+      new Set(
+        normalized
+          .map(
+            r => r.Priority
+          )
+          .filter(Boolean)
+      )
+    ).sort();
 
 
   const semesters =
     Array.from(
-      semesterSet
+      new Set(
+        normalized
+          .map(
+            r => r.Semester
+          )
+          .filter(Boolean)
+      )
     ).sort(
       (a,b) => {
 
@@ -1792,17 +1360,19 @@ function buildRawFromSheet1(rows){
           parseInt(
             String(a)
               .match(/\d+/)?.[0] ||
-            '9999',
+              '9999',
             10
           );
+
 
         const bn =
           parseInt(
             String(b)
               .match(/\d+/)?.[0] ||
-            '9999',
+              '9999',
             10
           );
+
 
         return (
           an - bn ||
@@ -1869,23 +1439,22 @@ function buildRawFromSheet1(rows){
           r.Mentors
         );
 
+
       const pi =
         programIndex.get(
           r.Program
         );
+
 
       const pri =
         priorityIndex.get(
           r.Priority
         );
 
-      const semesterValue =
-        r.Semester ||
-        'Not specified';
 
       const si =
         semesterIndex.get(
-          semesterValue
+          r.Semester
         );
 
 
@@ -1906,14 +1475,17 @@ function buildRawFromSheet1(rows){
         grouped.set(
           gk,
           {
+
             mi,
             pi,
             pri,
             si,
+
             total:0,
             paid:0,
             not_paid:0,
             partial:0
+
           }
         );
 
@@ -1922,6 +1494,7 @@ function buildRawFromSheet1(rows){
 
       const g =
         grouped.get(gk);
+
 
       g.total++;
 
@@ -1932,15 +1505,14 @@ function buildRawFromSheet1(rows){
         );
 
 
-      if(status === 'paid'){
+      if(status === 'paid')
         g.paid++;
-      }
-      else if(status === 'partial'){
+
+      else if(status === 'partial')
         g.partial++;
-      }
-      else{
+
+      else
         g.not_paid++;
-      }
 
     }
   );
@@ -1949,13 +1521,6 @@ function buildRawFromSheet1(rows){
   const rowsOut =
     Array.from(
       grouped.values()
-    )
-    .sort(
-      (a,b) =>
-        a.mi-b.mi ||
-        a.pi-b.pi ||
-        a.pri-b.pri ||
-        a.si-b.si
     )
     .map(
       g => [
@@ -1986,45 +1551,19 @@ function buildRawFromSheet1(rows){
 
 
 /* =====================================================
-   BUILD IS / DA
+   BUILD ISDA
+
+   PRIMARY SOURCE = SHEET2
+
+   Supports:
+
+   Mentor | Semester | IS % | DA %
+
+   and wide pivot:
+
+   Mentor | Sem 1 IS % | Sem 1 DA %
+          | Sem 2 IS % | Sem 2 DA %
 ===================================================== */
-
-/*
- IMPORTANT FIX
-
- Sheet2 should ideally contain:
-
- Mentor / Mentors
- Semester
- IS %
- DA %
-
- The code below also accepts:
-
- Mentor
- Sem
- IS
- DA
-
- and similar header variations.
-
- Each IS/DA record is stored with its semester.
-
- Therefore:
-
- All semesters
-      -> all IS/DA records
-
- Semester 1
-      -> only Semester 1 IS/DA records
-
- Semester 2
-      -> only Semester 2 IS/DA records
-
- etc.
-
- This is what was missing previously.
-*/
 
 function buildISDA(
   sheet2Rows,
@@ -2034,9 +1573,9 @@ function buildISDA(
   const result = [];
 
 
-  /* ------------------------------------------
-     FIRST: USE SHEET 2
-  ------------------------------------------ */
+  /* ---------------------------------------------
+     SHEET 2
+  --------------------------------------------- */
 
   if(
     sheet2Rows &&
@@ -2101,14 +1640,13 @@ function buildISDA(
 
     /*
       LONG FORMAT
-
-      Mentor | Semester | IS % | DA %
     */
 
     if(
       mentorCol &&
       isCol &&
-      daCol
+      daCol &&
+      semesterCol
     ){
 
       sheet2Rows.forEach(
@@ -2119,17 +1657,19 @@ function buildISDA(
               r[mentorCol]
             );
 
-          if(!name){
-            return;
-          }
-
 
           const semester =
-            semesterCol
-              ? norm(
-                  r[semesterCol]
-                )
-              : '';
+            norm(
+              r[semesterCol]
+            );
+
+
+          if(
+            !name ||
+            !semester
+          ){
+            return;
+          }
 
 
           const isPct =
@@ -2155,7 +1695,8 @@ function buildISDA(
             da_pct:daPct,
 
             diff:
-              isPct - daPct
+              isPct -
+              daPct
 
           });
 
@@ -2173,19 +1714,7 @@ function buildISDA(
 
 
     /*
-      WIDE FORMAT SUPPORT
-
-      Example:
-
-      Mentor
-      Sem 1 IS %
-      Sem 1 DA %
-      Sem 2 IS %
-      Sem 2 DA %
-
-      This allows the semester filter to work even
-      if Sheet2 is a pivot table with semesters
-      represented as columns.
+      WIDE PIVOT FORMAT
     */
 
     if(mentorCol){
@@ -2198,7 +1727,9 @@ function buildISDA(
         header => {
 
           const h =
-            key(header);
+            key(
+              header
+            );
 
 
           const match =
@@ -2217,18 +1748,12 @@ function buildISDA(
 
 
           const isColumn =
-            /(^|[\s_-])is([\s_%]|$)/i.test(
-              h
-            ) ||
             h.includes('is %') ||
             h.includes('is%') ||
             h.includes('is completion');
 
 
           const daColumn =
-            /(^|[\s_-])da([\s_%]|$)/i.test(
-              h
-            ) ||
             h.includes('da %') ||
             h.includes('da%') ||
             h.includes('da completion');
@@ -2271,6 +1796,7 @@ function buildISDA(
               r[mentorCol]
             );
 
+
           if(!name){
             return;
           }
@@ -2279,12 +1805,6 @@ function buildISDA(
           semesterColumns.forEach(
             c => {
 
-              const value =
-                pct(
-                  r[c.header]
-                );
-
-
               const gk =
                 name +
                 '|' +
@@ -2292,7 +1812,9 @@ function buildISDA(
 
 
               if(
-                !grouped.has(gk)
+                !grouped.has(
+                  gk
+                )
               ){
 
                 grouped.set(
@@ -2319,10 +1841,21 @@ function buildISDA(
 
 
               const g =
-                grouped.get(gk);
+                grouped.get(
+                  gk
+                );
 
 
-              if(c.type === 'IS'){
+              const value =
+                pct(
+                  r[c.header]
+                );
+
+
+              if(
+                c.type ===
+                'IS'
+              ){
 
                 g.is_pct =
                   value;
@@ -2390,31 +1923,15 @@ function buildISDA(
 
 
   /*
-    FALLBACK
-
-    If Sheet2 does not contain usable IS/DA
-    percentages, derive a semester-specific
-    IS/DA comparison from Sheet1.
-
-    Here completion is based on Re-Reg Paid
-    because that is the completion metric
-    available in the Page 2 dataset.
-
-    This fallback prevents the chart from
-    remaining static when a semester is selected.
+    FALLBACK FROM SHEET1
   */
 
-  const byMentorSemester =
+  const grouped =
     new Map();
 
 
   sheet1Normalized.forEach(
     r => {
-
-      if(!r.Mentors){
-        return;
-      }
-
 
       const lead =
         key(
@@ -2430,28 +1947,25 @@ function buildISDA(
       }
 
 
-      const semester =
-        r.Semester ||
-        'Not specified';
-
-
       const gk =
         r.Mentors +
         '|' +
-        semester;
+        r.Semester;
 
 
       if(
-        !byMentorSemester.has(gk)
+        !grouped.has(
+          gk
+        )
       ){
 
-        byMentorSemester.set(
+        grouped.set(
           gk,
           {
 
             name:r.Mentors,
 
-            semester,
+            semester:r.Semester,
 
             isPaid:0,
             isTotal:0,
@@ -2466,7 +1980,7 @@ function buildISDA(
 
 
       const g =
-        byMentorSemester.get(
+        grouped.get(
           gk
         );
 
@@ -2474,25 +1988,26 @@ function buildISDA(
       const paid =
         classifyPayment(
           r.ReReg
-        ) === 'paid';
+        ) ===
+        'paid';
 
 
-      if(lead === 'is'){
+      if(
+        lead === 'is'
+      ){
 
         g.isTotal++;
 
-        if(paid){
+        if(paid)
           g.isPaid++;
-        }
 
       }
       else{
 
         g.daTotal++;
 
-        if(paid){
+        if(paid)
           g.daPaid++;
-        }
 
       }
 
@@ -2500,7 +2015,7 @@ function buildISDA(
   );
 
 
-  byMentorSemester.forEach(
+  grouped.forEach(
     g => {
 
       const isPct =
@@ -2530,7 +2045,8 @@ function buildISDA(
         da_pct:daPct,
 
         diff:
-          isPct - daPct
+          isPct -
+          daPct
 
       });
 
@@ -2539,6 +2055,270 @@ function buildISDA(
 
 
   return result;
+
+}
+
+
+/* =====================================================
+   ISDA RENDER
+
+   THIS RUNS EVERY TIME THE SEMESTER
+   FILTER CHANGES.
+===================================================== */
+
+function renderISDA(){
+
+  let data =
+    ISDA.slice();
+
+
+  const selectedSemester =
+    state.semester !== null
+
+      ? RAW.semesters[
+          state.semester
+        ]
+
+      : null;
+
+
+  if(selectedSemester){
+
+    /*
+      Only use semester-specific
+      records if they exist.
+    */
+
+    if(
+      data.some(
+        d =>
+          d.semester
+      )
+    ){
+
+      data =
+        data.filter(
+          d =>
+            sameSemester(
+              d.semester,
+              selectedSemester
+            )
+        );
+
+    }
+
+  }
+
+
+  /*
+    Group duplicate mentor records.
+
+    This protects the chart if Sheet2
+    has duplicate mentor/semester rows.
+  */
+
+  const mentorMap =
+    new Map();
+
+
+  data.forEach(
+    d => {
+
+      const mentor =
+        d.name;
+
+
+      if(
+        !mentorMap.has(
+          mentor
+        )
+      ){
+
+        mentorMap.set(
+          mentor,
+          {
+
+            name:mentor,
+
+            is_pct:d.is_pct,
+
+            da_pct:d.da_pct,
+
+            diff:d.diff
+
+          }
+        );
+
+      }
+      else{
+
+        const existing =
+          mentorMap.get(
+            mentor
+          );
+
+
+        /*
+          If duplicate rows are present,
+          use the latest record.
+        */
+
+        existing.is_pct =
+          d.is_pct;
+
+        existing.da_pct =
+          d.da_pct;
+
+        existing.diff =
+          d.diff;
+
+      }
+
+    }
+  );
+
+
+  data =
+    Array.from(
+      mentorMap.values()
+    );
+
+
+  const maxAbs =
+    Math.max(
+      1,
+      ...data.map(
+        d =>
+          Math.abs(
+            Number(
+              d.diff
+            ) || 0
+          )
+      )
+    );
+
+
+  document.getElementById(
+    'isdaChart'
+  ).innerHTML =
+
+    data.length
+
+      ? data.map(
+          d => {
+
+            const cls =
+              d.diff < 0
+                ? 'neg'
+                : '';
+
+
+            const width =
+              (
+                Math.abs(
+                  d.diff
+                ) /
+                maxAbs *
+                50
+              ).toFixed(1);
+
+
+            const left =
+              d.diff >= 0
+
+                ? '50%'
+
+                : (
+                    50 -
+                    parseFloat(
+                      width
+                    )
+                  ) +
+                  '%';
+
+
+            const sign =
+              d.diff > 0
+                ? '+'
+                : '';
+
+
+            return `
+
+              <div class="div-row">
+
+                <div
+                  class="name"
+                  title="${d.name}"
+                >
+                  ${d.name}
+                </div>
+
+                <div class="div-track">
+
+                  <div class="div-mid"></div>
+
+                  <div
+                    class="div-fill ${cls}"
+                    style="
+                      left:${left};
+                      width:${width}%;
+                    "
+                  ></div>
+
+                </div>
+
+                <div class="meta">
+
+                  IS
+                  ${Number(
+                    d.is_pct
+                  ).toFixed(1)}%
+
+                  ·
+
+                  DA
+                  ${Number(
+                    d.da_pct
+                  ).toFixed(1)}%
+
+                  ·
+
+                  <b class="${cls}">
+
+                    ${sign}
+                    ${Number(
+                      d.diff
+                    ).toFixed(1)}
+
+                    pts
+
+                  </b>
+
+                </div>
+
+              </div>
+
+            `;
+
+          }
+        ).join('')
+
+      : `
+
+        <div class="empty">
+
+          No IS/DA data available
+          ${
+            selectedSemester
+              ? 'for ' +
+                selectedSemester
+              : ''
+          }.
+
+        </div>
+
+      `;
 
 }
 
@@ -2749,7 +2529,7 @@ function buildNotes(){
 
 
 /* =====================================================
-   FILTERS
+   FILTER POPULATION
 ===================================================== */
 
 function populateFilters(){
@@ -2759,10 +2539,12 @@ function populateFilters(){
       'progSel'
     );
 
+
   const priSel =
     document.getElementById(
       'priSel'
     );
+
 
   const semSel =
     document.getElementById(
@@ -2857,39 +2639,39 @@ function populateFilters(){
   );
 
 
-  const newProgramIndex =
+  const pi =
     RAW.programs.indexOf(
       oldProgram
     );
 
 
-  const newPriorityIndex =
+  const pri =
     RAW.priorities.indexOf(
       oldPriority
     );
 
 
-  const newSemesterIndex =
+  const si =
     RAW.semesters.indexOf(
       oldSemester
     );
 
 
   state.program =
-    newProgramIndex >= 0
-      ? newProgramIndex
+    pi >= 0
+      ? pi
       : null;
 
 
   state.priority =
-    newPriorityIndex >= 0
-      ? newPriorityIndex
+    pri >= 0
+      ? pri
       : null;
 
 
   state.semester =
-    newSemesterIndex >= 0
-      ? newSemesterIndex
+    si >= 0
+      ? si
       : null;
 
 
@@ -2917,7 +2699,9 @@ function populateFilters(){
    FILTERED ROWS
 ===================================================== */
 
-function filteredRows(ignore){
+function filteredRows(
+  ignore
+){
 
   return RAW.rows.filter(
     r =>
@@ -2925,7 +2709,8 @@ function filteredRows(ignore){
       (
         ignore === 'mentor' ||
         state.mentor === null ||
-        r[0] === state.mentor
+        r[0] ===
+        state.mentor
       )
 
       &&
@@ -2933,7 +2718,8 @@ function filteredRows(ignore){
       (
         ignore === 'program' ||
         state.program === null ||
-        r[1] === state.program
+        r[1] ===
+        state.program
       )
 
       &&
@@ -2941,7 +2727,8 @@ function filteredRows(ignore){
       (
         ignore === 'priority' ||
         state.priority === null ||
-        r[2] === state.priority
+        r[2] ===
+        state.priority
       )
 
       &&
@@ -2949,7 +2736,8 @@ function filteredRows(ignore){
       (
         ignore === 'semester' ||
         state.semester === null ||
-        r[7] === state.semester
+        r[7] ===
+        state.semester
       )
 
   );
@@ -2958,10 +2746,13 @@ function filteredRows(ignore){
 
 
 /* =====================================================
-   AGGREGATION
+   AGG
 ===================================================== */
 
-function aggBy(rows,dim){
+function aggBy(
+  rows,
+  dim
+){
 
   const m =
     new Map();
@@ -2974,7 +2765,9 @@ function aggBy(rows,dim){
         r[dim];
 
 
-      if(!m.has(k)){
+      if(
+        !m.has(k)
+      ){
 
         m.set(
           k,
@@ -3123,7 +2916,9 @@ function renderChips(){
               null;
 
 
-            if(k === 'program'){
+            if(
+              k === 'program'
+            ){
 
               document.getElementById(
                 'progSel'
@@ -3132,7 +2927,9 @@ function renderChips(){
             }
 
 
-            if(k === 'priority'){
+            if(
+              k === 'priority'
+            ){
 
               document.getElementById(
                 'priSel'
@@ -3141,7 +2938,9 @@ function renderChips(){
             }
 
 
-            if(k === 'semester'){
+            if(
+              k === 'semester'
+            ){
 
               document.getElementById(
                 'semSel'
@@ -3163,208 +2962,6 @@ function renderChips(){
     chips.length
       ? 'inline-block'
       : 'none';
-
-}
-
-
-/* =====================================================
-   IS / DA RENDER
-===================================================== */
-
-/*
- THIS IS THE MAIN FIX.
-
- Whenever Semester changes:
-
- render()
-    ↓
- renderISDA()
-    ↓
- selected semester identified
-    ↓
- ISDA filtered using sameSemester()
-    ↓
- chart changes
-*/
-
-function renderISDA(){
-
-  let data =
-    ISDA.slice();
-
-
-  const selectedSemester =
-    state.semester !== null
-      ? RAW.semesters[
-          state.semester
-        ]
-      : null;
-
-
-  if(selectedSemester){
-
-    /*
-      Only filter when ISDA actually contains
-      semester-specific records.
-    */
-
-    if(
-      data.some(
-        d => !!d.semester
-      )
-    ){
-
-      data =
-        data.filter(
-          d =>
-            sameSemester(
-              d.semester,
-              selectedSemester
-            )
-        );
-
-    }
-
-  }
-
-
-  /*
-    If Program filter is selected, mentor chart
-    should still reflect the selected program,
-    but IS/DA is already semester-specific.
-  */
-
-
-  const maxAbs =
-    Math.max(
-      1,
-      ...data.map(
-        d =>
-          Math.abs(
-            Number(d.diff) || 0
-          )
-      )
-    );
-
-
-  document.getElementById(
-    'isdaChart'
-  ).innerHTML =
-
-    data.length
-
-      ? data.map(
-          d => {
-
-            const cls =
-              d.diff < 0
-                ? 'neg'
-                : '';
-
-
-            const width =
-              (
-                Math.abs(d.diff) /
-                maxAbs *
-                50
-              ).toFixed(1);
-
-
-            const left =
-              d.diff >= 0
-
-                ? '50%'
-
-                : (
-                    50 -
-                    parseFloat(
-                      width
-                    )
-                  ) + '%';
-
-
-            const sign =
-              d.diff > 0
-                ? '+'
-                : '';
-
-
-            return `
-
-              <div class="div-row">
-
-                <div
-                  class="name"
-                  title="${d.name}"
-                >
-                  ${d.name}
-                </div>
-
-                <div class="div-track">
-
-                  <div class="div-mid"></div>
-
-                  <div
-                    class="div-fill ${cls}"
-                    style="
-                      left:${left};
-                      width:${width}%;
-                    "
-                  ></div>
-
-                </div>
-
-                <div class="meta">
-
-                  IS
-                  ${Number(
-                    d.is_pct
-                  ).toFixed(1)}%
-
-                  ·
-
-                  DA
-                  ${Number(
-                    d.da_pct
-                  ).toFixed(1)}%
-
-                  ·
-
-                  <b class="${cls}">
-
-                    ${sign}
-                    ${Number(
-                      d.diff
-                    ).toFixed(1)}
-
-                    pts
-
-                  </b>
-
-                </div>
-
-              </div>
-
-            `;
-
-          }
-        ).join('')
-
-      : `
-
-        <div class="empty">
-
-          No IS/DA data available
-          ${
-            selectedSemester
-              ? 'for ' +
-                selectedSemester
-              : ''
-          }.
-
-        </div>
-
-      `;
 
 }
 
@@ -3441,15 +3038,15 @@ function render(){
 
 
   const rows =
-    filteredRows(null);
+    filteredRows(
+      null
+    );
 
 
   const totals = {
 
     total:0,
-
     paid:0,
-
     not_paid:0
 
   };
@@ -3458,11 +3055,14 @@ function render(){
   rows.forEach(
     r => {
 
-      totals.total += r[3];
+      totals.total +=
+        r[3];
 
-      totals.paid += r[4];
+      totals.paid +=
+        r[4];
 
-      totals.not_paid += r[5];
+      totals.not_paid +=
+        r[5];
 
     }
   );
@@ -3476,9 +3076,7 @@ function render(){
       : 0;
 
 
-  /* =====================
-     MENTORS
-  ===================== */
+  /* MENTORS */
 
   const mentorRows =
     filteredRows(
@@ -3533,11 +3131,9 @@ function render(){
 
 
   const searchQ =
-    document
-      .getElementById(
-        'mentorSearch'
-      )
-      .value
+    document.getElementById(
+      'mentorSearch'
+    ).value
       .toLowerCase()
       .trim();
 
@@ -3601,14 +3197,11 @@ function render(){
     );
 
 
-  /* =====================
-     KPI
-  ===================== */
+  /* KPI */
 
   const kpis = [
 
     {
-
       label:
         'Students (filtered)',
 
@@ -3621,12 +3214,11 @@ function render(){
         RAW.rows.length
           ? 'all students'
           : 'filtered view'
-
     },
 
     {
-
-      label:'Paid',
+      label:
+        'Paid',
 
       value:
         fmt(
@@ -3637,12 +3229,11 @@ function render(){
         `${totals.paid.toLocaleString()}
          of
          ${totals.total.toLocaleString()}`
-
     },
 
     {
-
-      label:'Not paid',
+      label:
+        'Not paid',
 
       value:
         totals.not_paid
@@ -3650,23 +3241,19 @@ function render(){
 
       sub:
         're-registration pending'
-
     },
 
     {
-
       label:
         state.mentor !== null
           ? 'Selected mentor'
-          : 'Top performer',
+          : 'Mentor',
 
       value:
         state.mentor !== null
-
           ? RAW.mentors[
               state.mentor
             ]
-
           : (
               allMentorAgg[0]
                 ? allMentorAgg[0].name
@@ -3675,7 +3262,6 @@ function render(){
 
       sub:
         state.mentor !== null
-
           ? fmt(
               mentorList.find(
                 m =>
@@ -3684,18 +3270,7 @@ function render(){
               )?.paid_pct || 0
             ) +
             ' paid'
-
-          : (
-              allMentorAgg[0]
-
-                ? fmt(
-                    allMentorAgg[0]
-                      .paid_pct
-                  ) +
-                  ' paid'
-
-                : ''
-            )
+          : ''
 
     }
 
@@ -3729,9 +3304,7 @@ function render(){
     ).join('');
 
 
-  /* =====================
-     TOP CARD
-  ===================== */
+  /* TOP CARD */
 
   const best =
     allMentorAgg[0];
@@ -3744,13 +3317,14 @@ function render(){
     ).innerHTML = `
 
       <div class="tag">
-        Mentor-wise re-registration status
+        Re-registration status
       </div>
 
       <h3>
         ${best.name}
         —
-        ${fmt(best.paid_pct)} paid
+        ${fmt(best.paid_pct)}
+        paid
       </h3>
 
       <p>
@@ -3767,9 +3341,7 @@ function render(){
   }
 
 
-  /* =====================
-     MENTOR CHART
-  ===================== */
+  /* MENTOR */
 
   document.getElementById(
     'mentorHeading'
@@ -3782,238 +3354,118 @@ function render(){
       : 'Mentor-wise re-registration status';
 
 
-  if(!mentorList.length){
+  document.getElementById(
+    'mentorChart'
+  ).innerHTML =
 
-    document.getElementById(
-      'mentorChart'
-    ).innerHTML =
+    mentorList.length
 
-      `
-        <div class="empty">
-          No mentors match this filter.
-        </div>
-      `;
+      ? mentorList.map(
+          (
+            m,
+            i
+          ) => {
 
-  }
-  else{
-
-    document.getElementById(
-      'mentorChart'
-    ).innerHTML =
-
-      mentorList.map(
-        (
-          m,
-          i
-        ) => {
-
-          const isActive =
-            state.mentor ===
-            m.idx;
+            const active =
+              state.mentor ===
+              m.idx;
 
 
-          let pillsHtml =
-            '';
+            return `
 
+              <div
+                class="row ${
+                  active
+                    ? 'active'
+                    : ''
+                }"
+                data-mentor="${m.idx}"
+              >
 
-          if(isActive){
+                <div class="row-head">
 
-            const progAgg =
-              aggBy(
-
-                RAW.rows.filter(
-                  r =>
-
-                    r[0] ===
-                    m.idx
-
-                    &&
-
-                    (
-                      state.priority ===
-                      null ||
-                      r[2] ===
-                      state.priority
-                    )
-
-                    &&
-
-                    (
-                      state.semester ===
-                      null ||
-                      r[7] ===
-                      state.semester
-                    )
-                ),
-
-                1
-
-              );
-
-
-            const pills =
-
-              [
-                ...progAgg.entries()
-              ]
-              .map(
-                (
-                  [idx,o]
-                ) => `
-
-                  <span class="pill">
-
-                    ${RAW.programs[idx]}
-
-                    <b>
-
-                      ${fmt(
-                        o.total
-                          ? o.paid /
-                            o.total *
-                            100
-                          : 0
-                      )}
-
-                    </b>
-
-                    (${o.total})
-
-                  </span>
-
-                `
-              ).join('');
-
-
-            pillsHtml =
-              `
-                <div class="pills">
-                  ${pills}
-                </div>
-              `;
-
-
-            const noteText =
-              NOTES[m.name];
-
-
-            if(noteText){
-
-              pillsHtml += `
-
-                <div class="focus-note">
-
-                  <span class="flabel">
-
-                    Focus for
-                    ${m.name}
-
-                  </span>
-
-                  ${noteText}
-
-                </div>
-
-              `;
-
-            }
-
-          }
-
-
-          return `
-
-            <div
-              class="row ${
-                isActive
-                  ? 'active'
-                  : ''
-              }"
-              data-mentor="${m.idx}"
-            >
-
-              <div class="row-head">
-
-                <div class="rank">
-                  ${i+1}
-                </div>
-
-                <div
-                  class="name"
-                  title="${m.name}"
-                >
-                  ${m.name}
-                </div>
-
-                <div class="bar-track">
+                  <div class="rank">
+                    ${i+1}
+                  </div>
 
                   <div
-                    class="bar-fill"
-                    style="
-                      width:${m.paid_pct}%;
-                    "
-                  ></div>
+                    class="name"
+                    title="${m.name}"
+                  >
+                    ${m.name}
+                  </div>
 
-                </div>
+                  <div class="bar-track">
 
-                <div class="meta">
+                    <div
+                      class="bar-fill"
+                      style="
+                        width:${m.paid_pct}%;
+                      "
+                    ></div>
 
-                  <b>
-                    ${fmt(m.paid_pct)}
-                  </b>
+                  </div>
 
-                  ·
+                  <div class="meta">
 
-                  ${m.not_paid}
-                  unpaid
+                    <b>
+                      ${fmt(
+                        m.paid_pct
+                      )}
+                    </b>
+
+                    ·
+
+                    ${m.not_paid}
+                    unpaid
+
+                  </div>
 
                 </div>
 
               </div>
 
-              ${pillsHtml}
+            `;
 
-            </div>
+          }
+        ).join('')
 
-          `;
-
-        }
-      ).join('');
-
-
-    document
-      .querySelectorAll(
-        '#mentorChart .row'
-      )
-      .forEach(
-        el =>
-          el.addEventListener(
-            'click',
-            () => {
-
-              const idx =
-                +el.dataset.mentor;
+      : `
+        <div class="empty">
+          No mentors match this filter.
+        </div>
+      `;
 
 
-              state.mentor =
-                state.mentor ===
-                idx
-                  ? null
-                  : idx;
+  document
+    .querySelectorAll(
+      '#mentorChart .row'
+    )
+    .forEach(
+      el =>
+        el.addEventListener(
+          'click',
+          () => {
+
+            const idx =
+              +el.dataset.mentor;
 
 
-              render();
-
-            }
-          )
-      );
-
-  }
+            state.mentor =
+              state.mentor ===
+              idx
+                ? null
+                : idx;
 
 
-  /* =====================
-     PROGRAM
-  ===================== */
+            render();
+
+          }
+        )
+    );
+
+
+  /* PROGRAM */
 
   document.getElementById(
     'programHeading'
@@ -4026,7 +3478,7 @@ function render(){
       : 'Program-wise re-registration status';
 
 
-  const progAggAll =
+  const progAgg =
     [
       ...aggBy(
         filteredRows(
@@ -4074,7 +3526,7 @@ function render(){
     'programChart'
   ).innerHTML =
 
-    progAggAll.map(
+    progAgg.map(
       p => `
 
         <div
@@ -4109,12 +3561,14 @@ function render(){
             <div class="meta">
 
               <b>
-                ${fmt(p.paid_pct)}
+                ${fmt(
+                  p.paid_pct
+                )}
               </b>
 
               ·
 
-              ${p.not_paid.toLocaleString()}
+              ${p.not_paid}
               unpaid
 
             </div>
@@ -4157,6 +3611,15 @@ function render(){
                 : idx;
 
 
+            state._programName =
+              state.program ===
+              null
+                ? null
+                : RAW.programs[
+                    state.program
+                  ];
+
+
             render();
 
           }
@@ -4164,20 +3627,7 @@ function render(){
     );
 
 
-  /* =====================
-     PRIORITY
-  ===================== */
-
-  document.getElementById(
-    'priorityHeading'
-  ).textContent =
-
-    state.priority !== null
-
-      ? `${RAW.priorities[state.priority]} — detail`
-
-      : 'Priority category breakdown';
-
+  /* PRIORITY */
 
   const priAgg =
     [
@@ -4234,13 +3684,9 @@ function render(){
 
             const cls =
               p.not_paid_pct >= 60
-
                 ? 'neg'
-
                 : p.not_paid_pct >= 25
-
                   ? 'warn'
-
                   : 'pos';
 
 
@@ -4277,11 +3723,9 @@ function render(){
                   <span
                     class="badge ${cls}"
                   >
-
                     ${fmt(
                       p.not_paid_pct
                     )}
-
                   </span>
 
                 </td>
@@ -4347,13 +3791,10 @@ function render(){
 
 
   /*
-    VERY IMPORTANT:
-
-    renderISDA() is called every time render()
-    executes.
-
-    Therefore changing Semester immediately
-    recalculates the IS/DA section.
+    IMPORTANT:
+    Always render IS/DA last.
+    This makes the semester selection
+    immediately reflect in the chart.
   */
 
   renderISDA();
@@ -4362,7 +3803,7 @@ function render(){
 
 
 /* =====================================================
-   GOOGLE SHEET URL
+   GOOGLE SHEET
 ===================================================== */
 
 function googleSheetCsvUrl(
@@ -4388,10 +3829,6 @@ function googleSheetCsvUrl(
 }
 
 
-/* =====================================================
-   FETCH GOOGLE SHEET
-===================================================== */
-
 async function fetchGoogleSheetRows(
   sheetName
 ){
@@ -4412,7 +3849,7 @@ async function fetchGoogleSheetRows(
     throw new Error(
       'Could not read ' +
       sheetName +
-      ' from Google Sheets. HTTP ' +
+      '. HTTP ' +
       response.status
     );
 
@@ -4461,7 +3898,7 @@ async function fetchGoogleSheetRows(
 
 
 /* =====================================================
-   LOAD EVERYTHING
+   LOAD
 ===================================================== */
 
 async function loadFromGoogleSheet(){
@@ -4482,27 +3919,21 @@ async function loadFromGoogleSheet(){
     );
 
 
-    /*
-      BOTH pages use the SAME Google Sheet.
-
-      Page 2:
-      Sheet1 + Sheet2
-    */
-
     const [
       rows1,
       rows2
-    ] = await Promise.all([
+    ] =
+      await Promise.all([
 
-      fetchGoogleSheetRows(
-        GOOGLE_SHEET1_NAME
-      ),
+        fetchGoogleSheetRows(
+          GOOGLE_SHEET1_NAME
+        ),
 
-      fetchGoogleSheetRows(
-        GOOGLE_SHEET2_NAME
-      )
+        fetchGoogleSheetRows(
+          GOOGLE_SHEET2_NAME
+        )
 
-    ]);
+      ]);
 
 
     const built =
@@ -4526,11 +3957,6 @@ async function loadFromGoogleSheet(){
     RAW.rows =
       built.rows;
 
-
-    /*
-      Preserve selected filters after
-      automatic 60-second refresh.
-    */
 
     const mentorName =
       state._mentorName;
@@ -4626,7 +4052,7 @@ async function loadFromGoogleSheet(){
 
 
     /*
-      BUILD IS/DA AFTER Sheet1 + Sheet2
+      REBUILD ISDA EVERY REFRESH
     */
 
     ISDA =
@@ -4690,30 +4116,6 @@ async function loadFromGoogleSheet(){
 
 
 /* =====================================================
-   AUTO REFRESH
-===================================================== */
-
-function startGoogleRefresh(){
-
-  if(refreshTimer){
-
-    clearInterval(
-      refreshTimer
-    );
-
-  }
-
-
-  refreshTimer =
-    setInterval(
-      loadFromGoogleSheet,
-      GOOGLE_REFRESH_MS
-    );
-
-}
-
-
-/* =====================================================
    FILTER EVENTS
 ===================================================== */
 
@@ -4723,23 +4125,21 @@ document.getElementById(
   'change',
   () => {
 
-    state.program =
+    const value =
       document.getElementById(
         'progSel'
-      ).value === ''
+      ).value;
 
+
+    state.program =
+      value === ''
         ? null
-
-        : +document.getElementById(
-            'progSel'
-          ).value;
+        : +value;
 
 
     state._programName =
       state.program === null
-
         ? null
-
         : RAW.programs[
             state.program
           ];
@@ -4757,23 +4157,21 @@ document.getElementById(
   'change',
   () => {
 
-    state.priority =
+    const value =
       document.getElementById(
         'priSel'
-      ).value === ''
+      ).value;
 
+
+    state.priority =
+      value === ''
         ? null
-
-        : +document.getElementById(
-            'priSel'
-          ).value;
+        : +value;
 
 
     state._priorityName =
       state.priority === null
-
         ? null
-
         : RAW.priorities[
             state.priority
           ];
@@ -4789,19 +4187,7 @@ document.getElementById(
  =====================================================
  SEMESTER FILTER
 
- This is the critical event.
-
- When semester changes:
-
- state.semester changes
-        ↓
- render()
-        ↓
- renderISDA()
-        ↓
- ISDA filtered by semester
-        ↓
- IS vs DA chart changes
+ THIS IS THE IMPORTANT PART.
  =====================================================
 */
 
@@ -4830,6 +4216,12 @@ document.getElementById(
             state.semester
           ];
 
+
+    /*
+      render() calls renderISDA().
+      Therefore the IS/DA chart is rebuilt
+      immediately for this semester.
+    */
 
     render();
 
@@ -4900,7 +4292,15 @@ document.getElementById(
 
 loadFromGoogleSheet();
 
-startGoogleRefresh();
+if(refreshTimer){
+  clearInterval(refreshTimer);
+}
+
+refreshTimer =
+  setInterval(
+    loadFromGoogleSheet,
+    GOOGLE_REFRESH_MS
+  );
 
 render();
 
